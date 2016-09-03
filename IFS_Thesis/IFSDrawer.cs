@@ -98,7 +98,7 @@ namespace IFS_Thesis
 
         private Bitmap DrawFilledRectangle(int x, int y)
         {
-            Bitmap bmp = new Bitmap(x, y);
+            Bitmap bmp = new Bitmap(x, y, PixelFormat.Format24bppRgb);
 
             using (Graphics graph = Graphics.FromImage(bmp))
             {
