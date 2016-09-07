@@ -20,6 +20,8 @@ namespace IFS_Thesis
 
             var length = ifsMappings.Count;
 
+            #region Weird shit
+
             var x = ifsMappings[0][4];
             var y = ifsMappings[0][5];
             var xa = x;
@@ -42,25 +44,27 @@ namespace IFS_Thesis
 
                     if (p <= psum)
                         break;
-                    }
-
-                var x0 = x*ifsMappings[i][0] + y*ifsMappings[i][1] + ifsMappings[i][4];
-                    y = x*ifsMappings[i][2] + y*ifsMappings[i][3] + ifsMappings[i][5];
-                    x = x0;
-
-                    if (x < xa)
-                        xa = x;
-                    if (x > xb)
-                        xb = x;
-                    if (y < ya)
-                        ya = y;
-                    if (y > yb)
-                        yb = y;
                 }
 
-            imgy = Convert.ToInt32(imgy * (yb - ya) / (xb - xa)); //auto-re-adjust the aspect ratio
+                var x0 = x*ifsMappings[i][0] + y*ifsMappings[i][1] + ifsMappings[i][4];
+                y = x*ifsMappings[i][2] + y*ifsMappings[i][3] + ifsMappings[i][5];
+                x = x0;
+
+                if (x < xa)
+                    xa = x;
+                if (x > xb)
+                    xb = x;
+                if (y < ya)
+                    ya = y;
+                if (y > yb)
+                    yb = y;
+            }
+
+            imgy = Convert.ToInt32(imgy*(yb - ya)/(xb - xa)); //auto-re-adjust the aspect ratio
 
             var bmpImage = DrawFilledRectangle(imgx, imgy);
+
+            #endregion
 
             x = 0.0;
             y = 0.0;
@@ -94,6 +98,63 @@ namespace IFS_Thesis
             
 
             return bmpImage;
+        }
+
+        public void DrawIFSImageMyVersion()
+        {
+
+        }
+
+        public List<Point> CreateIfsPointsMyVersion(List<double[]> ifsMappings, int numberOfIterations)
+        {
+            List<Point> resultPoints = new List<Point>();
+
+            var startingPoint = new Point(1,1);
+            var numberOfFunctions = ifsMappings.Count;
+
+            var currentPoint = startingPoint;
+            var currentFunctionIndex = 0;
+
+            for (int i = 0; i < numberOfIterations; i++)
+            {
+                if (numberOfFunctions > 1)
+                {
+                    var p = new Random().NextDouble();
+                    var psum = 0.0;
+
+                    currentFunctionIndex = 0;
+
+                    for (int j = 0; j < numberOfFunctions; j++)
+                    {
+                        psum += ifsMappings[j][6];
+
+                        currentFunctionIndex = j;
+
+                        if (p <= psum)
+                            break;
+                    }
+
+
+                }
+
+                currentPoint = ApplyIFSTransformation(ifsMappings[currentFunctionIndex], currentPoint);
+
+                resultPoints.Add(currentPoint);
+            }
+
+            return resultPoints;
+        }
+
+        private Point ApplyIFSTransformation(double[] currentFunction, Point currentPoint)
+        {
+            var x0 = currentPoint.X;
+            var y0 = currentPoint.Y;
+
+            int x = Convert.ToInt32(currentFunction[0] * x0 + currentFunction[1] * y0 + currentFunction[4]);
+            int y = Convert.ToInt32(currentFunction[2] * x0 + currentFunction[3] * y0 + currentFunction[5]);
+
+            return new Point(x, y);
+
         }
 
         private Bitmap DrawFilledRectangle(int x, int y)
