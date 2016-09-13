@@ -15,7 +15,7 @@ namespace IFS_Thesis
     {
         static void Main(string[] args)
         {
-            var imageSavePath = "C:/Users/SG0222640/Desktop/fern.png";
+            var imageSavePath = "C:/Users/Loydik94/Desktop/fern.png";
             var imageSavePath2 = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_temp.png";
 
             var imageReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result.png";
@@ -35,8 +35,7 @@ namespace IFS_Thesis
 
             List<IfsFunction> pentagonMine = new List<IfsFunction> { new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
 
-            List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 2.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(100.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(1.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -21.191f, 23.588f, 15.2f) };
-
+            List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.311f, 0.0f, 0.2f, 0.312f, 0.0f, 0.0f, 0.1f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.3822f, 0.5f, 0.0f, 0.25f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.6f, 0.809f, 0.1f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.1f, 0.6f), new IfsFunction(0.1f, 0.1f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
 
             //var points = new IfsDrawer().CreateIfsPointsMyVersion(fernMine, 1000000);
 
@@ -47,14 +46,13 @@ namespace IFS_Thesis
 
             var drawer = new IfsDrawer();
             drawer.SaveIfsImage(pentagonMine, 512, 512, imageSavePath);
-            //drawer.CreateIfsPointsMyVersion(fernMine2, 100000);
-            //image.Save(imageSavePath, ImageFormat.Bmp);
 
-            //Individual individual = (Individual) fern2;
+            //var imageParser = new ImageParser();
+            //var bytes = imageParser.GetMatchingPixels(imageSavePath, Color.Black);
 
-            //var fitness = FitnessFunction.CalculateFitness(image, individual);
+            Bitmap image = (Bitmap)Image.FromFile(imageSavePath, true);
 
-            //image.Save(imageSavePath2);
+            var fitness = FitnessFunction.CalculateFitness(image, new Individual(pentagonMine2), 512, 512);
         }
     }
 }

@@ -1,12 +1,27 @@
-﻿namespace IFS_Thesis.EvolutionaryData
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace IFS_Thesis.EvolutionaryData
 {
     public class Singel
     {
-        public double[] Coefficients { get; set; }
+        public IfsFunction Coefficients { get; set; }
 
-        public Singel(double[] coefficients)
+        public Singel(IfsFunction coefficients)
         {
             Coefficients = coefficients;
+        }
+
+        public static implicit operator IfsFunction (Singel x)
+        {
+            return x.Coefficients;
+        }
+
+        public static explicit operator Singel(IfsFunction x)
+        {
+            Singel singel = new Singel(x);
+
+            return singel;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Net.Mime;
 using AForge.Imaging;
 using Image = System.Drawing.Image;
@@ -10,23 +12,45 @@ namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
-        //public static double CalculateFitness(Bitmap sourceImage, Individual individual)
-        //{
-        //    double similarity = 0.0;
+        public static float CalculateFitness(Bitmap sourceImage, Individual individual, int width, int height)
+        {
+            var originalPixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
-        //        var generatedImage = new IfsDrawer().DrawIfs(individual, 512, 512);
+            new IfsDrawer().CreateImageFromPixels(originalPixels).Save(@"C:/Users/Loydik94/Desktop/originalPixels.png");
 
-        //        ResizeImage(generatedImage, sourceImage.Width, sourceImage.Height);
+            var generatedPixels = new IfsDrawer().GetIfsPixels(individual.Singels, width,
+               height);
 
-        //        ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0);
-        //        // Compare two images
-        //        TemplateMatch[] matchings = tm.ProcessImage(generatedImage, sourceImage);
+            new IfsDrawer().CreateImageFromPixels(generatedPixels).Save(@"C:/Users/Loydik94/Desktop/generatedPixels.png");
 
-        //        similarity = matchings[0].Similarity;
+            var matchingPixels = generatedPixels.Intersect(originalPixels).ToList();
 
+            new IfsDrawer().CreateImageFromPixels(matchingPixels).Save(@"C:/Users/Loydik94/Desktop/matchingPixels.png");
 
-        //    return similarity;
-        //}
+            var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
+
+            new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save(@"C:/Users/Loydik94/Desktop/pixelsDrawnOutsidePixels.png");
+
+            //Stupid formula
+
+            var NA = generatedPixels.Count;
+
+            var NI = originalPixels.Count;
+
+            //NND
+            var NotDrawnPoints = originalPixels.Except(generatedPixels).Count();
+
+            //NNN
+            var PointsNotNeeded = generatedPixels.Except(matchingPixels).Count();
+
+            float RC = NotDrawnPoints/(float)NI;
+
+            float RO = PointsNotNeeded/(float)NA;
+
+            float fitness = (1 - RC) + (1 - RO);
+
+            return fitness;
+        }
 
 
         /// <summary>

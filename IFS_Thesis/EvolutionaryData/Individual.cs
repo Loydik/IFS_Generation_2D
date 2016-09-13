@@ -9,25 +9,26 @@ namespace IFS_Thesis.EvolutionaryData
     public class Individual
     {
         public int Degree { get; set; }
-        public List<Singel> Singels { get; set; }
 
-        public Individual(List<Singel> singels )
+        public List<IfsFunction> Singels { get; set; }
+
+        public Individual(List<IfsFunction> singels )
         {
             Singels = singels;
         }
 
-        public static implicit operator List<double[]>(Individual x)
-        {
-            return x.Singels.Select(singel => singel.Coefficients).ToList();
-        }
+        //public static implicit operator List<Singel>(Individual x)
+        //{
+        //    return x.Singels;
+        //}
 
-        public static explicit operator Individual(List<double[]> x)
-        {
-            var singels = x.Select(array => new Singel(array)).ToList();
+        //public static explicit operator Individual(List<Singel> x)
+        //{
+        //    var singels = x.Select(array => new Singel(array)).ToList();
 
-            Individual individual = new Individual(singels);
+        //    Individual individual = new Individual(singels);
 
-            return individual;
-        }
+        //    return individual;
+        //}
     }
 }

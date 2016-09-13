@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using AForge.Imaging;
-using OxyPlot;
-using OxyPlot.Extensions;
-using OxyPlot.Series;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace IFS_Thesis
@@ -21,92 +16,6 @@ namespace IFS_Thesis
             bmp.Save(path, ImageFormat.Png);
             bmp.Dispose();
         }
-
-        //public Bitmap DrawIfs(List<IfsFunction> ifsMappings, int imgx, int imgy)
-        //{
-        //    var randomGen = new Random();
-
-        //    var length = ifsMappings.Count;
-
-        //    #region Weird shit
-
-        //    var x = ifsMappings[0].E;
-        //    var y = ifsMappings[0].F;
-        //    var xa = x;
-        //    var xb = x;
-        //    var ya = y;
-        //    var yb = y;
-
-        //    for (int k = 0; k < imgx*imgy; k++)
-        //    {
-        //        var p = randomGen.NextDouble();
-        //        var psum = 0.0;
-
-        //        var i = 0;
-
-        //        for (int j = 0; j < length; j++)
-        //        {
-        //            psum += ifsMappings[j].P;
-
-        //            i = j;
-
-        //            if (p <= psum)
-        //                break;
-        //        }
-
-        //        var x0 = x*ifsMappings[i].A + y*ifsMappings[i].B + ifsMappings[i].E;
-        //        y = x * ifsMappings[i].C + y*ifsMappings[i].D + ifsMappings[i].F;
-        //        x = x0;
-
-        //        if (x < xa)
-        //            xa = x;
-        //        if (x > xb)
-        //            xb = x;
-        //        if (y < ya)
-        //            ya = y;
-        //        if (y > yb)
-        //            yb = y;
-        //    }
-
-        //    imgy = Convert.ToInt32(imgy*(yb - ya)/(xb - xa)); //auto-re-adjust the aspect ratio
-
-        //    var bmpImage = DrawFilledRectangle(imgx, imgy);
-
-        //    #endregion
-
-        //    x = 0.0f;
-        //    y = 0.0f;
-
-        //    for (int k = 0; k < imgx * imgy; k++)
-        //    {
-        //        var p = randomGen.NextDouble();
-        //        var psum = 0.0;
-
-        //        var i = 0;
-
-        //        for (int j = 0; j < length; j++)
-        //        {
-        //            psum += ifsMappings[j].P;
-
-        //            i = j;
-
-        //            if (p <= psum)
-        //                break;
-        //        }
-
-        //        var x0 = x * ifsMappings[i].A + y * ifsMappings[i].B + ifsMappings[i].E;
-        //            y = x * ifsMappings[i].C + y * ifsMappings[i].D + ifsMappings[i].F;
-        //            x = x0;
-
-        //            var jx = Convert.ToInt32((x - xa)/(xb - xa)*(imgx - 1));
-        //            var jy = (imgy - 1) - Convert.ToInt32((y - ya)/(yb - ya)*(imgy - 1));
-
-        //            bmpImage.SetPixel(jx, jy, Color.Black);
-        //     }
-
-
-        //    return bmpImage;
-        //}
 
         public List<Point> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy)
         {
@@ -165,6 +74,8 @@ namespace IFS_Thesis
                 pixels.Add(new Point(jx, jy));
             }
 
+            pixels = pixels.Distinct().ToList();
+
             return pixels;
         }
 
@@ -219,12 +130,11 @@ namespace IFS_Thesis
 
         private Bitmap DrawFilledRectangle(int x, int y)
         {
-            Bitmap bmp = new Bitmap(x, y, PixelFormat.Format24bppRgb);
+            Bitmap bmp = new Bitmap(x, y, PixelFormat.Format32bppRgb);
 
             using (Graphics graph = Graphics.FromImage(bmp))
             {
-                Rectangle imageSize = new Rectangle(0, 0, x, y);
-                graph.FillRectangle(Brushes.White, imageSize);
+               graph.Clear(Color.White);
             }
 
             return bmp;

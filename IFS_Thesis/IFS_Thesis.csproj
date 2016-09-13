@@ -72,6 +72,8 @@
     <Compile Include="EvolutionaryData\Species.cs" />
     <Compile Include="IFSDrawer.cs" />
     <Compile Include="IfsFunction.cs" />
+    <Compile Include="ImageParser.cs" />
+    <Compile Include="LockBitmap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
