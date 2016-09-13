@@ -1,0 +1,14 @@
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\IFS_Thesis.exe.config
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\obj\Debug\IFS_Thesis.csprojResolveAssemblyReference.cache
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\IFS_Thesis.exe
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\IFS_Thesis.pdb
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.dll
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.Imaging.dll
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.Math.dll
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.xml
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.Imaging.xml
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\AForge.Math.xml
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\obj\Debug\IFS_Thesis.exe
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\obj\Debug\IFS_Thesis.pdb
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\OxyPlot.dll
+C:\Users\SG0222640\Desktop\My Stuff\Thesis\Code\IFS_Thesis\bin\Debug\OxyPlot.Extensions.dll

@@ -10,23 +10,23 @@ namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
-        public static double CalculateFitness(Bitmap sourceImage, Individual individual)
-        {
-            double similarity = 0.0;
+        //public static double CalculateFitness(Bitmap sourceImage, Individual individual)
+        //{
+        //    double similarity = 0.0;
 
-                var generatedImage = new IfsDrawer().DrawIfs(individual, 512, 512);
+        //        var generatedImage = new IfsDrawer().DrawIfs(individual, 512, 512);
 
-                ResizeImage(generatedImage, sourceImage.Width, sourceImage.Height);
+        //        ResizeImage(generatedImage, sourceImage.Width, sourceImage.Height);
 
-                ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0);
-                // Compare two images
-                TemplateMatch[] matchings = tm.ProcessImage(generatedImage, sourceImage);
+        //        ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0);
+        //        // Compare two images
+        //        TemplateMatch[] matchings = tm.ProcessImage(generatedImage, sourceImage);
 
-                similarity = matchings[0].Similarity;
+        //        similarity = matchings[0].Similarity;
 
 
-            return similarity;
-        }
+        //    return similarity;
+        //}
 
 
         /// <summary>
