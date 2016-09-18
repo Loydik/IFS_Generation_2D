@@ -67,15 +67,18 @@
   <ItemGroup>
     <Compile Include="EvolutionaryData\EvolutionaryAlgorithm.cs" />
     <Compile Include="EvolutionaryData\FitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Individual.cs" />
+    <Compile Include="EvolutionaryData\Population.cs" />
     <Compile Include="EvolutionaryData\Singel.cs" />
     <Compile Include="EvolutionaryData\Species.cs" />
-    <Compile Include="IFSDrawer.cs" />
-    <Compile Include="IfsFunction.cs" />
-    <Compile Include="ImageParser.cs" />
-    <Compile Include="LockBitmap.cs" />
+    <Compile Include="Utils\IFSDrawer.cs" />
+    <Compile Include="Utils\IfsFunction.cs" />
+    <Compile Include="Utils\ImageParser.cs" />
+    <Compile Include="Utils\LockBitmap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

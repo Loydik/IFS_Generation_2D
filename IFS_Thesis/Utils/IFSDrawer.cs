@@ -12,12 +12,16 @@ namespace IFS_Thesis
         public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
         {
             var pixels = GetIfsPixels(ifsMappings, imgx, imgy);
+
+            if(pixels.Count != 0)
+            { 
             var bmp = CreateImageFromPixels(pixels);
             bmp.Save(path, ImageFormat.Png);
             bmp.Dispose();
+            }
         }
 
-        public List<Point> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy)
+        public List<Point> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy, bool ignoreProbabilities = true)
         {
             List<PointF> resultPoints = new List<PointF>();
 
@@ -29,29 +33,47 @@ namespace IFS_Thesis
             var currentPoint = new PointF(ifsMappings[0].E, ifsMappings[0].F);
 
             for (int k = 0; k < imgx*imgy; k++)
+            //for (int k = 0; k < 1000000000; k++)
             {
                 var p = randomGen.NextDouble();
                 var psum = 0.0;
 
                 var i = 0;
 
-                for (int j = 0; j < length; j++)
+                if (ignoreProbabilities)
                 {
-                    psum += ifsMappings[j].P;
-
-                    i = j;
-
-                    if (p <= psum)
-                        break;
+                    i = randomGen.Next(0, length);
                 }
+
+                else
+                {
+                    for (int j = 0; j < length; j++)
+                    {
+                        psum += ifsMappings[j].P;
+
+                        i = j;
+
+                        if (p <= psum)
+                            break;
+                    }
+                }          
 
                 currentPoint = ApplyIFSTransformation(ifsMappings[i], currentPoint);
 
                 resultPoints.Add(currentPoint);
             }
 
-            var pixels = ConvertPointsToPixels(resultPoints, imgx, imgy );
+            List<Point> pixels = new List<Point>();
 
+            try
+            {
+                pixels = ConvertPointsToPixels(resultPoints, imgx, imgy);
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine("Overflow");
+            }
+            
             return pixels;
         }
 
@@ -81,41 +103,51 @@ namespace IFS_Thesis
 
         public Bitmap CreateImageFromPixels(List<Point> pixels)
         {
-            var bmpImage = DrawFilledRectangle(pixels.Max(x => x.X)+1, pixels.Max(x => x.Y)+1);
+            Bitmap bitmapImage = null;
 
-            foreach (var pixel in pixels )
+            if (pixels.Count != 0)
             {
-                bmpImage.SetPixel(pixel.X, pixel.Y, Color.Black);
+                bitmapImage = DrawFilledRectangle(pixels.Max(x => x.X) + 1, pixels.Max(x => x.Y) + 1);
+
+                foreach (var pixel in pixels)
+                {
+                    bitmapImage.SetPixel(pixel.X, pixel.Y, Color.Black);
+                }
             }
 
-            return bmpImage;
+            else
+            {
+                bitmapImage = DrawFilledRectangle(1, 1);
+            }
+
+            return bitmapImage;
 
         }
 
-        public PointF[] CreateIfsPointsMyVersion(List<IfsFunction> ifsMappings, int numberOfIterations)
-        {
-            List<PointF> resultPoints = new List<PointF>();
+        //public PointF[] CreateIfsPointsMyVersion(List<IfsFunction> ifsMappings, int numberOfIterations)
+        //{
+        //    List<PointF> resultPoints = new List<PointF>();
 
-            var numberOfFunctions = ifsMappings.Count;
+        //    var numberOfFunctions = ifsMappings.Count;
 
-            var q0 = new PointF(10, 10);
+        //    var q0 = new PointF(10, 10);
 
-            for (int i = 0; i < numberOfIterations; i++)
-            {
-                var r = new Random().Next(1, numberOfFunctions);
+        //    for (int i = 0; i < numberOfIterations; i++)
+        //    {
+        //        var r = new Random().Next(1, numberOfFunctions);
 
-                var q = ApplyIFSTransformation(ifsMappings[r], q0);
+        //        var q = ApplyIFSTransformation(ifsMappings[r], q0);
 
-                q0 = q;
+        //        q0 = q;
 
-                resultPoints.Add(q0);
+        //        resultPoints.Add(q0);
 
-            }
+        //    }
 
-            var result = resultPoints.Distinct().ToList();
+        //    var result = resultPoints.Distinct().ToList();
 
-            return result.ToArray();
-        }
+        //    return result.ToArray();
+        //}
 
         private PointF ApplyIFSTransformation(IfsFunction currentFunction, PointF currentPoint)
         {

@@ -1,35 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Net.Mime;
-using AForge.Imaging;
 using Image = System.Drawing.Image;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
-        public static float CalculateFitness(Bitmap sourceImage, Individual individual, int width, int height)
+
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, Bitmap sourceImage)
+        {
+
+            foreach (var individual in individuals)
+            {
+                float fitness = CalculateFitness(sourceImage, individual, sourceImage.Width);
+
+                individual.CurrentFintess = fitness;
+            }
+
+            return individuals;
+        }
+
+        public static float CalculateFitness(Bitmap sourceImage, Individual individual, int width /*int height*/)
         {
             var originalPixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
-            new IfsDrawer().CreateImageFromPixels(originalPixels).Save(@"C:/Users/Loydik94/Desktop/originalPixels.png");
+            //new IfsDrawer().CreateImageFromPixels(originalPixels).Save(@"C:/Users/Loydik94/Desktop/originalPixels.png");
 
             var generatedPixels = new IfsDrawer().GetIfsPixels(individual.Singels, width,
-               height);
+               width);
 
-            new IfsDrawer().CreateImageFromPixels(generatedPixels).Save(@"C:/Users/Loydik94/Desktop/generatedPixels.png");
+            //new IfsDrawer().CreateImageFromPixels(generatedPixels).Save(@"C:/Users/Loydik94/Desktop/generatedPixels.png");
 
             var matchingPixels = generatedPixels.Intersect(originalPixels).ToList();
 
-            new IfsDrawer().CreateImageFromPixels(matchingPixels).Save(@"C:/Users/Loydik94/Desktop/matchingPixels.png");
+            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save(@"C:/Users/Loydik94/Desktop/matchingPixels.png");
 
             var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
 
-            new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save(@"C:/Users/Loydik94/Desktop/pixelsDrawnOutsidePixels.png");
+            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save(@"C:/Users/Loydik94/Desktop/pixelsDrawnOutsidePixels.png");
 
             //Stupid formula
 
