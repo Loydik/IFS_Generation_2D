@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace IFS_Thesis.EvolutionaryData
 {
@@ -15,15 +14,17 @@ namespace IFS_Thesis.EvolutionaryData
 
         private Population _population;
 
+        private float _fitnessThreshold = 0.05f;
+
         //private List<Singel> PoolOfSingels; 
 
 
 
         public Individual Start(int maxGenerations, Bitmap sourceImage)
-        {
+        { 
             _population = new Population();
 
-            var initialPopulationSize = 100;
+            var initialPopulationSize = 50;
 
             List<Singel> initialPoolOfSingels;
 
@@ -48,12 +49,20 @@ namespace IFS_Thesis.EvolutionaryData
 
             allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
 
-            var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.CurrentFintess)).ToList();
+            var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
 
-            var goodIndividuals = allIndividuals.Where(x => !float.IsNaN(x.CurrentFintess)).ToList();
+            allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
 
-            var highestFitnessIndividual = goodIndividuals.OrderByDescending(x => x.CurrentFintess).FirstOrDefault();
+            _population.SetAllIndividuals(allIndividuals);
 
+            VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+
+            var highestFitnessIndividual = allIndividuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+
+
+            _population = new GeneticOperators().GenerateNewPopulation(_population, VD, _fitnessThreshold, random);
+
+            var members = _population.GetAllIndividuals();
 
             return highestFitnessIndividual;
             //}

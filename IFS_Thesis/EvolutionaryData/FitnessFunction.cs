@@ -3,12 +3,47 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
+using IFS_Thesis.Utils;
 using Image = System.Drawing.Image;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
+        private float GetAverageFitnessForDegree(List<Individual> individuals, int degree)
+        {
+            var average = individuals.Where(x => x.Degree == degree).Select(x => x.ObjectiveFitness).Average();
+
+            return average;
+        }
+
+        /// <summary>
+        /// ToDO - test/ Needs rework
+        /// </summary>
+        public List<float> UpdateVectorOfProbabilitiesBasedOnFitness(List<Individual> individuals, List<float> vector )
+        {
+            //brute add method
+
+            //foreach (var individual in individuals)
+            //{
+            //    vector[individual.Degree - 1] = vector[individual.Degree - 1] + individual.ObjectiveFitness;
+            //}
+
+            var degrees = OtherUtils.GetDegreesOfIndividuals(individuals);
+
+            foreach (var degree in degrees)
+            {
+                var averageFitnessForDegree = GetAverageFitnessForDegree(individuals, degree);
+
+                vector[degree - 1] = vector[degree - 1] + averageFitnessForDegree;
+            }
+
+            vector = OtherUtils.NormalizeVector(vector);
+
+            return vector;
+        }
+
+
 
         public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, Bitmap sourceImage)
         {
@@ -17,7 +52,7 @@ namespace IFS_Thesis.EvolutionaryData
             {
                 float fitness = CalculateFitness(sourceImage, individual, sourceImage.Width);
 
-                individual.CurrentFintess = fitness;
+                individual.ObjectiveFitness = fitness;
             }
 
             return individuals;
@@ -62,7 +97,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             return fitness;
         }
-
 
         /// <summary>
         /// Resize the image to the specified width and height.

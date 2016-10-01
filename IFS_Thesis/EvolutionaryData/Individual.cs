@@ -12,7 +12,9 @@ namespace IFS_Thesis.EvolutionaryData
 
         public List<IfsFunction> Singels { get; set; }
 
-        public float CurrentFintess { get; set; }
+        public float ObjectiveFitness { get; set; }
+
+       // public float LinearRank { get; set; }
 
         public Individual(List<IfsFunction> singels )
         {

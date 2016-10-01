@@ -1,0 +1,1 @@
+﻿1. Read chapter in wiki about roulette-wheel selection and implement it porzadnie
