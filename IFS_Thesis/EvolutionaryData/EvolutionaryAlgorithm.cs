@@ -24,7 +24,7 @@ namespace IFS_Thesis.EvolutionaryData
         { 
             _population = new Population();
 
-            var initialPopulationSize = 50;
+            var initialPopulationSize = Properties.Settings.Default.InitialPopulationSize;
 
             List<Singel> initialPoolOfSingels;
 
@@ -36,14 +36,18 @@ namespace IFS_Thesis.EvolutionaryData
             //for (int i = 0; i < maxGenerations; i++)
             //{
 
-            initialPoolOfSingels = GenerateSingels(500, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, initialPopulationSize, VD, random);
 
-            for (int i = 0; i < initialPopulationSize; i++)
-            {
-                var individual = new GeneticOperators().CreateIndividual(VD, initialPoolOfSingels, random);
+            _population.AddIndividuals(initialIndividuals);
 
-                _population.AddIndividual(individual);
-            }
+            //initialPoolOfSingels = GenerateSingels(500, random);
+
+            //for (int i = 0; i < initialPopulationSize; i++)
+            //{
+            //    var individual = new GeneticOperators().CreateIndividual(VD, initialPoolOfSingels, random);
+
+            //    _population.AddIndividual(individual);
+            //}
 
             var allIndividuals = _population.GetAllIndividuals();
 
@@ -66,20 +70,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             return highestFitnessIndividual;
             //}
-        }
-
-        private List<Singel> GenerateSingels(int amount, Random random)
-        {
-            var result = new List<Singel>();
-
-            for (int j = 0; j < amount; j++)
-            {
-                var singel = new GeneticOperators().CreateRandomSingel(random);
-
-                result.Add(singel);
-            }
-
-            return result;
         }
     }
 }

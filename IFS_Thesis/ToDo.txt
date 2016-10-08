@@ -1,1 +1,5 @@
 ﻿1. Read chapter in wiki about roulette-wheel selection and implement it porzadnie
+2. Settings file with all preferences
+3. Add logging
+4. Try multipoint crossover strategy
+5. Write tests (especially for recombination)

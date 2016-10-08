@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AForge.Imaging;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.Utils;
 using Image = System.Drawing.Image;
 
 namespace IFS_Thesis

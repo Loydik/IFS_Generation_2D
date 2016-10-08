@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using IFS_Thesis.Utils;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace IFS_Thesis

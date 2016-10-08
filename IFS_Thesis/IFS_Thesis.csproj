@@ -77,11 +77,19 @@
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Individual.cs" />
     <Compile Include="EvolutionaryData\Population.cs" />
+    <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\RecombinationStrategy.cs" />
     <Compile Include="EvolutionaryData\SelectionAlgorithms.cs" />
     <Compile Include="EvolutionaryData\Selection\RouletteWheelSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\SelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Singel.cs" />
     <Compile Include="EvolutionaryData\Species.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utils\IFSDrawer.cs" />
     <Compile Include="Utils\IfsFunction.cs" />
     <Compile Include="Utils\ImageParser.cs" />
@@ -94,10 +102,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ToDo.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
