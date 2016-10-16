@@ -11,5 +11,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection
         public abstract List<Individual> SelectIndividuals(List<Individual> selectionPool, int count, Random randomGen);
 
         public abstract Species SelectSpecies(Population population, List<float> probabilityVector, Random randomGen);
+
+        public abstract Species SelectSecondSpecies(Population population, Species firstSpecies, int maximumDistance, Random randomGen);
     }
 }

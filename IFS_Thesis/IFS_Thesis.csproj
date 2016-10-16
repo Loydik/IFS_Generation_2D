@@ -79,6 +79,7 @@
     <Compile Include="EvolutionaryData\Population.cs" />
     <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\ReasortmentStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\RecombinationStrategy.cs" />
     <Compile Include="EvolutionaryData\SelectionAlgorithms.cs" />
     <Compile Include="EvolutionaryData\Selection\RouletteWheelSelectionStrategy.cs" />

@@ -83,5 +83,27 @@ namespace IFS_Thesis.EvolutionaryData.Selection
 
             return null;
         }
+
+        /// <summary>
+        /// Selects two species according to VD and maximum distance between species 
+        /// </summary>
+        public override Species SelectSecondSpecies(Population population, Species firstSpecies, int maximumDistance, Random randomGen)
+        {
+            var firstSpeciesDegree = firstSpecies.DegreeOfIndividualsInSpecies;
+
+            var possibleMatches =
+                population.Species.Where(
+                    x =>
+                        x.DegreeOfIndividualsInSpecies < firstSpeciesDegree &&
+                        x.DegreeOfIndividualsInSpecies >= firstSpeciesDegree - maximumDistance ||
+                        x.DegreeOfIndividualsInSpecies <= firstSpeciesDegree + maximumDistance &&
+                        x.DegreeOfIndividualsInSpecies > firstSpeciesDegree).ToList();
+
+            var randomIndex = randomGen.Next(0, possibleMatches.Count - 1);
+
+            var secondSpecies = possibleMatches[randomIndex];
+
+            return secondSpecies;
+        }
     }
 }

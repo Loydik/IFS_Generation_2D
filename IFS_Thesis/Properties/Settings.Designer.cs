@@ -46,5 +46,29 @@ namespace IFS_Thesis.Properties {
                 this["N2IndividualsCount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int N3IndividualsCount {
+            get {
+                return ((int)(this["N3IndividualsCount"]));
+            }
+            set {
+                this["N3IndividualsCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int N4IndividualsCount {
+            get {
+                return ((int)(this["N4IndividualsCount"]));
+            }
+            set {
+                this["N4IndividualsCount"] = value;
+            }
+        }
     }
 }
