@@ -19,35 +19,27 @@ namespace IFS_Thesis.EvolutionaryData
         //private List<Singel> PoolOfSingels; 
 
 
-
         public Individual Start(int maxGenerations, Bitmap sourceImage)
         { 
             _population = new Population();
 
             var initialPopulationSize = Properties.Settings.Default.InitialPopulationSize;
 
-            List<Singel> initialPoolOfSingels;
-
             //8 max
             VD = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
 
             var random = new Random();
 
-            //for (int i = 0; i < maxGenerations; i++)
-            //{
-
             var initialIndividuals = new GeneticOperators().CreateIndividuals(500, initialPopulationSize, VD, random);
 
             _population.AddIndividuals(initialIndividuals);
 
-            //initialPoolOfSingels = GenerateSingels(500, random);
+            Individual highestFitnessIndividual;
 
-            //for (int i = 0; i < initialPopulationSize; i++)
-            //{
-            //    var individual = new GeneticOperators().CreateIndividual(VD, initialPoolOfSingels, random);
-
-            //    _population.AddIndividual(individual);
-            //}
+            for (int i = 0; i < maxGenerations; i++)
+            {
+            
+            Console.WriteLine($"Starting evolving generation {i + 1}...");
 
             var allIndividuals = _population.GetAllIndividuals();
 
@@ -59,17 +51,31 @@ namespace IFS_Thesis.EvolutionaryData
 
             _population.SetAllIndividuals(allIndividuals);
 
-            VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
-
-            var highestFitnessIndividual = allIndividuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
-
+            VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);          
 
             _population = new GeneticOperators().GenerateNewPopulation(_population, VD, _fitnessThreshold, random);
 
-            var members = _population.GetAllIndividuals();
+                //allIndividuals = _population.GetAllIndividuals();
+
+                //allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
+
+                //Step 12
+                //VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+
+                Console.WriteLine($"Finished evolving generation {i + 1}...");
+
+                highestFitnessIndividual = _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+
+                new IfsDrawer().SaveIfsImage(highestFitnessIndividual.Singels, 512, 512, "C:/Users/Loydik94/Desktop/IFS Images/new/highest_fitness.png");
+            }
+
+            var resultingIndividuals = _population.GetAllIndividuals();
+
+            resultingIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(resultingIndividuals, sourceImage);
+
+            highestFitnessIndividual = resultingIndividuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
             return highestFitnessIndividual;
-            //}
         }
     }
 }

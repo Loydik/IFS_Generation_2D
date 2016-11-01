@@ -41,6 +41,11 @@ namespace IFS_Thesis.Utils
             P = p;
         }
 
+        public IfsFunction(float[] coefficients)
+        {
+            Coefficients = coefficients;
+        }
+
         /// <summary>
         /// Overriding GetHashCode
         /// </summary>

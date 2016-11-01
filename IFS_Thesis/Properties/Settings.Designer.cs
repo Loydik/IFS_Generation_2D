@@ -70,5 +70,17 @@ namespace IFS_Thesis.Properties {
                 this["N4IndividualsCount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float MutationProbability {
+            get {
+                return ((float)(this["MutationProbability"]));
+            }
+            set {
+                this["MutationProbability"] = value;
+            }
+        }
     }
 }

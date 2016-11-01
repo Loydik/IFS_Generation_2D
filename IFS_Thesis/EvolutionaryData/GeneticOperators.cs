@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
+using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection;
 using IFS_Thesis.Utils;
@@ -115,6 +117,7 @@ namespace IFS_Thesis.EvolutionaryData
         {
             SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
             RecombinationStrategy recombinationStrategy = new OnePointCrossoverStrategy();
+            IndividualMutationStrategy mutationStrategy = new StandardMutationRateStrategy();
 
             var newPopulation = new Population();
 
@@ -171,6 +174,16 @@ namespace IFS_Thesis.EvolutionaryData
                 var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
                 newPopulation.AddIndividuals(children);
             }
+
+            //Step 11
+            foreach (Individual individual in newPopulation.Individuals)
+            {
+                var currentIndividual = individual;
+
+                mutationStrategy.Mutate(ref currentIndividual, new CoefficientsMutationStrategy(), randomGen);
+            }
+            
+
 
             return newPopulation;
         }

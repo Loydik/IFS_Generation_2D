@@ -16,11 +16,11 @@ namespace IFS_Thesis
     {
         static void Main(string[] args)
         {
-            var imageSavePath = "C:/Users/Loydik94/Desktop/fern.png";
-            var imageSavePath2 = @"C:/Users/Loydik94/Desktop/highest_fitness.png";
+            var imageSavePath = "C:/Users/Loydik94/Desktop/IFS Images/new/fern.png";
+            var imageSavePath2 = @"C:/Users/Loydik94/Desktop/IFS Images/new/highest_fitness.png";
 
-            var imageReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result.png";
-            var image2ReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result2.png";
+            //var imageReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result.png";
+            //var image2ReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result2.png";
 
             int sizeX = 512;
             int sizeY = 512;
@@ -61,7 +61,7 @@ namespace IFS_Thesis
 
             var ea = new EvolutionaryAlgorithm();
 
-            var highest = ea.Start(100, image);
+            var highest = ea.Start(2000, image);
 
             drawer.SaveIfsImage(highest.Singels, 512, 512, imageSavePath2);
         }

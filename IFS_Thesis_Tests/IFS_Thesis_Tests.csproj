@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MutationStrategiesTests\MutationStrategiesTests.cs" />
     <Compile Include="RecombinationStrategiesTests\ReasortmentOperatorTests.cs" />
     <Compile Include="RecombinationStrategiesTests\InterSpeciesCrossoverTests.cs" />
     <Compile Include="RecombinationStrategiesTests\OnePointCrossoverTests.cs" />

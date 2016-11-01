@@ -76,6 +76,10 @@
     <Compile Include="EvolutionaryData\FitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Individual.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Individuals\StandardMutationRateStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\CoefficientsMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\RealValueMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Population.cs" />
     <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />

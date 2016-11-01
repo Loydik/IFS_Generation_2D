@@ -2,4 +2,4 @@
 2. Settings file with all preferences
 3. Add logging
 4. Try multipoint crossover strategy
-5. Write tests (especially for recombination)
+5. Fuck, the coefficients are not limited to 0 and 1
