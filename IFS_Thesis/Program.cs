@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AForge.Imaging;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.Utils;
 using Image = System.Drawing.Image;
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace IFS_Thesis
 {
@@ -16,11 +11,8 @@ namespace IFS_Thesis
     {
         static void Main(string[] args)
         {
-            var imageSavePath = "C:/Users/Loydik94/Desktop/IFS Images/new/fern.png";
-            var imageSavePath2 = @"C:/Users/Loydik94/Desktop/IFS Images/new/highest_fitness.png";
-
-            //var imageReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result.png";
-            //var image2ReadPath = @"C:/Users/Loydik94/Desktop/IFS Images/Fitness Experiment/ifs_result2.png";
+            var imageSavePath = Properties.Settings.Default.WorkingDirectory + "/fern.png";
+            var imageSavePath2 = Properties.Settings.Default.WorkingDirectory + @"/highest_fitness_final.png";
 
             int sizeX = 512;
             int sizeY = 512;
@@ -40,28 +32,15 @@ namespace IFS_Thesis
 
             List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.311f, 0.0f, 0.2f, 0.312f, 0.0f, 0.0f, 0.1f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.3822f, 0.5f, 0.0f, 0.25f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.6f, 0.809f, 0.1f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.1f, 0.6f), new IfsFunction(0.1f, 0.1f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
 
-            //var points = new IfsDrawer().CreateIfsPointsMyVersion(fernMine, 1000000);
-
-            //Bitmap image = (Bitmap)Image.FromFile(imageReadPath, true);
-
-            ////Bitmap image2 = (Bitmap)Image.FromFile(image2ReadPath, true);
-
 
             var drawer = new IfsDrawer();
             drawer.SaveIfsImage(pentagonMine, 512, 512, imageSavePath);
 
-            //var imageParser = new ImageParser();
-            //var bytes = imageParser.GetMatchingPixels(imageSavePath, Color.Black);
-
             Bitmap image = (Bitmap)Image.FromFile(imageSavePath, true);
-
-            //var width = image.Width;
-
-            //var fitness = FitnessFunction.CalculateFitness(image, new Individual(pentagonMine), width);
 
             var ea = new EvolutionaryAlgorithm();
 
-            var highest = ea.Start(2000, image);
+            var highest = ea.Start(2000, image, drawer);
 
             drawer.SaveIfsImage(highest.Singels, 512, 512, imageSavePath2);
         }

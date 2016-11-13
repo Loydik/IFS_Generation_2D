@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData
@@ -15,12 +11,16 @@ namespace IFS_Thesis.EvolutionaryData
 
         public float ObjectiveFitness { get; set; }
 
-       // public float LinearRank { get; set; }
 
         public Individual(List<IfsFunction> singels)
         {
             Singels = singels;
             Degree = singels.Count;
+        }
+
+        public override string ToString()
+        {
+            return $"Degree - {Degree}, Fitness - {ObjectiveFitness}\n Singles:{string.Join(";", Singels)}";
         }
 
         //public static implicit operator List<Singel>(Individual x)

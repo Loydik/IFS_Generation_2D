@@ -10,6 +10,7 @@ namespace IFS_Thesis
 {
     public class IfsDrawer
     {
+
         public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
         {
             var pixels = GetIfsPixels(ifsMappings, imgx, imgy);

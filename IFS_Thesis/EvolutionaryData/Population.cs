@@ -13,11 +13,12 @@ namespace IFS_Thesis.EvolutionaryData
 
         public List<Individual> Individuals => GetAllIndividuals();
 
+        public int Count => Individuals.Count;
+
         public Population()
         {
             Species =  new List<Species>();
         }
-
 
         //for testing only
         public Population(List<Species> species)
@@ -85,6 +86,11 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Species.Add(newSpecies);
             }
+        }
+
+        public void RemoveSpecies(Species species)
+        {
+            Species.Remove(species);
         }
     }
 }

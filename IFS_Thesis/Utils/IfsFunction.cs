@@ -86,5 +86,10 @@ namespace IFS_Thesis.Utils
             return other != null && A.Equals(other.A) && B.Equals(other.B) && C.Equals(other.C) && D.Equals(other.D) &&
                    E.Equals(other.E) && F.Equals(other.F) && P.Equals(other.P);
         }
+
+        public override string ToString()
+        {
+            return $"[{A},{B},{C},{D},{E},{F},{P}]";
+        }
     }
 }

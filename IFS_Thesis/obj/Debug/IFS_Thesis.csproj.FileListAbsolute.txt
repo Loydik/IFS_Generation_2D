@@ -28,3 +28,5 @@ C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\ob
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\obj\Debug\IFS_Thesis.pdb
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\MoreLinq.dll
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\MoreLinq.xml
+C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\log4net.dll
+C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\log4net.xml

@@ -16,7 +16,7 @@ namespace IFS_Thesis_Tests.MutationStrategiesTests
     {
         private static readonly Random Random = new Random();
 
-        [Test, Category("VariableMutation"), Category("Manual")]
+        [Test, Category("VariableMutation"), Category("Manual"), Ignore("Manual")]
         public void ManualCoefficientsMutationStrategyTest()
         {
             var mutationStrategy = new CoefficientsMutationStrategy();

@@ -1,5 +1,5 @@
-﻿1. Read chapter in wiki about roulette-wheel selection and implement it porzadnie
-2. Settings file with all preferences
-3. Add logging
-4. Try multipoint crossover strategy
-5. Fuck, the coefficients are not limited to 0 and 1
+﻿1. Try multipoint crossover strategy
+2. Fuck, the coefficients are not limited to 0 and 1 - do something about it
+3. Cache of fitness, because it is not always predictable
+4. Debug the whole process
+5. Remove species step is currently ignored, need to rethink approach

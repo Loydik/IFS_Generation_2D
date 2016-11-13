@@ -4,12 +4,20 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using IFS_Thesis.Utils;
+using log4net;
+using log4net.Repository.Hierarchy;
 using Image = System.Drawing.Image;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private float GetAverageFitnessForDegree(List<Individual> individuals, int degree)
         {
             var average = individuals.Where(x => x.Degree == degree).Select(x => x.ObjectiveFitness).Average();
@@ -39,6 +47,8 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             vector = OtherUtils.NormalizeVector(vector);
+
+            Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
 
             return vector;
         }

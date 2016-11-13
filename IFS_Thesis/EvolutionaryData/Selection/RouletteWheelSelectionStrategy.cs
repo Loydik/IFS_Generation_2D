@@ -34,6 +34,13 @@ namespace IFS_Thesis.EvolutionaryData.Selection
             return null;
         }
 
+        private Species SelectNearestSpecies(Population population, int degree)
+        {
+            var closestSpecies= population.Species.Aggregate((x, y) => Math.Abs(x.DegreeOfIndividualsInSpecies - degree) < Math.Abs(y.DegreeOfIndividualsInSpecies - degree) ? x : y);
+
+            return closestSpecies;
+        }
+
         /// <summary>
         /// Private selection using Roulette Select
         /// </summary>
@@ -75,7 +82,18 @@ namespace IFS_Thesis.EvolutionaryData.Selection
                 {
                     var degree = i + 1;
 
-                    var selectedSpecies = population.Species.Single(x => x.DegreeOfIndividualsInSpecies.Equals(degree));
+                    Species selectedSpecies;
+
+                    //If the population with a given degree is empty, select the nearest one
+                    if (population.Species.All(x => x.DegreeOfIndividualsInSpecies != degree))
+                    {
+                        selectedSpecies = SelectNearestSpecies(population, degree);
+                    }
+                    else
+                    {
+                        selectedSpecies =
+                            population.Species.Single(x => x.DegreeOfIndividualsInSpecies.Equals(degree));
+                    }
 
                     return selectedSpecies;
                 }

@@ -25,7 +25,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int InitialPopulationSize {
             get {
                 return ((int)(this["InitialPopulationSize"]));
@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
         public int N2IndividualsCount {
             get {
                 return ((int)(this["N2IndividualsCount"]));
@@ -49,7 +49,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public int N3IndividualsCount {
             get {
                 return ((int)(this["N3IndividualsCount"]));
@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("70")]
         public int N4IndividualsCount {
             get {
                 return ((int)(this["N4IndividualsCount"]));
@@ -80,6 +80,42 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["MutationProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public float AverageFitnessThreshold {
+            get {
+                return ((float)(this["AverageFitnessThreshold"]));
+            }
+            set {
+                this["AverageFitnessThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int N1IndividualsCount {
+            get {
+                return ((int)(this["N1IndividualsCount"]));
+            }
+            set {
+                this["N1IndividualsCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:/Users/Loydik94/Desktop/IFS Images")]
+        public string WorkingDirectory {
+            get {
+                return ((string)(this["WorkingDirectory"]));
+            }
+            set {
+                this["WorkingDirectory"] = value;
             }
         }
     }

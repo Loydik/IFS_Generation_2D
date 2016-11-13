@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
@@ -29,7 +27,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             return singel;
         }
-
 
         public Individual CreateIndividual(List<float> probabilityVectors, List<Singel> poolOfSingels, Random randomGen)
         {
@@ -113,7 +110,7 @@ namespace IFS_Thesis.EvolutionaryData
             return generatedIndividuals;
         }
 
-        public Population GenerateNewPopulation(Population population, List<float> probabilityVectors,  float fitnessThreshold, Random randomGen)
+        public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
             SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
             RecombinationStrategy recombinationStrategy = new OnePointCrossoverStrategy();
@@ -121,9 +118,9 @@ namespace IFS_Thesis.EvolutionaryData
 
             var newPopulation = new Population();
 
+            // (Step 6.) Adding best individuals of each new degree 
             var degrees = OtherUtils.GetDegreesOfIndividuals(population.GetAllIndividuals());
 
-            //Adding best individuals of each new degree (Step 6.)
             foreach (var degree in degrees)
             {
                 var best = population.GetAllIndividuals().Where(x => x.Degree == degree).MaxBy(x => x.ObjectiveFitness);
@@ -132,17 +129,31 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             //Step 7
-            var selectedSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
-            var selectedIndividuals = selectionStrategy.SelectIndividuals(population.GetAllIndividuals().Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies)).ToList(), 2, randomGen);
-            
-            //one-point crossover for now
-            var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0], selectedIndividuals[1],
-                randomGen);
-            newPopulation.AddIndividuals(offspring);
+            var count = Properties.Settings.Default.N1IndividualsCount;
+
+            for (int i = 0; i <= count/2; i++)
+            {
+                var selectedSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+
+                if (selectedSpecies != null)
+                {
+                    var selectedIndividuals =
+                        selectionStrategy.SelectIndividuals(
+                            population.GetAllIndividuals()
+                                .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
+                                .ToList(), 2, randomGen);
+
+                    //one-point crossover for now
+                    var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
+                        selectedIndividuals[1],
+                        randomGen);
+                    newPopulation.AddIndividuals(offspring);
+                }
+            }
 
             //Step 8
-            var count = Properties.Settings.Default.N2IndividualsCount;
-            var generatedIndividuals = CreateIndividuals(100, count, probabilityVectors, randomGen);
+            count = Properties.Settings.Default.N2IndividualsCount;
+            var generatedIndividuals = CreateIndividuals(200, count, probabilityVectors, randomGen);
             newPopulation.AddIndividuals(generatedIndividuals);
 
             //Step 9
@@ -151,14 +162,22 @@ namespace IFS_Thesis.EvolutionaryData
             for (int i = 0; i <= count/2; i++)
             {
                 var firstSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
-                var secondSpecies = selectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
-                var firstIndividual = selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
-                var secondIndividual = selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
-                recombinationStrategy = new InterSpeciesCrossoverStrategy();
+                if (firstSpecies != null)
+                {
 
-                var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual, randomGen);
-                newPopulation.AddIndividuals(children);
+                    var secondSpecies = selectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
+                    var firstIndividual =
+                        selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+                    var secondIndividual =
+                        selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+
+                    recombinationStrategy = new InterSpeciesCrossoverStrategy();
+
+                    var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual, randomGen);
+                    newPopulation.AddIndividuals(children);
+                }
+
             }
 
 
@@ -171,8 +190,11 @@ namespace IFS_Thesis.EvolutionaryData
 
                 recombinationStrategy = new ReasortmentStrategy();
 
-                var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
-                newPopulation.AddIndividuals(children);
+                if (parents[0] != null && parents[1] != null)
+                {
+                    var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
+                    newPopulation.AddIndividuals(children);
+                }
             }
 
             //Step 11
@@ -183,9 +205,44 @@ namespace IFS_Thesis.EvolutionaryData
                 mutationStrategy.Mutate(ref currentIndividual, new CoefficientsMutationStrategy(), randomGen);
             }
             
-
-
             return newPopulation;
+        }
+
+        /// <summary>
+        /// Removes weakest species from a population if average fitness is below threshold, and no element has higher fitness
+        /// </summary>
+        public Population RemoveWeakestSpecies(Population population, float averageFitnessThreshold)
+        {
+            var weakestSpecies =
+                population.Species.Where(x => x.Individuals.Average(individual => individual.ObjectiveFitness) < averageFitnessThreshold && !x.Individuals.Any(f => f.ObjectiveFitness >= averageFitnessThreshold)).ToList();
+
+            foreach (var species in weakestSpecies)
+            {
+                population.RemoveSpecies(species);
+            }
+
+            return population;
+        }
+
+
+        /// <summary>
+        /// Removes weakest species from a population if its population is below %of total
+        /// </summary>
+        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, float percentThreshold)
+        {
+            var populationCount = population.Individuals.Count;
+
+            var threshold = (int)(populationCount*percentThreshold);
+
+            var smallSpecies =
+                population.Species.Where(x => x.Individuals.Count < threshold).ToList();
+
+            foreach (var species in smallSpecies)
+            {
+                population.RemoveSpecies(species);
+            }
+
+            return population;
         }
     }
 }

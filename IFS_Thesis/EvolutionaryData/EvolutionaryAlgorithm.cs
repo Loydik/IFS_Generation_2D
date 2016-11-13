@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows;
+using log4net;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class EvolutionaryAlgorithm
-    { 
+    {
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private List<Species> Species;
         private List<float> VD { get; set; }
-
         private Population _population;
 
-        private float _fitnessThreshold = 0.05f;
 
-        //private List<Singel> PoolOfSingels; 
-
-
-        public Individual Start(int maxGenerations, Bitmap sourceImage)
-        { 
+        public Individual Start(int maxGenerations, Bitmap sourceImage, IfsDrawer drawer)
+        {
             _population = new Population();
 
             var initialPopulationSize = Properties.Settings.Default.InitialPopulationSize;
@@ -34,46 +33,71 @@ namespace IFS_Thesis.EvolutionaryData
 
             _population.AddIndividuals(initialIndividuals);
 
-            Individual highestFitnessIndividual;
-
-            for (int i = 0; i < maxGenerations; i++)
-            {
-            
-            Console.WriteLine($"Starting evolving generation {i + 1}...");
-
             var allIndividuals = _population.GetAllIndividuals();
 
             allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
 
+            //Maybe remove this?
             var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
 
             allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
 
             _population.SetAllIndividuals(allIndividuals);
 
-            VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);          
+            Individual highestFitnessIndividual =
+                _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
-            _population = new GeneticOperators().GenerateNewPopulation(_population, VD, _fitnessThreshold, random);
+            for (int i = 0; i < maxGenerations; i++)
+            {
+                var currentGenerationNumber = i + 1;
 
-                //allIndividuals = _population.GetAllIndividuals();
+                Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                //allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
+                VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+
+                //Generating New Population (Steps 7 - 11)
+
+                _population = new GeneticOperators().GenerateNewPopulation(_population, VD, random);
+
+                allIndividuals = _population.GetAllIndividuals();
+
+                allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
+
+                badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
+
+                allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
+
+                _population.SetAllIndividuals(allIndividuals);
 
                 //Step 12
-                //VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+                VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+                
+                //Step 13
+                //_population = new GeneticOperators().RemoveWeakestSpecies(_population,
+                   // Properties.Settings.Default.AverageFitnessThreshold);
 
-                Console.WriteLine($"Finished evolving generation {i + 1}...");
+                //Step 14
+                //_population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, 0.05f);
 
-                highestFitnessIndividual = _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+                Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
-                new IfsDrawer().SaveIfsImage(highestFitnessIndividual.Singels, 512, 512, "C:/Users/Loydik94/Desktop/IFS Images/new/highest_fitness.png");
+                highestFitnessIndividual =
+                    _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+
+                Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
+                Log.Info($"Population size: {_population.Count}");
+
+                //every 50th generation, save the highest fit individual as image
+                if (currentGenerationNumber%50 == 0)
+                {
+                    if (highestFitnessIndividual != null)
+                    {
+                        drawer.SaveIfsImage(highestFitnessIndividual.Singels, 512, 512,
+                            Properties.Settings.Default.WorkingDirectory +
+                            $"/highest_fit_{currentGenerationNumber}_generation.png");
+                    }
+                }
             }
-
-            var resultingIndividuals = _population.GetAllIndividuals();
-
-            resultingIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(resultingIndividuals, sourceImage);
-
-            highestFitnessIndividual = resultingIndividuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
             return highestFitnessIndividual;
         }
