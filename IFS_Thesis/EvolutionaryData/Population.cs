@@ -92,5 +92,17 @@ namespace IFS_Thesis.EvolutionaryData
         {
             Species.Remove(species);
         }
+
+        public List<Singel> GetAllSingels()
+        {
+            List<Singel> singels = new List<Singel>();
+
+            foreach (var individual in Individuals)
+            {
+                singels.AddRange(individual.Singels.Select(singel => new Singel(singel)));
+            }
+
+            return singels;
+        }
     }
 }

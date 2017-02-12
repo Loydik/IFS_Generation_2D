@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using IFS_Thesis.Utils;
+using static System.Single;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
-namespace IFS_Thesis
+namespace IFS_Thesis.Utils
 {
     public class IfsDrawer
     {
 
         public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
         {
-            var pixels = GetIfsPixels(ifsMappings, imgx, imgy);
+            var data = GetIfsPixels(ifsMappings, imgx, imgy);
 
-            if(pixels.Count != 0)
-            { 
-            var bmp = CreateImageFromPixels(pixels);
-            bmp.Save(path, ImageFormat.Png);
-            bmp.Dispose();
+            var pixels = data.Item2;
+
+            if (pixels.Count != 0)
+            {
+                var bmp = CreateImageFromPixels(pixels);
+                bmp.Save(path, ImageFormat.Png);
+                bmp.Dispose();
             }
         }
 
-        public List<Point> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy, bool ignoreProbabilities = true)
+        public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy, bool ignoreProbabilities = true)
         {
             List<PointF> resultPoints = new List<PointF>();
 
@@ -34,8 +36,10 @@ namespace IFS_Thesis
             //we start at E and F
             var currentPoint = new PointF(ifsMappings[0].E, ifsMappings[0].F);
 
-            for (int k = 0; k < imgx*imgy; k++)
-            //for (int k = 0; k < 1000000000; k++)
+            var minIterations = 100;
+            var maxIterations = imgx * imgy * 8;
+
+            for (int k = 0; k < maxIterations; k++)
             {
                 var p = randomGen.NextDouble();
                 var psum = 0.0;
@@ -62,25 +66,21 @@ namespace IFS_Thesis
 
                 currentPoint = ApplyIFSTransformation(ifsMappings[i], currentPoint);
 
-                resultPoints.Add(currentPoint);
+                if (k > minIterations)
+                {
+                    resultPoints.Add(currentPoint);
+                }
             }
 
-            List<Point> pixels = new List<Point>();
-
-            try
-            {
-                pixels = ConvertPointsToPixels(resultPoints, imgx, imgy);
-            }
-            catch (OverflowException ex)
-            {
-                Console.WriteLine("Overflow");
-            }
-            
-            return pixels;
+            var result = ConvertPointsToPixels(resultPoints, imgx, imgy);
+                     
+            return result;
         }
 
-        private List<Point> ConvertPointsToPixels(List<PointF> points, int imgx, int imgy)
+        private Tuple<int, List<Point>> ConvertPointsToPixels(List<PointF> points, int imgx, int imgy)
         {
+            int redundantPixels = 0;
+
             List<Point> pixels =new List<Point>();
 
             var xMin = points.Min(x => x.X);
@@ -88,19 +88,51 @@ namespace IFS_Thesis
             var yMin = points.Min(x => x.Y);
             var yMax = points.Max(x => x.Y);
 
-            imgy = Convert.ToInt32(imgy * (yMax - yMin) / (xMax - xMin)); //auto-re-adjust the aspect ratio
+            if (IsInfinity(xMax) || IsInfinity(yMax) || IsInfinity(xMin) || IsInfinity(yMin) || IsNaN(xMax) || IsNaN(yMax) || IsNaN(xMin) || IsNaN(yMin))
+            {
+                redundantPixels = points.Count;
+                return new Tuple<int, List<Point>>(redundantPixels, new List<Point>());
+            }
+
+            try
+            {
+                //imgy = Convert.ToInt32(imgy * (yMax - yMin) / (xMax - xMin)); //auto-re-adjust the aspect ratio
+                Convert.ToInt32(imgy * (yMax - yMin) / (xMax - xMin));
+            }
+            catch (OverflowException e)
+            {
+                //If we cannot even adjust aspect ratio, all pixels are redundant
+                redundantPixels = points.Count;
+                return new Tuple<int, List<Point>>(redundantPixels, new List<Point>());
+            }
 
             foreach (var point in points)
             {
-                var jx = Convert.ToInt32((point.X - xMin) / (xMax - xMin) * (imgx - 1));
-                var jy = imgy - 1 - Convert.ToInt32((point.Y - yMin) / (yMax - yMin) * (imgy - 1));
+                try
+                {
+                    var jx = Convert.ToInt32((point.X - xMin) / (xMax - xMin) * (imgx - 1));
+                    var jy = imgy - 1 - Convert.ToInt32((point.Y - yMin) / (yMax - yMin) * (imgy - 1));
 
-                pixels.Add(new Point(jx, jy));
+                    if (jx < 0 || jx > imgx || jy < 0 || jy > imgy)
+                    {
+                        redundantPixels++;
+                    }
+                    else
+                    {
+                        pixels.Add(new Point(jx, jy));
+                    }
+                    
+                }
+                catch (OverflowException e)
+                {
+                    redundantPixels++;
+                }
+                
             }
 
             pixels = pixels.Distinct().ToList();
 
-            return pixels;
+            return new Tuple<int, List<Point>>(redundantPixels, pixels);
         }
 
         public Bitmap CreateImageFromPixels(List<Point> pixels)
@@ -125,31 +157,6 @@ namespace IFS_Thesis
             return bitmapImage;
 
         }
-
-        //public PointF[] CreateIfsPointsMyVersion(List<IfsFunction> ifsMappings, int numberOfIterations)
-        //{
-        //    List<PointF> resultPoints = new List<PointF>();
-
-        //    var numberOfFunctions = ifsMappings.Count;
-
-        //    var q0 = new PointF(10, 10);
-
-        //    for (int i = 0; i < numberOfIterations; i++)
-        //    {
-        //        var r = new Random().Next(1, numberOfFunctions);
-
-        //        var q = ApplyIFSTransformation(ifsMappings[r], q0);
-
-        //        q0 = q;
-
-        //        resultPoints.Add(q0);
-
-        //    }
-
-        //    var result = resultPoints.Distinct().ToList();
-
-        //    return result.ToArray();
-        //}
 
         private PointF ApplyIFSTransformation(IfsFunction currentFunction, PointF currentPoint)
         {

@@ -70,12 +70,16 @@ namespace IFS_Thesis.EvolutionaryData
 
         public static float CalculateFitness(Bitmap sourceImage, Individual individual, int width /*int height*/)
         {
+            //TODO Calculate for 1 time only
             var originalPixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
             //new IfsDrawer().CreateImageFromPixels(originalPixels).Save(@"C:/Users/Loydik94/Desktop/originalPixels.png");
 
-            var generatedPixels = new IfsDrawer().GetIfsPixels(individual.Singels, width,
-               width);
+            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
+                width);
+
+            var redundantPixels = result.Item1;
+            var generatedPixels = result.Item2;
 
             //new IfsDrawer().CreateImageFromPixels(generatedPixels).Save(@"C:/Users/Loydik94/Desktop/generatedPixels.png");
 
@@ -83,11 +87,16 @@ namespace IFS_Thesis.EvolutionaryData
 
             //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save(@"C:/Users/Loydik94/Desktop/matchingPixels.png");
 
-            var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
+            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
 
             //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save(@"C:/Users/Loydik94/Desktop/pixelsDrawnOutsidePixels.png");
 
             //Stupid formula
+
+            if (generatedPixels.Count == 0)
+            {
+                return 0;
+            }
 
             var NA = generatedPixels.Count;
 
@@ -98,6 +107,8 @@ namespace IFS_Thesis.EvolutionaryData
 
             //NNN
             var PointsNotNeeded = generatedPixels.Except(matchingPixels).Count();
+
+            PointsNotNeeded = PointsNotNeeded + redundantPixels;
 
             float RC = NotDrawnPoints/(float)NI;
 

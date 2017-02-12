@@ -24,7 +24,7 @@
       <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="WorkingDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:/Users/Loydik94/Desktop/IFS Images</Value>
+      <Value Profile="(Default)">C:/Users/Loydik/Desktop/IFS Images</Value>
     </Setting>
   </Settings>
 </SettingsFile>

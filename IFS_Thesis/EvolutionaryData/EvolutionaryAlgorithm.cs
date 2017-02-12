@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using IFS_Thesis.Utils;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData
@@ -38,9 +39,9 @@ namespace IFS_Thesis.EvolutionaryData
             allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
 
             //Maybe remove this?
-            var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
+           // var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
 
-            allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
+            //allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
 
             _population.SetAllIndividuals(allIndividuals);
 
@@ -63,9 +64,9 @@ namespace IFS_Thesis.EvolutionaryData
 
                 allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
 
-                badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
+                //badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
 
-                allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
+                //allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
 
                 _population.SetAllIndividuals(allIndividuals);
 
@@ -87,8 +88,8 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
                 Log.Info($"Population size: {_population.Count}");
 
-                //every 50th generation, save the highest fit individual as image
-                if (currentGenerationNumber%50 == 0)
+                //every 20th generation, save the highest fit individual as image
+                if (currentGenerationNumber%20 == 0)
                 {
                     if (highestFitnessIndividual != null)
                     {

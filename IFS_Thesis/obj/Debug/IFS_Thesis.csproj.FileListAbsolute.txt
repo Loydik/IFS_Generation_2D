@@ -30,3 +30,21 @@ C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bi
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\MoreLinq.xml
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\log4net.dll
 C:\Users\Loydik94\Documents\Visual Studio 2015\Projects\IFS_Thesis\IFS_Thesis\bin\Debug\log4net.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\IFS_Thesis.exe.config
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\IFS_Thesis.exe
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\IFS_Thesis.pdb
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.Imaging.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.Math.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\log4net.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\MoreLinq.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\OxyPlot.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\OxyPlot.Extensions.dll
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.Imaging.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\AForge.Math.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\log4net.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\MoreLinq.xml
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\obj\Debug\IFS_Thesis.csprojResolveAssemblyReference.cache
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\obj\Debug\IFS_Thesis.exe
+C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\obj\Debug\IFS_Thesis.pdb

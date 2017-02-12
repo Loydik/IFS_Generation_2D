@@ -110,6 +110,20 @@ namespace IFS_Thesis.EvolutionaryData
             return generatedIndividuals;
         }
 
+        public List<Individual> CreateIndividualsFromExistingPoolOfSingels(List<Singel> poolOfSingels, int populationSize, List<float> probablityVectors, Random randomGen)
+        {
+            var generatedIndividuals = new List<Individual>();
+
+            for (int i = 0; i < populationSize; i++)
+            {
+                var individual = new GeneticOperators().CreateIndividual(probablityVectors, poolOfSingels, randomGen);
+
+                generatedIndividuals.Add(individual);
+            }
+
+            return generatedIndividuals;
+        }
+
         public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
             SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
@@ -153,7 +167,8 @@ namespace IFS_Thesis.EvolutionaryData
 
             //Step 8
             count = Properties.Settings.Default.N2IndividualsCount;
-            var generatedIndividuals = CreateIndividuals(200, count, probabilityVectors, randomGen);
+            var allSingles = population.GetAllSingels();
+            var generatedIndividuals = CreateIndividualsFromExistingPoolOfSingels(allSingles, count, probabilityVectors, randomGen);
             newPopulation.AddIndividuals(generatedIndividuals);
 
             //Step 9

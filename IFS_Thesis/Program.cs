@@ -30,7 +30,7 @@ namespace IFS_Thesis
 
             List<IfsFunction> pentagonMine = new List<IfsFunction> { new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
 
-            List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.311f, 0.0f, 0.2f, 0.312f, 0.0f, 0.0f, 0.1f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.3822f, 0.5f, 0.0f, 0.25f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.6f, 0.809f, 0.1f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.1f, 0.6f), new IfsFunction(0.1f, 0.1f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
+            List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.582f, 2.0f, 0.0f, 0.382f, 0.0f, 1.0f, 0.2f), new IfsFunction(1.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(0.382f, 1.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -0.191f, 0.288f, 0.2f) };
 
 
             var drawer = new IfsDrawer();
