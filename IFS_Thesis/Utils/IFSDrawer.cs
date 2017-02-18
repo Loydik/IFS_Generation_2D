@@ -11,6 +11,9 @@ namespace IFS_Thesis.Utils
     public class IfsDrawer
     {
 
+        /// <summary>
+        /// Generates an image from given IFS mappings and saves it 
+        /// </summary>
         public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
         {
             var data = GetIfsPixels(ifsMappings, imgx, imgy);
@@ -25,6 +28,9 @@ namespace IFS_Thesis.Utils
             }
         }
 
+        /// <summary>
+        /// Gets generated IFS pixels based on given IFS functions
+        /// </summary>
         public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy, bool ignoreProbabilities = true)
         {
             List<PointF> resultPoints = new List<PointF>();

@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.Utils;
+using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
 {
     public class StandardMutationRateStrategy : IndividualMutationStrategy
     {
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Mutates an Individual using real-valued mutation
         /// </summary>
@@ -47,10 +54,6 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
             }
 
             individual.Singels = newSingels;
-
-            //mutatedIndividual.Singels = individualSingels;
-
-            //individual = mutatedIndividual;
         }
     }
 

@@ -1,23 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using IFS_Thesis.Utils;
 using log4net;
 using log4net.Repository.Hierarchy;
-using Image = System.Drawing.Image;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class FitnessFunction
     {
+        #region Logger
+
         /// <summary>
         /// Logger
         /// </summary>
         private static readonly ILog Log =
-            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Calculates average fitness for a given degree
+        /// </summary>
         private float GetAverageFitnessForDegree(List<Individual> individuals, int degree)
         {
             var average = individuals.Where(x => x.Degree == degree).Select(x => x.ObjectiveFitness).Average();
@@ -25,8 +33,53 @@ namespace IFS_Thesis.EvolutionaryData
             return average;
         }
 
+        private float CalculateFitness(List<Point> sourceImagePixels, Individual individual, int width, int height)
+        {
+            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
+                height);
+
+            var redundantPixels = result.Item1;
+            var generatedPixels = result.Item2;
+
+            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
+
+            if (generatedPixels.Count == 0)
+            {
+                //Log.Debug($"Calculated fitness for individual. Fitness - {0}");
+                return 0;
+            }
+
+            //NA
+            var na = generatedPixels.Count;
+
+            //NI
+            var ni = sourceImagePixels.Count;
+
+            //NND
+            var notDrawnPoints = sourceImagePixels.Except(generatedPixels).Count();
+
+            //NNN
+            var pointsNotNeeded = generatedPixels.Except(matchingPixels).Count();
+
+            pointsNotNeeded = pointsNotNeeded + redundantPixels;
+
+            var rc = notDrawnPoints / (float)ni;
+
+            var ro = pointsNotNeeded / (float)na;
+
+            var fitness = (1 - rc) + (1 - ro);
+
+            //Log.Debug($"Calculated fitness for individual. Fitness - {fitness}");
+
+            return fitness;
+        }
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
-        /// ToDO - test/ Needs rework
+        /// TODO - test/ Needs rework
         /// </summary>
         public List<float> UpdateVectorOfProbabilitiesBasedOnFitness(List<Individual> individuals, List<float> vector )
         {
@@ -53,102 +106,25 @@ namespace IFS_Thesis.EvolutionaryData
             return vector;
         }
 
-
-
-        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, Bitmap sourceImage)
+        /// <summary>
+        /// Calculates fintess for given individuals using source Image pixels
+        /// </summary>
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, List<Point> sourceImagePixels, int imageWidth, int imageHeight)
         {
+            Log.Debug("Started calculating fitness for all individuals");
 
-            foreach (var individual in individuals)
+            Parallel.ForEach(individuals, individual =>
             {
-                float fitness = CalculateFitness(sourceImage, individual, sourceImage.Width);
+                individual.ObjectiveFitness = CalculateFitness(sourceImagePixels, individual, imageWidth, imageHeight);
 
-                individual.ObjectiveFitness = fitness;
-            }
+            });
+
+            Log.Debug("Ended calculating fitness for all individuals");
 
             return individuals;
         }
 
-        public static float CalculateFitness(Bitmap sourceImage, Individual individual, int width /*int height*/)
-        {
-            //TODO Calculate for 1 time only
-            var originalPixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
-
-            //new IfsDrawer().CreateImageFromPixels(originalPixels).Save(@"C:/Users/Loydik94/Desktop/originalPixels.png");
-
-            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
-                width);
-
-            var redundantPixels = result.Item1;
-            var generatedPixels = result.Item2;
-
-            //new IfsDrawer().CreateImageFromPixels(generatedPixels).Save(@"C:/Users/Loydik94/Desktop/generatedPixels.png");
-
-            var matchingPixels = generatedPixels.Intersect(originalPixels).ToList();
-
-            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save(@"C:/Users/Loydik94/Desktop/matchingPixels.png");
-
-            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
-
-            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save(@"C:/Users/Loydik94/Desktop/pixelsDrawnOutsidePixels.png");
-
-            //Stupid formula
-
-            if (generatedPixels.Count == 0)
-            {
-                return 0;
-            }
-
-            var NA = generatedPixels.Count;
-
-            var NI = originalPixels.Count;
-
-            //NND
-            var NotDrawnPoints = originalPixels.Except(generatedPixels).Count();
-
-            //NNN
-            var PointsNotNeeded = generatedPixels.Except(matchingPixels).Count();
-
-            PointsNotNeeded = PointsNotNeeded + redundantPixels;
-
-            float RC = NotDrawnPoints/(float)NI;
-
-            float RO = PointsNotNeeded/(float)NA;
-
-            float fitness = (1 - RC) + (1 - RO);
-
-            return fitness;
-        }
-
-        /// <summary>
-        /// Resize the image to the specified width and height.
-        /// </summary>
-        /// <param name="image">The image to resize.</param>
-        /// <param name="width">The width to resize to.</param>
-        /// <param name="height">The height to resize to.</param>
-        /// <returns>The resized image.</returns>
-        public static Bitmap ResizeImage(Image image, int width, int height)
-        {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-
-            return destImage;
-        }
+        #endregion
+        
     }
 }

@@ -9,6 +9,21 @@ namespace IFS_Thesis.Utils
 {
     public class OtherUtils
     {
+        /// <summary>
+        /// Determines whether probability happened
+        /// </summary>
+        public static bool DeterminePercentProbability(Random random, float probability)
+        {
+            var randomResult = random.NextDouble();
+
+            if (randomResult < probability)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static List<float> NormalizeVector(List<float> vector)
         {
             //sum of all elements in the vector

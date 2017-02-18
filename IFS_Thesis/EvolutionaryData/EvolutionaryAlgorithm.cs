@@ -15,10 +15,20 @@ namespace IFS_Thesis.EvolutionaryData
         private static readonly ILog Log =
             log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private List<float> VD { get; set; }
+        /// <summary>
+        /// List of Probability Vectors
+        /// </summary>
+        private List<float> ProbabilityVectors { get; set; }
+
+        /// <summary>
+        /// The current Population
+        /// </summary>
         private Population _population;
 
 
+        /// <summary>
+        /// Start the Evolution Process
+        /// </summary>
         public Individual Start(int maxGenerations, Bitmap sourceImage, IfsDrawer drawer)
         {
             _population = new Population();
@@ -26,22 +36,19 @@ namespace IFS_Thesis.EvolutionaryData
             var initialPopulationSize = Properties.Settings.Default.InitialPopulationSize;
 
             //8 max
-            VD = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
+            ProbabilityVectors = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
 
             var random = new Random();
 
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, initialPopulationSize, VD, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, initialPopulationSize, ProbabilityVectors, random);
 
             _population.AddIndividuals(initialIndividuals);
 
             var allIndividuals = _population.GetAllIndividuals();
 
-            allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
+            var sourceImagePixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
-            //Maybe remove this?
-           // var badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
-
-            //allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
+            allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
             _population.SetAllIndividuals(allIndividuals);
 
@@ -54,31 +61,29 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+                ProbabilityVectors = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, ProbabilityVectors);
 
                 //Generating New Population (Steps 7 - 11)
 
-                _population = new GeneticOperators().GenerateNewPopulation(_population, VD, random);
+                _population = new GeneticOperators().GenerateNewPopulation(_population, ProbabilityVectors, random);
 
                 allIndividuals = _population.GetAllIndividuals();
 
-                allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImage);
-
-                //badIndividuals = allIndividuals.Where(x => float.IsNaN(x.ObjectiveFitness)).ToList();
-
-                //allIndividuals.RemoveAll(x => badIndividuals.Contains(x));
+                allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
                 _population.SetAllIndividuals(allIndividuals);
 
                 //Step 12
-                VD = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, VD);
+                ProbabilityVectors = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnFitness(allIndividuals, ProbabilityVectors);
                 
                 //Step 13
-                //_population = new GeneticOperators().RemoveWeakestSpecies(_population,
-                   // Properties.Settings.Default.AverageFitnessThreshold);
+                _population = new GeneticOperators().RemoveWeakestSpecies(_population,
+                    Properties.Settings.Default.AverageFitnessThreshold);
 
                 //Step 14
-                //_population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, 0.05f);
+
+                var totalPopulationCount = _population.Count;
+                _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.05f);
 
                 Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 

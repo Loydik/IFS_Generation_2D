@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using Image = System.Drawing.Image;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -11,14 +12,19 @@ namespace IFS_Thesis
     {
         static void Main(string[] args)
         {
-            var imageSavePath = Properties.Settings.Default.WorkingDirectory + "/fern.png";
-            var imageSavePath2 = Properties.Settings.Default.WorkingDirectory + @"/highest_fitness_final.png";
+            #region Image Parameters
 
-            int sizeX = 512;
-            int sizeY = 512;
+            var imageSavePath = Settings.Default.WorkingDirectory + "/fern.png";
+            var imageSavePath2 = Settings.Default.WorkingDirectory + @"/highest_fitness_final.png";
+
+            int imageSizeX = 512;
+            int imageSizeY = 512;
+
+            #endregion
+
+            #region IFS Definitions
 
             List<double[]> fern = new List<double[]> {new[] { 0.1, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01 }, new[] { 0.85, 0.04, -0.04, 0.85, 0.0, 1.6, 0.85 }, new[] { 0.2, -0.26, 0.23, 0.22, 0.0, 1.6, 0.07 }, new[] { -0.15, 0.29, 0.25, 0.24, 0.0, 0.41, 0.07 }};
-
 
             List<double[]> fernTemp = new List<double[]> { new[] { 0.1, 0.0, 0.0, 0.16, 0.0, 0.0, 0.25 }, new[] { 0.85, 0.04, -0.04, 0.85, 0.0, 1.6, 0.25 }, new[] { 0.2, -0.26, 0.23, 0.22, 0.0, 1.6, 0.25 }, new[] { -0.15, 0.29, 0.25, 0.24, 0.0, 0.41, 0.25 } };
 
@@ -33,16 +39,18 @@ namespace IFS_Thesis
             List<IfsFunction> pentagonMine2 = new List<IfsFunction> { new IfsFunction(0.582f, 2.0f, 0.0f, 0.382f, 0.0f, 1.0f, 0.2f), new IfsFunction(1.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(0.382f, 1.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -0.191f, 0.288f, 0.2f) };
 
 
+            #endregion
+
             var drawer = new IfsDrawer();
-            drawer.SaveIfsImage(pentagonMine, 512, 512, imageSavePath);
+            drawer.SaveIfsImage(pentagonMine, imageSizeX, imageSizeY, imageSavePath);
 
             Bitmap image = (Bitmap)Image.FromFile(imageSavePath, true);
 
             var ea = new EvolutionaryAlgorithm();
 
-            var highest = ea.Start(2000, image, drawer);
+            var highest = ea.Start(Settings.Default.NumberOfGenerations, image, drawer);
 
-            drawer.SaveIfsImage(highest.Singels, 512, 512, imageSavePath2);
+            drawer.SaveIfsImage(highest.Singels, imageSizeX, imageSizeY, imageSavePath2);
         }
     }
 }

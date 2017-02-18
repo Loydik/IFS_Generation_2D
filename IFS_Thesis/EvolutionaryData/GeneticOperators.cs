@@ -5,13 +5,21 @@ using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
+using log4net;
 using MoreLinq;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class GeneticOperators
     {
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public Singel CreateRandomSingel(Random random)
         {
             var a = GetRandomCoefficient(random);
@@ -124,6 +132,9 @@ namespace IFS_Thesis.EvolutionaryData
             return generatedIndividuals;
         }
 
+        /// <summary>
+        /// Generates new population
+        /// </summary>
         public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
             SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
@@ -139,7 +150,8 @@ namespace IFS_Thesis.EvolutionaryData
             {
                 var best = population.GetAllIndividuals().Where(x => x.Degree == degree).MaxBy(x => x.ObjectiveFitness);
                 newPopulation.AddIndividual(best);
-                population.RemoveIndividual(best);
+                //leave individual??
+                //population.RemoveIndividual(best);
             }
 
             //Step 7
@@ -172,7 +184,7 @@ namespace IFS_Thesis.EvolutionaryData
             newPopulation.AddIndividuals(generatedIndividuals);
 
             //Step 9
-            count = Properties.Settings.Default.N3IndividualsCount;
+            count = Settings.Default.N3IndividualsCount;
 
             for (int i = 0; i <= count/2; i++)
             {
@@ -180,17 +192,21 @@ namespace IFS_Thesis.EvolutionaryData
 
                 if (firstSpecies != null)
                 {
-
                     var secondSpecies = selectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
-                    var firstIndividual =
-                        selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
-                    var secondIndividual =
-                        selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
-                    recombinationStrategy = new InterSpeciesCrossoverStrategy();
+                    if (secondSpecies != null)
+                    {
+                        var firstIndividual =
+                            selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+                        var secondIndividual =
+                            selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
-                    var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual, randomGen);
-                    newPopulation.AddIndividuals(children);
+                        recombinationStrategy = new InterSpeciesCrossoverStrategy();
+
+                        var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
+                            randomGen);
+                        newPopulation.AddIndividuals(children);
+                    }
                 }
 
             }
@@ -215,9 +231,13 @@ namespace IFS_Thesis.EvolutionaryData
             //Step 11
             foreach (Individual individual in newPopulation.Individuals)
             {
-                var currentIndividual = individual;
+                //Mutates individual with frequency of defined probability
+                if (OtherUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
+                {
+                    var currentIndividual = individual;
 
-                mutationStrategy.Mutate(ref currentIndividual, new CoefficientsMutationStrategy(), randomGen);
+                    mutationStrategy.Mutate(ref currentIndividual, new CoefficientsMutationStrategy(), randomGen);
+                }
             }
             
             return newPopulation;
@@ -234,6 +254,7 @@ namespace IFS_Thesis.EvolutionaryData
             foreach (var species in weakestSpecies)
             {
                 population.RemoveSpecies(species);
+                Log.Info($"Removed species with degree {species.DegreeOfIndividualsInSpecies} because average fitness was below threshold. Average Fitness: {species.Individuals.Average(individual => individual.ObjectiveFitness)}");
             }
 
             return population;
@@ -243,11 +264,9 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Removes weakest species from a population if its population is below %of total
         /// </summary>
-        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, float percentThreshold)
+        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, int totalPopulationCount, float percentThreshold)
         {
-            var populationCount = population.Individuals.Count;
-
-            var threshold = (int)(populationCount*percentThreshold);
+            var threshold = (int)(totalPopulationCount * percentThreshold);
 
             var smallSpecies =
                 population.Species.Where(x => x.Individuals.Count < threshold).ToList();
@@ -255,6 +274,7 @@ namespace IFS_Thesis.EvolutionaryData
             foreach (var species in smallSpecies)
             {
                 population.RemoveSpecies(species);
+                Log.Info($"Removed species with degree: {species.DegreeOfIndividualsInSpecies} due to their population count below 5% total");
             }
 
             return population;

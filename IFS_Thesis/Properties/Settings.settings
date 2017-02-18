@@ -15,7 +15,7 @@
       <Value Profile="(Default)">70</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
+      <Value Profile="(Default)">0.2</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.01</Value>
@@ -25,6 +25,9 @@
     </Setting>
     <Setting Name="WorkingDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:/Users/Loydik/Desktop/IFS Images</Value>
+    </Setting>
+    <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

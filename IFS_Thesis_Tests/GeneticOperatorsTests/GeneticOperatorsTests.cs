@@ -143,7 +143,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
 
             var smallSpecies = testPopulation.Species.Where(x => x.Individuals.Count < 5).ToList();
 
-            testPopulation = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(testPopulation, 0.05f);
+            testPopulation = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(testPopulation, populationSize, 0.05f);
           
             Assert.That(testPopulation.Species, !Does.Contain(smallSpecies));
         }

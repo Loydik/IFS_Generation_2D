@@ -73,7 +73,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
         public float MutationProbability {
             get {
                 return ((float)(this["MutationProbability"]));
@@ -116,6 +116,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["WorkingDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        public int NumberOfGenerations {
+            get {
+                return ((int)(this["NumberOfGenerations"]));
+            }
+            set {
+                this["NumberOfGenerations"] = value;
             }
         }
     }

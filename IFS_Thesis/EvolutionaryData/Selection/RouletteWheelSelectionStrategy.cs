@@ -117,11 +117,15 @@ namespace IFS_Thesis.EvolutionaryData.Selection
                         x.DegreeOfIndividualsInSpecies <= firstSpeciesDegree + maximumDistance &&
                         x.DegreeOfIndividualsInSpecies > firstSpeciesDegree).ToList();
 
-            var randomIndex = randomGen.Next(0, possibleMatches.Count - 1);
+            if (possibleMatches.Count != 0)
+            {
+                var randomIndex = randomGen.Next(0, possibleMatches.Count - 1);
+                var secondSpecies = possibleMatches[randomIndex];
 
-            var secondSpecies = possibleMatches[randomIndex];
+                return secondSpecies;
+            }
 
-            return secondSpecies;
+            return null;
         }
     }
 }

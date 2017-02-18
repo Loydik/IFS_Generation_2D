@@ -93,6 +93,9 @@ namespace IFS_Thesis.EvolutionaryData
             Species.Remove(species);
         }
 
+        /// <summary>
+        /// Gets all singles in population (gene pool)
+        /// </summary>
         public List<Singel> GetAllSingels()
         {
             List<Singel> singels = new List<Singel>();
