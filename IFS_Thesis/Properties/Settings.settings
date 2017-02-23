@@ -6,13 +6,13 @@
       <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="N2IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">60</Value>
+      <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="N3IndividualsCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="N4IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">70</Value>
+      <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.2</Value>
@@ -27,7 +27,13 @@
       <Value Profile="(Default)">C:/Users/Loydik/Desktop/IFS Images</Value>
     </Setting>
     <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2000</Value>
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="PrcFitness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

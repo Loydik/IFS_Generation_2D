@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int N2IndividualsCount {
             get {
                 return ((int)(this["N2IndividualsCount"]));
@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("70")]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
         public int N4IndividualsCount {
             get {
                 return ((int)(this["N4IndividualsCount"]));
@@ -121,13 +121,37 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
         public int NumberOfGenerations {
             get {
                 return ((int)(this["NumberOfGenerations"]));
             }
             set {
                 this["NumberOfGenerations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int PrcFitness {
+            get {
+                return ((int)(this["PrcFitness"]));
+            }
+            set {
+                this["PrcFitness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int ProFitness {
+            get {
+                return ((int)(this["ProFitness"]));
+            }
+            set {
+                this["ProFitness"] = value;
             }
         }
     }

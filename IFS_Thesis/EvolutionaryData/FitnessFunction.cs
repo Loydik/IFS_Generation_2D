@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
 using log4net.Repository.Hierarchy;
@@ -67,7 +69,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             var ro = pointsNotNeeded / (float)na;
 
-            var fitness = (1 - rc) + (1 - ro);
+            var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
 
             //Log.Debug($"Calculated fitness for individual. Fitness - {fitness}");
 
@@ -101,6 +103,46 @@ namespace IFS_Thesis.EvolutionaryData
 
             vector = OtherUtils.NormalizeVector(vector);
 
+            Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
+
+            return vector;
+        }
+
+        /// <summary>
+        /// Adapts the vector of probability distribution V D proportionally to the fitness value
+        ///of the best individual of each degree.
+        /// </summary>
+        public List<float> UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(List<Individual> individuals, List<float> vector)
+        {
+            Dictionary<int, float> bestFitnessesPerDegree = new Dictionary<int, float>();
+
+            var degrees = OtherUtils.GetDegreesOfIndividuals(individuals);
+            
+            degrees.Sort();
+
+            foreach (var degree in degrees)
+            {
+                var bestFitnessForDegree = individuals.Where(x => x.Degree == degree).Max(x => x.ObjectiveFitness);
+
+                vector[degree - 1] = vector[degree - 1] + bestFitnessForDegree;
+
+                bestFitnessesPerDegree.Add(degree, bestFitnessForDegree);
+            }
+
+            vector = OtherUtils.NormalizeVector(vector);
+
+            for (var index = 0; index < vector.Count; index++)
+            {
+                var probability = vector[index];
+                
+                //Setting to zero
+                if (Math.Abs(probability) > 0.00000001 && probability < 0.00000001)
+                {
+                    vector[index] = 0;
+                }
+            }
+
+            Log.Info($"Best fitnesses for degrees: [{string.Join(";", bestFitnessesPerDegree)}]");
             Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
 
             return vector;
