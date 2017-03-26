@@ -20,6 +20,37 @@ namespace IFS_Thesis.EvolutionaryData
         private static readonly ILog Log =
             log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        #region Private Methods
+
+        /// <summary>
+        /// Gets Random coefficient for IFS function
+        /// </summary>
+        private float GetRandomCoefficient(Random random)
+        {
+            var value = random.NextDouble();
+
+            var coefficient = (float)Math.Round(value, 4);
+
+            return coefficient;
+        }
+
+        /// <summary>
+        /// Gets Recombination strategy (either one-point crossover or arithmetic crossover) based on probabilities
+        /// </summary>
+        private RecombinationStrategy GetRecombinationStrategy(float onePointCrossoverProbability, Random randomGen)
+        {
+            var result = randomGen.NextDouble();
+
+            if (result <= onePointCrossoverProbability)
+            {
+                return new OnePointCrossoverStrategy();
+            }
+
+            return new ArithmeticCrossoverStrategy();
+        }
+
+        #endregion
+
         public Singel CreateRandomSingel(Random random)
         {
             var a = GetRandomCoefficient(random);
@@ -50,19 +81,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             return individual;
         }
-
-        private float GetRandomCoefficient(Random random)
-        {
-            //var randomGen = new Random();
-
-            var value = random.NextDouble();
-
-            float coefficient = (float) Math.Round(value, 3);
-
-            return coefficient;
-
-        }
-
+     
         /// <summary>
         /// This function calculates cumulative probability and returns an index of the vector
         /// </summary>
@@ -155,11 +174,16 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             //Step 7
-            var count = Properties.Settings.Default.N1IndividualsCount;
+            var count = Settings.Default.N1IndividualsCount;
 
             for (int i = 0; i <= count/2; i++)
             {
+                //Selecting Species
                 var selectedSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+
+                //selecting recombination strategy
+                recombinationStrategy = GetRecombinationStrategy(Settings.Default.OnePointCrossoverProbability,
+                    randomGen);
 
                 if (selectedSpecies != null)
                 {
@@ -169,11 +193,16 @@ namespace IFS_Thesis.EvolutionaryData
                                 .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
                                 .ToList(), 2, randomGen);
 
-                    //one-point crossover for now
                     var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
                         selectedIndividuals[1],
                         randomGen);
                     newPopulation.AddIndividuals(offspring);
+
+                    Log.Debug($"Generated 2 individuals using {recombinationStrategy.GetType()}");
+                }
+                else
+                {
+                    Log.Warn($"There was a problem with selecting species (Step 7). Population count - {population.Count}. \n Probability vectors - {probabilityVectors}");
                 }
             }
 

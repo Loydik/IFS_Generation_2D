@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IFS_Thesis.EvolutionaryData;
 
 namespace IFS_Thesis.Utils

@@ -4,6 +4,8 @@ namespace IFS_Thesis.Utils
 {
     public class IfsFunction : IEquatable<IfsFunction>
     {
+        #region Properties
+
         public float A { get; set; }
         public float B { get; set; }
         public float C { get; set; }
@@ -30,6 +32,26 @@ namespace IFS_Thesis.Utils
             }
         }
 
+        #endregion
+
+        #region Construction
+
+        /// <summary>
+        /// Create IFS Function without probabilities
+        /// </summary>
+        public IfsFunction(float a, float b, float c, float d, float e, float f)
+        {
+            A = a;
+            B = b;
+            C = c;
+            D = d;
+            E = e;
+            F = f;
+        }
+
+        /// <summary>
+        /// Create IFS Function with probabilities
+        /// </summary>
         public IfsFunction(float a, float b, float c, float d, float e, float f, float p)
         {
             A = a;
@@ -41,10 +63,17 @@ namespace IFS_Thesis.Utils
             P = p;
         }
 
+        /// <summary>
+        /// Create IFS Function from array of coefficients
+        /// </summary>
         public IfsFunction(float[] coefficients)
         {
             Coefficients = coefficients;
         }
+
+        #endregion
+
+        #region Overriding Members
 
         /// <summary>
         /// Overriding GetHashCode
@@ -91,5 +120,7 @@ namespace IFS_Thesis.Utils
         {
             return $"[{A},{B},{C},{D},{E},{F},{P}]";
         }
+
+        #endregion
     }
 }

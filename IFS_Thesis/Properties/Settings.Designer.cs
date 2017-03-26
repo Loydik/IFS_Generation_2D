@@ -154,5 +154,41 @@ namespace IFS_Thesis.Properties {
                 this["ProFitness"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int DrawPointsMultiplier {
+            get {
+                return ((int)(this["DrawPointsMultiplier"]));
+            }
+            set {
+                this["DrawPointsMultiplier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public float ArithmeticCrossoverProbability {
+            get {
+                return ((float)(this["ArithmeticCrossoverProbability"]));
+            }
+            set {
+                this["ArithmeticCrossoverProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public float OnePointCrossoverProbability {
+            get {
+                return ((float)(this["OnePointCrossoverProbability"]));
+            }
+            set {
+                this["OnePointCrossoverProbability"] = value;
+            }
+        }
     }
 }

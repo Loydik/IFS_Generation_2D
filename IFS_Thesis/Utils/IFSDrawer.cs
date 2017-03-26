@@ -43,7 +43,7 @@ namespace IFS_Thesis.Utils
             var currentPoint = new PointF(ifsMappings[0].E, ifsMappings[0].F);
 
             var minIterations = 100;
-            var maxIterations = imgx * imgy * 8;
+            var maxIterations = imgx * imgy * Properties.Settings.Default.DrawPointsMultiplier;
 
             for (int k = 0; k < maxIterations; k++)
             {
