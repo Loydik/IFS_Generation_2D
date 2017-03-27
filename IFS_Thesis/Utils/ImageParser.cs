@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IFS_Thesis
+namespace IFS_Thesis.Utils
 {
     public class ImageParser
     {

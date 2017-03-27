@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using IFS_Thesis.Properties;
 using static System.Single;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
@@ -31,8 +32,10 @@ namespace IFS_Thesis.Utils
         /// <summary>
         /// Gets generated IFS pixels based on given IFS functions
         /// </summary>
-        public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy, bool ignoreProbabilities = true)
+        public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy)
         {
+            bool ignoreProbabilities = Settings.Default.IgnoreProbabilities;
+
             List<PointF> resultPoints = new List<PointF>();
 
             var randomGen = new Random();

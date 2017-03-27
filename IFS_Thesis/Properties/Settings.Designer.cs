@@ -190,5 +190,17 @@ namespace IFS_Thesis.Properties {
                 this["OnePointCrossoverProbability"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IgnoreProbabilities {
+            get {
+                return ((bool)(this["IgnoreProbabilities"]));
+            }
+            set {
+                this["IgnoreProbabilities"] = value;
+            }
+        }
     }
 }
