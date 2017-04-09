@@ -83,7 +83,8 @@
     <Compile Include="EvolutionaryData\Individual.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\StandardMutationRateStrategy.cs" />
-    <Compile Include="EvolutionaryData\Mutation\Variables\CoefficientsMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\ControlledMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\RandomMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Mutation\Variables\RealValueMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Population.cs" />
     <Compile Include="EvolutionaryData\Recombination\ArithmeticCrossoverStrategy.cs" />

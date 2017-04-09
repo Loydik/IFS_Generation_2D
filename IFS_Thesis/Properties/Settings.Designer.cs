@@ -202,5 +202,29 @@ namespace IFS_Thesis.Properties {
                 this["IgnoreProbabilities"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        public float RandomMutationProbability {
+            get {
+                return ((float)(this["RandomMutationProbability"]));
+            }
+            set {
+                this["RandomMutationProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.6")]
+        public float ControlledMutationProbability {
+            get {
+                return ((float)(this["ControlledMutationProbability"]));
+            }
+            set {
+                this["ControlledMutationProbability"] = value;
+            }
+        }
     }
 }

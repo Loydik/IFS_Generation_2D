@@ -19,7 +19,7 @@ namespace IFS_Thesis_Tests.MutationStrategiesTests
         [Test, Category("VariableMutation"), Category("Manual"), Ignore("Manual")]
         public void ManualCoefficientsMutationStrategyTest()
         {
-            var mutationStrategy = new CoefficientsMutationStrategy();
+            var mutationStrategy = new ControlledMutationStrategy();
 
             List<float> results = new List<float>();
 
@@ -27,9 +27,11 @@ namespace IFS_Thesis_Tests.MutationStrategiesTests
 
             Random random = new Random();
 
+            var range = new Tuple<int,int>(-1,1);
+
             for (int i = 0; i < 100; i++)
             {
-                results.Add(mutationStrategy.Mutate(variable, random));
+                results.Add(mutationStrategy.Mutate(variable, random, range));
             }
 
             Assert.Fail("The test is manual :D");
@@ -42,7 +44,7 @@ namespace IFS_Thesis_Tests.MutationStrategiesTests
         {
             var mutationStrategy = new StandardMutationRateStrategy();
 
-            mutationStrategy.Mutate(ref individual, new CoefficientsMutationStrategy(), Random);
+            mutationStrategy.Mutate(ref individual, new ControlledMutationStrategy(), Random);
 
             foreach (var singel in individual.Singels)
             {

@@ -95,12 +95,11 @@ namespace IFS_Thesis.EvolutionaryData
                 var totalPopulationCount = _population.Count;
 
                 //Removing and adding species
-
                 int speciesCountBefore = _population.Species.Count;
 
                 //Step 13
                 _population = new GeneticOperators().RemoveWeakestSpecies(_population,
-                    Properties.Settings.Default.AverageFitnessThreshold);
+                    Settings.Default.AverageFitnessThreshold);
 
                 //Step 14
                 _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.05f);
@@ -113,6 +112,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
+
                 highestFitnessIndividual =
                     _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
@@ -120,12 +120,12 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Population size: {_population.Count}");
 
                 //every 20th generation, save the highest fit individual as image
-                if (currentGenerationNumber%20 == 0)
+                if (currentGenerationNumber % 20 == 0)
                 {
                     if (highestFitnessIndividual != null)
                     {
                         drawer.SaveIfsImage(highestFitnessIndividual.Singels, 512, 512,
-                            Properties.Settings.Default.WorkingDirectory +
+                            Settings.Default.WorkingDirectory +
                             $"/highest_fit_{currentGenerationNumber}_generation.png");
                     }
                 }

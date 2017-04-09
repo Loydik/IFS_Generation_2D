@@ -47,5 +47,11 @@
     <Setting Name="IgnoreProbabilities" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.4</Value>
+    </Setting>
+    <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.6</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -2,13 +2,13 @@
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
 {
-    public class CoefficientsMutationStrategy : RealValueMutationStrategy
+    public class ControlledMutationStrategy : RealValueMutationStrategy
     {
         /// <summary>
         /// Mutation operator of the Breeder Genetic Algorithm
         /// </summary>
         /// <remarks>produces small step-sizes with a high probability and large step-sizes with a low probability.</remarks>>
-        public override float Mutate(float variable, Random randomGen)
+        public override float Mutate(float variable, Random randomGen, Tuple<int, int> range)
         {
             //General formula (taken from GEATbx) -> Var = Var + s * r * a
 
@@ -30,15 +30,15 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
 
             var tempVariable =  variable + (float)(s * r * a);
 
-            ////Clipping overflows
-            //if (tempVariable > 1 || Math.Abs(variable - 1) < 0.001)
-            //{
-            //    tempVariable = 1;
-            //}
-            //else if(tempVariable < 0 || Math.Abs(variable) < 0.001)
-            //{
-            //    tempVariable = 0;
-            //}
+            //Clipping overflows
+            if (tempVariable > range.Item2 /*|| Math.Abs(variable - 1) < 0.001*/)
+            {
+                tempVariable = range.Item2;
+            }
+            else if (tempVariable < range.Item1 /*|| Math.Abs(variable) < 0.001*/)
+            {
+                tempVariable = range.Item1;
+            }
 
             return tempVariable;
         }

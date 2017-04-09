@@ -42,7 +42,7 @@ namespace IFS_Thesis
             #endregion
 
             var drawer = new IfsDrawer();
-            drawer.SaveIfsImage(fernMine, imageSizeX, imageSizeY, imageSavePath);
+            drawer.SaveIfsImage(pentagonMine, imageSizeX, imageSizeY, imageSavePath);
 
             Bitmap image = (Bitmap)Image.FromFile(imageSavePath, true);
 

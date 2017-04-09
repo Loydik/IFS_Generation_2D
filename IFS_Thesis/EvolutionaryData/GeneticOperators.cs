@@ -25,9 +25,10 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Gets Random coefficient for IFS function
         /// </summary>
-        private float GetRandomCoefficient(Random random)
+        private float GetRandomCoefficient(Random random, Tuple<int, int> range)
         {
-            var value = random.NextDouble();
+            //random.NextDouble() * (maximum - minimum) + minimum
+            var value = random.NextDouble() * (range.Item2 - range.Item1) + range.Item1;
 
             var coefficient = (float)Math.Round(value, 4);
 
@@ -49,16 +50,40 @@ namespace IFS_Thesis.EvolutionaryData
             return new ArithmeticCrossoverStrategy();
         }
 
+        /// <summary>
+        /// Gets Mutation strategy based on probabilities
+        /// </summary>
+        private RealValueMutationStrategy GetMutationStrategy(float randomMutationProbability, Random randomGen)
+        {
+            var result = randomGen.NextDouble();
+
+            if (result <= randomMutationProbability)
+            {
+                return new RandomMutationStrategy();
+            }
+
+            return new ControlledMutationStrategy();
+        }
+
         #endregion
 
+        /// <summary>
+        /// Create Random Singel
+        /// </summary>
         public Singel CreateRandomSingel(Random random)
         {
-            var a = GetRandomCoefficient(random);
-            var b = GetRandomCoefficient(random);
-            var c = GetRandomCoefficient(random);
-            var d = GetRandomCoefficient(random);
-            var e = GetRandomCoefficient(random);
-            var f = GetRandomCoefficient(random);
+            //range for a,b,c,d coefficients
+            var range1 = new Tuple<int, int>(-1, 1);
+
+            //range for e,f coefficients
+            var range2 = new Tuple<int, int>(-10, 10);
+
+            var a = GetRandomCoefficient(random, range1);
+            var b = GetRandomCoefficient(random, range1);
+            var c = GetRandomCoefficient(random, range1);
+            var d = GetRandomCoefficient(random, range1);
+            var e = GetRandomCoefficient(random, range2);
+            var f = GetRandomCoefficient(random, range2);
 
             var coefficients = new IfsFunction(a,b,c,d,e,f,0f);
 
@@ -157,8 +182,8 @@ namespace IFS_Thesis.EvolutionaryData
         public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
             SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
-            RecombinationStrategy recombinationStrategy = new OnePointCrossoverStrategy();
-            IndividualMutationStrategy mutationStrategy = new StandardMutationRateStrategy();
+            RecombinationStrategy recombinationStrategy;
+            IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
 
             var newPopulation = new Population();
 
@@ -263,9 +288,11 @@ namespace IFS_Thesis.EvolutionaryData
                 //Mutates individual with frequency of defined probability
                 if (OtherUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
                 {
+                    var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
+
                     var currentIndividual = individual;
 
-                    mutationStrategy.Mutate(ref currentIndividual, new CoefficientsMutationStrategy(), randomGen);
+                    individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
                 }
             }
             
