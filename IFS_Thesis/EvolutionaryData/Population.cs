@@ -26,6 +26,9 @@ namespace IFS_Thesis.EvolutionaryData
             Species = species;
         }
 
+        /// <summary>
+        /// Add individual to population
+        /// </summary>
         public void AddIndividual(Individual individual)
         {
             bool existingSpecies = Species.Any(x => x.DegreeOfIndividualsInSpecies == individual.Degree);
@@ -42,10 +45,12 @@ namespace IFS_Thesis.EvolutionaryData
               newSpecies.Individuals.Add(individual);
 
               Species.Add(newSpecies);
-
             }
         }
 
+        /// <summary>
+        /// Add a list of individuals to population
+        /// </summary>
         public void AddIndividuals(List<Individual> individuals)
         {
             foreach (var individual in individuals)
@@ -59,14 +64,12 @@ namespace IFS_Thesis.EvolutionaryData
              Species.Single(x => x.DegreeOfIndividualsInSpecies == individual.Degree).Individuals.Remove(individual);
         }
 
+        /// <summary>
+        /// Get all individuals which belong to the population
+        /// </summary>
         public List<Individual> GetAllIndividuals()
         {
-            var allIndividuals = new List<Individual>();
-
-            foreach (var species in Species)
-            {
-                allIndividuals.AddRange(species.Individuals);
-            }
+            var allIndividuals = Species.SelectMany(x => x.Individuals).ToList();
 
             return allIndividuals;
         }

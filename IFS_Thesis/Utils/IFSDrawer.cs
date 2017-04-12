@@ -9,88 +9,41 @@ using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace IFS_Thesis.Utils
 {
+    /// <summary>
+    /// Class used for drawing IFS
+    /// </summary>
     public class IfsDrawer
     {
+        #region Private Methods
 
-        /// <summary>
-        /// Generates an image from given IFS mappings and saves it 
-        /// </summary>
-        public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
+        private PointF ApplyIFSTransformation(IfsFunction currentFunction, PointF currentPoint)
         {
-            var data = GetIfsPixels(ifsMappings, imgx, imgy);
+            var x0 = currentPoint.X;
+            var y0 = currentPoint.Y;
 
-            var pixels = data.Item2;
+            var x = currentFunction.A * x0 + currentFunction.B * y0 + currentFunction.E;
+            var y = currentFunction.C * x0 + currentFunction.D * y0 + currentFunction.F;
 
-            if (pixels.Count != 0)
-            {
-                var bmp = CreateImageFromPixels(pixels);
-                bmp.Save(path, ImageFormat.Png);
-                bmp.Dispose();
-            }
+            return new PointF(x, y);
         }
 
-        /// <summary>
-        /// Gets generated IFS pixels based on given IFS functions
-        /// </summary>
-        public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy)
+        private Bitmap DrawFilledRectangle(int x, int y)
         {
-            bool ignoreProbabilities = Settings.Default.IgnoreProbabilities;
+            Bitmap bmp = new Bitmap(x, y, PixelFormat.Format32bppRgb);
 
-            List<PointF> resultPoints = new List<PointF>();
-
-            var randomGen = new Random();
-
-            var length = ifsMappings.Count;
-
-            //we start at E and F
-            var currentPoint = new PointF(ifsMappings[0].E, ifsMappings[0].F);
-
-            var minIterations = 100;
-            var maxIterations = imgx * imgy * Properties.Settings.Default.DrawPointsMultiplier;
-
-            for (int k = 0; k < maxIterations; k++)
+            using (Graphics graph = Graphics.FromImage(bmp))
             {
-                var p = randomGen.NextDouble();
-                var psum = 0.0;
-
-                var i = 0;
-
-                if (ignoreProbabilities)
-                {
-                    i = randomGen.Next(0, length);
-                }
-
-                else
-                {
-                    for (int j = 0; j < length; j++)
-                    {
-                        psum += ifsMappings[j].P;
-
-                        i = j;
-
-                        if (p <= psum)
-                            break;
-                    }
-                }          
-
-                currentPoint = ApplyIFSTransformation(ifsMappings[i], currentPoint);
-
-                if (k > minIterations)
-                {
-                    resultPoints.Add(currentPoint);
-                }
+                graph.Clear(Color.White);
             }
 
-            var result = ConvertPointsToPixels(resultPoints, imgx, imgy);
-                     
-            return result;
+            return bmp;
         }
 
         private Tuple<int, List<Point>> ConvertPointsToPixels(List<PointF> points, int imgx, int imgy)
         {
             int redundantPixels = 0;
 
-            List<Point> pixels =new List<Point>();
+            List<Point> pixels = new List<Point>();
 
             var xMin = points.Min(x => x.X);
             var xMax = points.Max(x => x.X);
@@ -130,23 +83,104 @@ namespace IFS_Thesis.Utils
                     {
                         pixels.Add(new Point(jx, jy));
                     }
-                    
+
                 }
                 catch (OverflowException e)
                 {
                     redundantPixels++;
                 }
-                
+
             }
 
-            pixels = pixels.Distinct().ToList();
+            //pixels = pixels.Distinct().ToList();
 
             return new Tuple<int, List<Point>>(redundantPixels, pixels);
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Generates an image from given IFS mappings and saves it 
+        /// </summary>
+        public void SaveIfsImage(List<IfsFunction> ifsMappings, int imgx, int imgy, string path)
+        {
+            var data = GetIfsPixels(ifsMappings, imgx, imgy);
+
+            var pixels = data.Item2;
+
+            if (pixels.Count != 0)
+            {
+                var bmp = CreateImageFromPixels(pixels);
+                bmp.Save(path, ImageFormat.Png);
+                bmp.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets generated IFS pixels based on given IFS functions
+        /// </summary>
+        public Tuple<int, List<Point>> GetIfsPixels(List<IfsFunction> ifsMappings, int imgx, int imgy)
+        {
+            bool ignoreProbabilities = Settings.Default.IgnoreProbabilities;
+
+            List<PointF> resultPoints = new List<PointF>();
+
+            var randomGen = new Random();
+
+            var length = ifsMappings.Count;
+
+            //we start at E and F
+            var currentPoint = new PointF(ifsMappings[0].E, ifsMappings[0].F);
+
+            var minIterations = 100;
+            var maxIterations = imgx * imgy * Settings.Default.DrawPointsMultiplier;
+
+            for (int k = 0; k < maxIterations; k++)
+            {
+                var p = randomGen.NextDouble();
+                var psum = 0.0;
+
+                var i = 0;
+
+                if (ignoreProbabilities)
+                {
+                    i = randomGen.Next(0, length);
+                }
+
+                else
+                {
+                    for (int j = 0; j < length; j++)
+                    {
+                        psum += ifsMappings[j].P;
+
+                        i = j;
+
+                        if (p <= psum)
+                            break;
+                    }
+                }          
+
+                currentPoint = ApplyIFSTransformation(ifsMappings[i], currentPoint);
+
+                if (k > minIterations)
+                {
+                    resultPoints.Add(currentPoint);
+                }
+            }
+
+            var result = ConvertPointsToPixels(resultPoints, imgx, imgy);
+                     
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a bitmap from a list of given pixels
+        /// </summary>
         public Bitmap CreateImageFromPixels(List<Point> pixels)
         {
-            Bitmap bitmapImage = null;
+            Bitmap bitmapImage;
 
             if (pixels.Count != 0)
             {
@@ -167,27 +201,7 @@ namespace IFS_Thesis.Utils
 
         }
 
-        private PointF ApplyIFSTransformation(IfsFunction currentFunction, PointF currentPoint)
-        {
-            var x0 = currentPoint.X;
-            var y0 = currentPoint.Y;
-
-            var x = currentFunction.A * x0 + currentFunction.B * y0 + currentFunction.E;
-            var y = currentFunction.C * x0 + currentFunction.D * y0 + currentFunction.F;
-
-            return new PointF(x, y);
-        }
-
-        private Bitmap DrawFilledRectangle(int x, int y)
-        {
-            Bitmap bmp = new Bitmap(x, y, PixelFormat.Format32bppRgb);
-
-            using (Graphics graph = Graphics.FromImage(bmp))
-            {
-               graph.Clear(Color.White);
-            }
-
-            return bmp;
-        }
+        #endregion
+        
     }
 }

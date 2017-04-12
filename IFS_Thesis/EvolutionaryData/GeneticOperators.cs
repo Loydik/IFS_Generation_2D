@@ -92,17 +92,19 @@ namespace IFS_Thesis.EvolutionaryData
             return singel;
         }
 
+        /// <summary>
+        /// Create individual based on probabilities vector from a given pool of singels
+        /// </summary>
         public Individual CreateIndividual(List<float> probabilityVectors, List<Singel> poolOfSingels, Random randomGen)
         {
             var degreeOfIndividual = GetIndividualsDegreeBasedOnVectors(probabilityVectors, randomGen);
 
-            poolOfSingels.Shuffle();
+            poolOfSingels.Shuffle(randomGen);
 
-            var individual = new Individual(poolOfSingels.Select(x => x.Coefficients).Take(degreeOfIndividual).ToList())
+            var individual = new Individual(poolOfSingels.Take(degreeOfIndividual).Select(x => x.Coefficients).ToList())
             {
                 Degree = degreeOfIndividual
             };
-
 
             return individual;
         }
@@ -132,6 +134,9 @@ namespace IFS_Thesis.EvolutionaryData
             return degree;
         }
 
+        /// <summary>
+        /// Generates a specified amount of singels
+        /// </summary>
         private List<Singel> GenerateSingels(int amount, Random random)
         {
             var result = new List<Singel>();
@@ -146,6 +151,9 @@ namespace IFS_Thesis.EvolutionaryData
             return result;
         }
 
+        /// <summary>
+        /// Creates individuals based on probability vector
+        /// </summary>
         public List<Individual> CreateIndividuals(int singelsPoolSize, int populationSize, List<float> probablityVectors, Random randomGen)
         {
             var generatedIndividuals = new List<Individual>();

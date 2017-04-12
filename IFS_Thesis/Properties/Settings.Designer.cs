@@ -145,7 +145,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int ProFitness {
             get {
                 return ((int)(this["ProFitness"]));
@@ -224,6 +224,42 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["ControlledMutationProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("512")]
+        public int ImageX {
+            get {
+                return ((int)(this["ImageX"]));
+            }
+            set {
+                this["ImageX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("512")]
+        public int ImageY {
+            get {
+                return ((int)(this["ImageY"]));
+            }
+            set {
+                this["ImageY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int InitialSingelPoolSize {
+            get {
+                return ((int)(this["InitialSingelPoolSize"]));
+            }
+            set {
+                this["InitialSingelPoolSize"] = value;
             }
         }
     }

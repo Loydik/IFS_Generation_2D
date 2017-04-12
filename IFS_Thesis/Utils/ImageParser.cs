@@ -4,26 +4,31 @@ using System.Drawing;
 
 namespace IFS_Thesis.Utils
 {
+    /// <summary>
+    /// Class for parsing Images
+    /// </summary>
     public class ImageParser
     {
+        /// <summary>
+        /// Get pixels from an image which match a given color
+        /// </summary>
         public List<Point> GetMatchingPixels(Bitmap image, Color color)
         {
-
-            List<Point> resultPoints = new List<Point>();
-            List<Color> resultColors = new List<Color>();
+            var resultPoints = new List<Point>();
+            var colorArgb = color.ToArgb();
 
             try
             {
-                LockBitmap lockBitmap = new LockBitmap(image);
+                var lockBitmap = new LockBitmap(image);
                 lockBitmap.LockBits();
 
                 for (int y = 0; y < lockBitmap.Height; y++)
                 {
                     for (int x = 0; x < lockBitmap.Width; x++)
                     {
-                        resultColors.Add(lockBitmap.GetPixel(x, y));
+                        var pixel = lockBitmap.GetPixel(x, y);
 
-                        if (lockBitmap.GetPixel(x, y).ToArgb() == color.ToArgb())
+                        if (pixel.ToArgb() == colorArgb)
                         {
                             resultPoints.Add(new Point(x,y));                            
                         }
@@ -41,17 +46,5 @@ namespace IFS_Thesis.Utils
             return resultPoints;
         }
 
-        public void ConvertBytesToPixelsByColor(int rgbColorValue, byte[] bytes)
-        {
-            List<Point> resultPoints = new List<Point>();
-
-            foreach (var element in bytes)
-            {
-                if (element.Equals((byte)rgbColorValue))
-                {
-                    var point = new Point();
-                }
-            }
-        }
     }
 }

@@ -15,7 +15,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             allSignels.AddRange(firstParent.Singels);
             allSignels.AddRange(secondParent.Singels);
 
-            allSignels.Shuffle();
+            allSignels.Shuffle(randomGen);
 
             var firstChildSingels = allSignels.Take(firstParent.Degree).ToList();
             var secondChildSingels = allSignels.TakeLast(secondParent.Degree).ToList();

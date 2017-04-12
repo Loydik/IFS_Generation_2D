@@ -35,6 +35,10 @@ namespace IFS_Thesis.EvolutionaryData
             return average;
         }
 
+        /// <summary>
+        /// Calculate fitness for a given individual
+        /// </summary>
+        /// //TODO Refactor to simpler calculations
         private float CalculateFitness(List<Point> sourceImagePixels, Individual individual, int width, int height)
         {
             var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
@@ -43,13 +47,20 @@ namespace IFS_Thesis.EvolutionaryData
             var redundantPixels = result.Item1;
             var generatedPixels = result.Item2;
 
-            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
-
             if (generatedPixels.Count == 0)
             {
-                //Log.Debug($"Calculated fitness for individual. Fitness - {0}");
                 return 0;
             }
+
+           // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
+
+            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
+
+            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
+
+            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
+
+            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
 
             //NA
             var na = generatedPixels.Count;
@@ -58,10 +69,10 @@ namespace IFS_Thesis.EvolutionaryData
             var ni = sourceImagePixels.Count;
 
             //NND
-            var notDrawnPoints = sourceImagePixels.Except(generatedPixels).Count();
+            var notDrawnPoints = ni - matchingPixels.Count;
 
             //NNN
-            var pointsNotNeeded = generatedPixels.Except(matchingPixels).Count();
+            var pointsNotNeeded = na - matchingPixels.Count;
 
             pointsNotNeeded = pointsNotNeeded + redundantPixels;
 
@@ -70,8 +81,6 @@ namespace IFS_Thesis.EvolutionaryData
             var ro = pointsNotNeeded / (float)na;
 
             var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
-
-            //Log.Debug($"Calculated fitness for individual. Fitness - {fitness}");
 
             return fitness;
         }
@@ -160,6 +169,12 @@ namespace IFS_Thesis.EvolutionaryData
                 individual.ObjectiveFitness = CalculateFitness(sourceImagePixels, individual, imageWidth, imageHeight);
 
             });
+
+            //For debugging
+            //foreach (var individual in individuals)
+            //{
+            //    individual.ObjectiveFitness = CalculateFitness(sourceImagePixels, individual, imageWidth, imageHeight);
+            //}
 
             Log.Debug("Ended calculating fitness for all individuals");
 

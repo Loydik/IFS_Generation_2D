@@ -33,7 +33,7 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ProFitness" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="DrawPointsMultiplier" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -52,6 +52,15 @@
     </Setting>
     <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.6</Value>
+    </Setting>
+    <Setting Name="ImageX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">512</Value>
+    </Setting>
+    <Setting Name="ImageY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">512</Value>
+    </Setting>
+    <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
     </Setting>
   </Settings>
 </SettingsFile>
