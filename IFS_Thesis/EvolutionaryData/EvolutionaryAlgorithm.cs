@@ -66,7 +66,13 @@ namespace IFS_Thesis.EvolutionaryData
         private void ChangeConfiguration(int currentGeneration)
         {
             //On 500th generation, decrease the value of pro to refine points coverage
-            if (currentGeneration == 500)
+            if (currentGeneration == 700)
+            {
+                Settings.Default.ProFitness = 4;
+                Log.Info("Changed the value of Pro fitness to 4");
+            }
+
+            if (currentGeneration == 1400)
             {
                 Settings.Default.ProFitness = 3;
                 Log.Info("Changed the value of Pro fitness to 3");
@@ -172,14 +178,14 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                //every 20th generation, save the highest fit individual as image
-                if (currentGenerationNumber % 20 == 0)
+                //every Nth generation, save the highest fit individual as image
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
                 {
                     if (highestFitnessIndividual != null)
                     {
-                        drawer.SaveIfsImage(highestFitnessIndividual.Singels, 512, 512,
+                        drawer.SaveIfsImage(highestFitnessIndividual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
                             Settings.Default.WorkingDirectory +
-                            $"/highest_fit_{currentGenerationNumber}_generation.png");
+                            $"/best_{currentGenerationNumber}th_gen_fitness_{highestFitnessIndividual.ObjectiveFitness:##.###}.png");
                     }
                 }
             }

@@ -92,7 +92,8 @@ namespace IFS_Thesis.Utils
 
             }
 
-            //pixels = pixels.Distinct().ToList();
+            //Remove duplicated pixels
+            pixels = pixels.Distinct().ToList();
 
             return new Tuple<int, List<Point>>(redundantPixels, pixels);
         }

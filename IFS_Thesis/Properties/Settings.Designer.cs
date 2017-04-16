@@ -145,7 +145,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
         public int ProFitness {
             get {
                 return ((int)(this["ProFitness"]));
@@ -229,7 +229,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("512")]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
         public int ImageX {
             get {
                 return ((int)(this["ImageX"]));
@@ -241,7 +241,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("512")]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
         public int ImageY {
             get {
                 return ((int)(this["ImageY"]));
@@ -253,13 +253,25 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
         public int InitialSingelPoolSize {
             get {
                 return ((int)(this["InitialSingelPoolSize"]));
             }
             set {
                 this["InitialSingelPoolSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DrawImageEveryNthGeneration {
+            get {
+                return ((int)(this["DrawImageEveryNthGeneration"]));
+            }
+            set {
+                this["DrawImageEveryNthGeneration"] = value;
             }
         }
     }
