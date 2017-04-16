@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
@@ -29,6 +30,9 @@ namespace IFS_Thesis
             List<IfsFunction> pentagonMine = new List<IfsFunction> { new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f), new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, -0.191f, 0.588f, 0.2f) };
 
             #endregion
+
+            //Creating the directory if it does not exist
+            Directory.CreateDirectory(Settings.Default.WorkingDirectory);
 
             var drawer = new IfsDrawer();
             drawer.SaveIfsImage(pentagonMine, imageSizeX, imageSizeY, initialImagePath);

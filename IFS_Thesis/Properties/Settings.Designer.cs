@@ -109,7 +109,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:/Users/Loydik/Desktop/IFS Images")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:/tmp/IFS Images")]
         public string WorkingDirectory {
             get {
                 return ((string)(this["WorkingDirectory"]));
