@@ -42,6 +42,11 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private Random _randomNumberGenerator;
 
+        /// <summary>
+        /// Genetic operators
+        /// </summary>
+        private GeneticOperators _geneticOperators;
+
         #endregion
 
         #region Private Methods
@@ -68,18 +73,31 @@ namespace IFS_Thesis.EvolutionaryData
             //On 500th generation, decrease the value of pro to refine points coverage
             if (currentGeneration == 700)
             {
-                Settings.Default.ProFitness = 4;
-                Log.Info("Changed the value of Pro fitness to 4");
-            }
-
-            if (currentGeneration == 1400)
-            {
                 Settings.Default.ProFitness = 3;
                 Log.Info("Changed the value of Pro fitness to 3");
             }
         }
 
+        /// <summary>
+        /// Generates a report image based on current generation
+        /// </summary>
+        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber)
+        {
+            //every Nth generation, save the highest fit individual as image
+            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            {
+                if (individual != null)
+                {
+                    ifsDrawer.SaveIfsImage(individual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
+                        Settings.Default.WorkingDirectory +
+                        $"/best_{currentGenerationNumber}th_gen_fitness_{individual.ObjectiveFitness:##.#######}.png");
+                }
+            }
+        }
+
         #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Start the Evolution Process
@@ -88,6 +106,7 @@ namespace IFS_Thesis.EvolutionaryData
         {
             OutputEvolutinaryAlgorithmParameters();
 
+            _geneticOperators = new GeneticOperators();
             _population = new Population();
 
             //Initial Probability vector, 8 max
@@ -116,38 +135,31 @@ namespace IFS_Thesis.EvolutionaryData
 
             _population.AddIndividuals(initialIndividuals);
 
-            var allIndividuals = _population.GetAllIndividuals();
-
             //we get pixels from a source image 
             _sourceImagePixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
-            allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
-
-            _population.SetAllIndividuals(allIndividuals);
+            _population.Individuals = new FitnessFunction().CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
             Individual highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
+            //Iterating for N Generations
             for (int i = 0; i < maxGenerations; i++)
             {
                 var currentGenerationNumber = i + 1;
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(allIndividuals, ProbabilityVector);
+                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(_population.Individuals, ProbabilityVector);
 
                 //Generating New Population (Steps 7 - 11)
 
-                _population = new GeneticOperators().GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
+                _population = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
 
-                allIndividuals = _population.GetAllIndividuals();
-
-                allIndividuals = new FitnessFunction().CalculateFitnessForIndividuals(allIndividuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
-
-                _population.SetAllIndividuals(allIndividuals);
+                _population.Individuals = new FitnessFunction().CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
                 //Step 12
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(allIndividuals, ProbabilityVector);
+                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(_population.Individuals, ProbabilityVector);
 
                 var totalPopulationCount = _population.Count;
 
@@ -177,20 +189,12 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Population size: {_population.Count}");
 
                 ChangeConfiguration(currentGenerationNumber);
-
-                //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
-                {
-                    if (highestFitnessIndividual != null)
-                    {
-                        drawer.SaveIfsImage(highestFitnessIndividual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
-                            Settings.Default.WorkingDirectory +
-                            $"/best_{currentGenerationNumber}th_gen_fitness_{highestFitnessIndividual.ObjectiveFitness:##.###}.png");
-                    }
-                }
+                GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber);
             }
 
             return highestFitnessIndividual;
         }
+
+        #endregion
     }
 }

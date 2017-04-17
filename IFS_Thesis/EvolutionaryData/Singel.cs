@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using IFS_Thesis.Utils;
+﻿using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData
 {

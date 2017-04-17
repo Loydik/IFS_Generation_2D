@@ -35,56 +35,6 @@ namespace IFS_Thesis.EvolutionaryData
             return average;
         }
 
-        /// <summary>
-        /// Calculate fitness for a given individual
-        /// </summary>
-        /// //TODO Refactor to simpler calculations
-        private float CalculateFitness(List<Point> sourceImagePixels, Individual individual, int width, int height)
-        {
-            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
-                height);
-
-            var redundantPixels = result.Item1;
-            var generatedPixels = result.Item2;
-
-            if (generatedPixels.Count == 0)
-            {
-                return 0;
-            }
-
-           // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
-
-            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
-
-            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
-
-            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
-
-            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
-
-            //NA
-            var na = generatedPixels.Count;
-
-            //NI
-            var ni = sourceImagePixels.Count;
-
-            //NND
-            var notDrawnPoints = ni - matchingPixels.Count;
-
-            //NNN
-            var pointsNotNeeded = na - matchingPixels.Count;
-
-            pointsNotNeeded = pointsNotNeeded + redundantPixels;
-
-            var rc = notDrawnPoints / (float)ni;
-
-            var ro = pointsNotNeeded / (float)na;
-
-            var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
-
-            return fitness;
-        }
-
         #endregion
 
         #region Public Methods
@@ -158,22 +108,75 @@ namespace IFS_Thesis.EvolutionaryData
         }
 
         /// <summary>
+        /// Calculate fitness for a given individual
+        /// </summary>
+        /// //TODO Refactor to simpler calculations
+        public float CalculateFitnessForIndividual(List<Point> sourceImagePixels, Individual individual, int width, int height)
+        {
+            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
+                height);
+
+            var redundantPixels = result.Item1;
+            var generatedPixels = result.Item2;
+
+            if (generatedPixels.Count == 0)
+            {
+                return 0;
+            }
+
+            // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
+
+            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
+
+            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
+
+            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
+
+            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
+
+            //NA
+            var na = generatedPixels.Count;
+
+            //NI
+            var ni = sourceImagePixels.Count;
+
+            //NND
+            var notDrawnPoints = ni - matchingPixels.Count;
+
+            //NNN
+            var pointsNotNeeded = na - matchingPixels.Count;
+
+            pointsNotNeeded = pointsNotNeeded + redundantPixels;
+
+            var rc = notDrawnPoints / (float)ni;
+
+            var ro = pointsNotNeeded / (float)na;
+
+            var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
+
+            return fitness;
+        }
+
+        /// <summary>
         /// Calculates fintess for given individuals using source Image pixels
         /// </summary>
         public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, List<Point> sourceImagePixels, int imageWidth, int imageHeight)
         {
             Log.Debug("Started calculating fitness for all individuals");
 
-            Parallel.ForEach(individuals, individual =>
+            var nonEliteIndividuals = individuals.Where(i => i.Elite == false).ToList();
+
+            //For each individual which is not elite we calculate fitness
+            Parallel.ForEach(nonEliteIndividuals, individual =>
             {
-                individual.ObjectiveFitness = CalculateFitness(sourceImagePixels, individual, imageWidth, imageHeight);
+                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImagePixels, individual, imageWidth, imageHeight);
 
             });
 
             //For debugging
             //foreach (var individual in individuals)
             //{
-            //    individual.ObjectiveFitness = CalculateFitness(sourceImagePixels, individual, imageWidth, imageHeight);
+            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImagePixels, individual, imageWidth, imageHeight);
             //}
 
             Log.Debug("Ended calculating fitness for all individuals");

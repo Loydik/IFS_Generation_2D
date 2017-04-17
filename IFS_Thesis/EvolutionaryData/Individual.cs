@@ -1,16 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData
 {
-    public class Individual
+    public class Individual : ICloneable
     {
+        #region Properties
+
+        /// <summary>
+        /// The degree of an individual
+        /// </summary>
         public int Degree { get; set; }
 
+        /// <summary>
+        /// Signels
+        /// </summary>
         public List<IfsFunction> Singels { get; set; }
 
+        /// <summary>
+        /// The objective fitness of an individual
+        /// </summary>
         public float ObjectiveFitness { get; set; }
 
+        /// <summary>
+        /// Whether an endividual is elitist (highest fitness and untouched)
+        /// </summary>
+        public bool Elite { get; set; }
+
+        #endregion
+
+        #region Construction
 
         public Individual(List<IfsFunction> singels)
         {
@@ -18,23 +38,29 @@ namespace IFS_Thesis.EvolutionaryData
             Degree = singels.Count;
         }
 
+        #endregion
+
+        #region Public Methods 
+
         public override string ToString()
         {
             return $"Degree - {Degree}, Fitness - {ObjectiveFitness}\n Singles:{string.Join(";", Singels)}";
         }
 
-        //public static implicit operator List<Singel>(Individual x)
-        //{
-        //    return x.Singels;
-        //}
+        /// <summary>
+        /// Create a deep clone of individual
+        /// </summary>
+        public object Clone()
+        {
+            //first we create a shallow copy of the object
+            var clonedIndividual = (Individual) MemberwiseClone();
 
-        //public static explicit operator Individual(List<Singel> x)
-        //{
-        //    var singels = x.Select(array => new Singel(array)).ToList();
+            //then we clone the singels of individual and assign them to cloned individual
+            clonedIndividual.Singels = (List<IfsFunction>)Singels.Clone();
 
-        //    Individual individual = new Individual(singels);
+            return clonedIndividual;
+        }
 
-        //    return individual;
-        //}
+        #endregion
     }
 }

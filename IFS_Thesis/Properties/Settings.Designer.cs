@@ -145,7 +145,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int ProFitness {
             get {
                 return ((int)(this["ProFitness"]));
@@ -272,6 +272,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["DrawImageEveryNthGeneration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int EliteIndividualsPerDegree {
+            get {
+                return ((int)(this["EliteIndividualsPerDegree"]));
+            }
+            set {
+                this["EliteIndividualsPerDegree"] = value;
             }
         }
     }

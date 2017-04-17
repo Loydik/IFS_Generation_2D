@@ -147,7 +147,7 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
                 1
             };
 
-            //crossover at point 3
+           //crossover at point 3
             yield return new object[]
             {
                 new Individual(new List<IfsFunction>

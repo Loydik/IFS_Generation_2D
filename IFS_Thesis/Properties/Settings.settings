@@ -33,7 +33,7 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ProFitness" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="DrawPointsMultiplier" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -63,6 +63,9 @@
       <Value Profile="(Default)">50000</Value>
     </Setting>
     <Setting Name="DrawImageEveryNthGeneration" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>

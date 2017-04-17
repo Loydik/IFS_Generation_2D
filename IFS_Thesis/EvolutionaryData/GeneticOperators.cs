@@ -23,6 +23,27 @@ namespace IFS_Thesis.EvolutionaryData
         #region Private Methods
 
         /// <summary>
+        /// Gets best individuals from each degree
+        /// </summary>
+        private List<Individual> GetBestIndividualsOfEachDegree(Population population, int numberOfIndividualsPerDegree)
+        {
+            var bestIndividuals = new List<Individual>();
+
+            var degrees = OtherUtils.GetDegreesOfIndividuals(population.Individuals);
+
+            foreach (var degree in degrees)
+            {
+                var best = population.Individuals.Where(x => x.Degree == degree).OrderByDescending(x => x.ObjectiveFitness).Take(numberOfIndividualsPerDegree).ToList().Clone();
+                
+                //we set those individuals as elite
+                best.ForEach(i => i.Elite = true);
+                bestIndividuals.AddRange(best);
+            }
+
+            return bestIndividuals;
+        }
+
+        /// <summary>
         /// Gets Random coefficient for IFS function
         /// </summary>
         private float GetRandomCoefficient(Random random, Tuple<int, int> range)
@@ -66,6 +87,8 @@ namespace IFS_Thesis.EvolutionaryData
         }
 
         #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Create Random Singel
@@ -196,18 +219,15 @@ namespace IFS_Thesis.EvolutionaryData
             var newPopulation = new Population();
 
             // (Step 6.) Adding best individuals of each new degree 
-            var degrees = OtherUtils.GetDegreesOfIndividuals(population.GetAllIndividuals());
+            var bestIndividuals = GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+            newPopulation.AddIndividuals(bestIndividuals);
 
-            foreach (var degree in degrees)
-            {
-                var best = population.GetAllIndividuals().Where(x => x.Degree == degree).MaxBy(x => x.ObjectiveFitness);
-                newPopulation.AddIndividual(best);
-                //leave individual??
-                //population.RemoveIndividual(best);
-            }
+            #region N1 Individuals
 
             //Step 7
             var count = Settings.Default.N1IndividualsCount;
+
+            var n1Individuals = new List<Individual>();
 
             for (int i = 0; i <= count/2; i++)
             {
@@ -229,7 +249,7 @@ namespace IFS_Thesis.EvolutionaryData
                     var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
                         selectedIndividuals[1],
                         randomGen);
-                    newPopulation.AddIndividuals(offspring);
+                    n1Individuals.AddRange(offspring);
 
                     Log.Debug($"Generated 2 individuals using {recombinationStrategy.GetType()}");
                 }
@@ -239,14 +259,28 @@ namespace IFS_Thesis.EvolutionaryData
                 }
             }
 
+            newPopulation.AddIndividuals(n1Individuals);
+            Log.Debug($"Added {n1Individuals.Count} N1 individuals to new population");
+
+            #endregion
+
+            #region N2 Individuals
+
             //Step 8
-            count = Properties.Settings.Default.N2IndividualsCount;
+            count = Settings.Default.N2IndividualsCount;
             var allSingles = population.GetAllSingels();
-            var generatedIndividuals = CreateIndividualsFromExistingPoolOfSingels(allSingles, count, probabilityVectors, randomGen);
-            newPopulation.AddIndividuals(generatedIndividuals);
+            var n2Individuals = CreateIndividualsFromExistingPoolOfSingels(allSingles, count, probabilityVectors, randomGen);
+            newPopulation.AddIndividuals(n2Individuals);
+            Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
+
+            #endregion
+
+            #region N3 Individuals
 
             //Step 9
             count = Settings.Default.N3IndividualsCount;
+
+            var n3Individuals = new List<Individual>();
 
             for (int i = 0; i <= count/2; i++)
             {
@@ -267,15 +301,21 @@ namespace IFS_Thesis.EvolutionaryData
 
                         var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
                             randomGen);
-                        newPopulation.AddIndividuals(children);
+                        n3Individuals.AddRange(children);
                     }
                 }
-
             }
 
+            newPopulation.AddIndividuals(n3Individuals);
+            Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
+
+            #endregion
+
+            #region N4 Individuals
 
             //Step 10
-            count = Properties.Settings.Default.N4IndividualsCount;
+            count = Settings.Default.N4IndividualsCount;
+            var n4Individuals = new List<Individual>();
 
             for (int i = 0; i <= count / 2; i++)
             {
@@ -286,12 +326,19 @@ namespace IFS_Thesis.EvolutionaryData
                 if (parents[0] != null && parents[1] != null)
                 {
                     var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
-                    newPopulation.AddIndividuals(children);
+                    n4Individuals.AddRange(children);
                 }
             }
 
+            newPopulation.AddIndividuals(n4Individuals);
+            Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
+
+            #endregion
+
             //Step 11
-            foreach (Individual individual in newPopulation.Individuals)
+            //Mutate all individuals except elite ones
+
+            foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
             {
                 //Mutates individual with frequency of defined probability
                 if (OtherUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
@@ -303,7 +350,7 @@ namespace IFS_Thesis.EvolutionaryData
                     individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
                 }
             }
-            
+
             return newPopulation;
         }
 
@@ -324,7 +371,6 @@ namespace IFS_Thesis.EvolutionaryData
             return population;
         }
 
-
         /// <summary>
         /// Removes weakest species from a population if its population is below %of total
         /// </summary>
@@ -343,5 +389,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             return population;
         }
+
+        #endregion
     }
 }

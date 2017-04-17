@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData
@@ -11,7 +8,17 @@ namespace IFS_Thesis.EvolutionaryData
     {
         public List<Species> Species { get; set; }
 
-        public List<Individual> Individuals => GetAllIndividuals();
+        public List<Individual> Individuals
+        {
+            get { return GetAllIndividuals(); }
+            set
+            {
+                if (value != null)
+                {
+                    SetAllIndividuals(value);
+                }
+            }
+        }
 
         public int Count => Individuals.Count;
 

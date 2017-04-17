@@ -2,7 +2,7 @@
 
 namespace IFS_Thesis.Utils
 {
-    public class IfsFunction : IEquatable<IfsFunction>
+    public class IfsFunction : IEquatable<IfsFunction>, ICloneable
     {
         #region Properties
 
@@ -119,6 +119,14 @@ namespace IFS_Thesis.Utils
         public override string ToString()
         {
             return $"[{A},{B},{C},{D},{E},{F},{P}]";
+        }
+
+        /// <summary>
+        /// Creates a clone of IfsFunction
+        /// </summary>
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
 
         #endregion

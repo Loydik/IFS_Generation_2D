@@ -9,21 +9,21 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     {
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
-            Individual parentWithBiggerDegree = firstParent;
-            Individual parentWithLesserDegree = secondParent;
-
             if (firstParent == null || secondParent == null || firstParent.Degree == secondParent.Degree)
             {
                 return new List<Individual>();
             }
+
+            Individual parentWithBiggerDegree = (Individual)firstParent.Clone();
+            Individual parentWithLesserDegree = (Individual)secondParent.Clone();
 
             //we get the crossover point at random
             var crossoverPoint = randomGen.Next(1, 5);
 
             if (firstParent.Degree < secondParent.Degree)
             {
-                parentWithBiggerDegree = secondParent;
-                parentWithLesserDegree = firstParent;
+                parentWithBiggerDegree = (Individual)secondParent.Clone();
+                parentWithLesserDegree = (Individual)firstParent.Clone();
             }
 
             var firstSingels = parentWithBiggerDegree.Singels;

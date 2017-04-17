@@ -12,13 +12,17 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
         {
             List<IfsFunction> allSignels = new List<IfsFunction>();
 
-            allSignels.AddRange(firstParent.Singels);
-            allSignels.AddRange(secondParent.Singels);
+            //cloning to prevent unexpected behavior
+            var firstParentClone = (Individual)firstParent.Clone();
+            var secondParentClone = (Individual)secondParent.Clone();
+
+            allSignels.AddRange(firstParentClone.Singels);
+            allSignels.AddRange(secondParentClone.Singels);
 
             allSignels.Shuffle(randomGen);
 
-            var firstChildSingels = allSignels.Take(firstParent.Degree).ToList();
-            var secondChildSingels = allSignels.TakeLast(secondParent.Degree).ToList();
+            var firstChildSingels = allSignels.Take(firstParentClone.Degree).ToList();
+            var secondChildSingels = allSignels.TakeLast(secondParentClone.Degree).ToList();
 
             var firstChild = new Individual(firstChildSingels);
             var secondChild = new Individual(secondChildSingels);
