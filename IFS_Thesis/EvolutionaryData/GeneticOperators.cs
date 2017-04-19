@@ -193,6 +193,9 @@ namespace IFS_Thesis.EvolutionaryData
             return generatedIndividuals;
         }
 
+        /// <summary>
+        /// Creates individuals from existing pool of singels
+        /// </summary>
         public List<Individual> CreateIndividualsFromExistingPoolOfSingels(List<Singel> poolOfSingels, int populationSize, List<float> probablityVectors, Random randomGen)
         {
             var generatedIndividuals = new List<Individual>();

@@ -164,10 +164,8 @@ namespace IFS_Thesis.EvolutionaryData
         {
             Log.Debug("Started calculating fitness for all individuals");
 
-            var nonEliteIndividuals = individuals.Where(i => i.Elite == false).ToList();
-
             //For each individual which is not elite we calculate fitness
-            Parallel.ForEach(nonEliteIndividuals, individual =>
+            Parallel.ForEach(individuals, individual =>
             {
                 individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImagePixels, individual, imageWidth, imageHeight);
 

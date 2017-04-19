@@ -15,7 +15,7 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.6</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.01</Value>
@@ -36,7 +36,7 @@
       <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="DrawPointsMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
@@ -48,10 +48,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.7</Value>
     </Setting>
     <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.6</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">256</Value>

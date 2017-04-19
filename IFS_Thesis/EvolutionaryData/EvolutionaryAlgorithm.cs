@@ -70,11 +70,18 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private void ChangeConfiguration(int currentGeneration)
         {
-            //On 500th generation, decrease the value of pro to refine points coverage
-            if (currentGeneration == 700)
+            //On 1000th generation, decrease the value of pro to refine points coverage
+            if (currentGeneration == 1000)
             {
                 Settings.Default.ProFitness = 3;
-                Log.Info("Changed the value of Pro fitness to 3");
+                Log.Info($"Changed the value of Pro fitness to {Settings.Default.ProFitness}");
+            }
+
+            if (currentGeneration == 1500)
+            {
+                Settings.Default.ControlledMutationProbability = 0.7f;
+                Settings.Default.RandomMutationProbability = 0.3f;
+                Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
             }
         }
 
