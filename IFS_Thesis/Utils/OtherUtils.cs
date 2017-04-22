@@ -41,5 +41,24 @@ namespace IFS_Thesis.Utils
 
             return degrees;
         }
+
+        /// <summary>
+        /// Gets best individuals from each degree
+        /// </summary>
+        public static List<Individual> GetBestIndividualsOfEachDegree(Population population, int numberOfIndividualsPerDegree)
+        {
+            var bestIndividuals = new List<Individual>();
+
+            var degrees = GetDegreesOfIndividuals(population.Individuals);
+
+            foreach (var degree in degrees)
+            {
+                var best = population.Individuals.Where(x => x.Degree == degree).OrderByDescending(x => x.ObjectiveFitness).Take(numberOfIndividualsPerDegree).ToList().Clone();
+                bestIndividuals.AddRange(best);
+            }
+
+            return bestIndividuals;
+        }
+
     }
 }

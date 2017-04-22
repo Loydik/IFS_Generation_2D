@@ -38,6 +38,11 @@ namespace IFS_Thesis.EvolutionaryData
         private Population _population;
 
         /// <summary>
+        /// Best individuals per degree in a current population
+        /// </summary>
+        private List<Individual> BestIndividualsPerDegree => OtherUtils.GetBestIndividualsOfEachDegree(_population, 1);
+
+        /// <summary>
         /// Random number generator for the whole evolutionary run
         /// </summary>
         private Random _randomNumberGenerator;
@@ -88,7 +93,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates a report image based on current generation
         /// </summary>
-        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber)
+        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber, string path)
         {
             //every Nth generation, save the highest fit individual as image
             if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
@@ -96,8 +101,8 @@ namespace IFS_Thesis.EvolutionaryData
                 if (individual != null)
                 {
                     ifsDrawer.SaveIfsImage(individual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
-                        Settings.Default.WorkingDirectory +
-                        $"/best_{currentGenerationNumber}th_gen_fitness_{individual.ObjectiveFitness:##.#######}.png");
+                        path +
+                        $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}.png");
                 }
             }
         }
@@ -157,7 +162,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(_population.Individuals, ProbabilityVector);
+                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
                 //Generating New Population (Steps 7 - 11)
 
@@ -166,7 +171,7 @@ namespace IFS_Thesis.EvolutionaryData
                 _population.Individuals = new FitnessFunction().CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
                 //Step 12
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(_population.Individuals, ProbabilityVector);
+                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
                 var totalPopulationCount = _population.Count;
 
@@ -188,6 +193,11 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    Log.Debug($"Best individuals per degree are:\n {string.Join("\n", BestIndividualsPerDegree)} \n\n");
+                    Log.Debug($"Current whole population is:\n {string.Join("\n", _population.Individuals)}");
+                }
 
                 highestFitnessIndividual =
                     _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
@@ -196,7 +206,19 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Population size: {_population.Count}");
 
                 ChangeConfiguration(currentGenerationNumber);
-                GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber);
+
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                    System.IO.Directory.CreateDirectory(folderPath);
+
+                    foreach (var individual in BestIndividualsPerDegree)
+                    {
+                        GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
+                    }
+                }
+
+               GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber, Settings.Default.WorkingDirectory); 
             }
 
             return highestFitnessIndividual;

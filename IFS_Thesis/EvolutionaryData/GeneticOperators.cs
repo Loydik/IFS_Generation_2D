@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
@@ -8,40 +9,22 @@ using IFS_Thesis.EvolutionaryData.Selection;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
-using MoreLinq;
 
 namespace IFS_Thesis.EvolutionaryData
 {
     public class GeneticOperators
     {
+        #region Private Properties
+
         /// <summary>
         /// Logger
         /// </summary>
         private static readonly ILog Log =
-            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
 
         #region Private Methods
-
-        /// <summary>
-        /// Gets best individuals from each degree
-        /// </summary>
-        private List<Individual> GetBestIndividualsOfEachDegree(Population population, int numberOfIndividualsPerDegree)
-        {
-            var bestIndividuals = new List<Individual>();
-
-            var degrees = OtherUtils.GetDegreesOfIndividuals(population.Individuals);
-
-            foreach (var degree in degrees)
-            {
-                var best = population.Individuals.Where(x => x.Degree == degree).OrderByDescending(x => x.ObjectiveFitness).Take(numberOfIndividualsPerDegree).ToList().Clone();
-                
-                //we set those individuals as elite
-                best.ForEach(i => i.Elite = true);
-                bestIndividuals.AddRange(best);
-            }
-
-            return bestIndividuals;
-        }
 
         /// <summary>
         /// Gets Random coefficient for IFS function
@@ -222,7 +205,11 @@ namespace IFS_Thesis.EvolutionaryData
             var newPopulation = new Population();
 
             // (Step 6.) Adding best individuals of each new degree 
-            var bestIndividuals = GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+            var bestIndividuals = OtherUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+
+            //we set those individuals as elite
+            bestIndividuals.ForEach(i => i.Elite = true);
+
             newPopulation.AddIndividuals(bestIndividuals);
 
             #region N1 Individuals

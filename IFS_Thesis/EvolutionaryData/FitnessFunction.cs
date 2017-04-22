@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
-using log4net.Repository.Hierarchy;
 
 namespace IFS_Thesis.EvolutionaryData
 {
@@ -42,7 +41,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// TODO - test/ Needs rework
         /// </summary>
-        public List<float> UpdateVectorOfProbabilitiesBasedOnFitness(List<Individual> individuals, List<float> vector )
+        public List<float> UpdateVectorOfProbabilitiesBasedOnAverageFitness(List<Individual> individuals, List<float> vector )
         {
             //brute add method
 
@@ -71,17 +70,16 @@ namespace IFS_Thesis.EvolutionaryData
         /// Adapts the vector of probability distribution V D proportionally to the fitness value
         ///of the best individual of each degree.
         /// </summary>
-        public List<float> UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(List<Individual> individuals, List<float> vector)
+        public List<float> UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(List<Individual> bestIndividuals, List<float> vector)
         {
             Dictionary<int, float> bestFitnessesPerDegree = new Dictionary<int, float>();
 
-            var degrees = OtherUtils.GetDegreesOfIndividuals(individuals);
-            
+            var degrees = OtherUtils.GetDegreesOfIndividuals(bestIndividuals);
             degrees.Sort();
 
             foreach (var degree in degrees)
             {
-                var bestFitnessForDegree = individuals.Where(x => x.Degree == degree).Max(x => x.ObjectiveFitness);
+                var bestFitnessForDegree = bestIndividuals.Single(x => x.Degree == degree).ObjectiveFitness;
 
                 vector[degree - 1] = vector[degree - 1] + bestFitnessForDegree;
 

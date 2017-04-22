@@ -286,5 +286,17 @@ namespace IFS_Thesis.Properties {
                 this["EliteIndividualsPerDegree"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExtremeDebugging {
+            get {
+                return ((bool)(this["ExtremeDebugging"]));
+            }
+            set {
+                this["ExtremeDebugging"] = value;
+            }
+        }
     }
 }

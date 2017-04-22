@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.Utils;
@@ -42,7 +41,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
         public void TestFitnessForIndividual()
         {
             var fitnesses  = new List<float>();
-            var individual = CreateIndividualFromSingelsString("[0.4199,0.1155,0.3005,0.5313,-3.1733,-3.1937,0];[0.1701,-0.1785,0.3398,-0.1059,-3.2943,-6.8108,0];[0.0327,0.1881,-0.5201,-0.09676194,7.6954,-4.4345,0];[0.3389,-0.1501,-0.2864,-0.6797,6.8361,-4.6384,0];[0.5196,-0.2561,0.6439,-0.3201,6.450814,-2.2881,0];[-0.4216,0.9305,0.0156,0.0673,-3.0577,8.2746,0];[0.5319,0.219,-0.0793,0.0871,3.0154,3.4911,0]");
+            var individual = CreateIndividualFromSingelsString("[0.3187,0.8946,0.3675,-0.1502,7.1641,3.5426,0];[0.2131,-0.8507,-0.2005,0.7513,4.2749,9.9805,0];[0.3297,-0.6026,-0.9373,0.8636885,-1.4526,-5.5306,0];[-0.9453,-0.9164,-0.5955,0.9657,6.6942,2.1566,0];[0.0716,-0.0509,0.9484,0.52,8.6859,7.2074,0];[-0.8213352,-0.5575,-0.2881,-0.5935,7.0869,-3.16,0]");
             var initialImagePath = "C:/tmp/IFS Images/tested_ifs.png";
 
             var image = (Bitmap)Image.FromFile(initialImagePath, true);
