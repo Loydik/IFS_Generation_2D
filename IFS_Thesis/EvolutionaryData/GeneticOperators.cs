@@ -215,11 +215,11 @@ namespace IFS_Thesis.EvolutionaryData
             #region N1 Individuals
 
             //Step 7
-            var count = Settings.Default.N1IndividualsCount;
+            var n1Count = Settings.Default.N1IndividualsPercentage * Settings.Default.PopulationSize;
 
             var n1Individuals = new List<Individual>();
 
-            for (int i = 0; i <= count/2; i++)
+            for (int i = 0; i <= n1Count/2; i++)
             {
                 //Selecting Species
                 var selectedSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
@@ -232,9 +232,14 @@ namespace IFS_Thesis.EvolutionaryData
                 {
                     var selectedIndividuals =
                         selectionStrategy.SelectIndividuals(
-                            population.GetAllIndividuals()
+                            population.Individuals
                                 .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
                                 .ToList(), 2, randomGen);
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Selected N1 individuals for recombination: \n {string.Join("\n", selectedIndividuals)} \n");
+                    }
 
                     var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
                         selectedIndividuals[1],
@@ -257,10 +262,10 @@ namespace IFS_Thesis.EvolutionaryData
             #region N2 Individuals
 
             //Step 8
-            count = Settings.Default.N2IndividualsCount;
-           // var allSingles = population.GetAllSingels();
+            var n2Count = (int) (Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
+            // var allSingles = population.GetAllSingels();
             //var n2Individuals = CreateIndividualsFromExistingPoolOfSingels(allSingles, count, probabilityVectors, randomGen);
-            var n2Individuals = CreateIndividuals(1000, count, probabilityVectors, randomGen);
+            var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
             newPopulation.AddIndividuals(n2Individuals);
             newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
@@ -270,11 +275,11 @@ namespace IFS_Thesis.EvolutionaryData
             #region N3 Individuals
 
             //Step 9
-            count = Settings.Default.N3IndividualsCount;
+            var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
 
             var n3Individuals = new List<Individual>();
 
-            for (int i = 0; i <= count/2; i++)
+            for (int i = 0; i <= n3Count / 2; i++)
             {
                 var firstSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
@@ -288,6 +293,11 @@ namespace IFS_Thesis.EvolutionaryData
                             selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
                         var secondIndividual =
                             selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+
+                        if (Settings.Default.ExtremeDebugging)
+                        {
+                            Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
+                        }
 
                         recombinationStrategy = new InterSpeciesCrossoverStrategy();
 
@@ -306,12 +316,17 @@ namespace IFS_Thesis.EvolutionaryData
             #region N4 Individuals
 
             //Step 10
-            count = Settings.Default.N4IndividualsCount;
+            var n4Count = Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize;
             var n4Individuals = new List<Individual>();
 
-            for (int i = 0; i <= count / 2; i++)
+            for (int i = 0; i <= n4Count / 2; i++)
             {
-                var parents = selectionStrategy.SelectIndividuals(population.GetAllIndividuals(), 2, randomGen);
+                var parents = selectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
+
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
+                }
 
                 recombinationStrategy = new ReasortmentStrategy();
 

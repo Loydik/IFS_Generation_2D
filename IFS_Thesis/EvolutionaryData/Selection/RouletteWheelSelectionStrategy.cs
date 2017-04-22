@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Selection
 {
     public class RouletteWheelSelectionStrategy : SelectionStrategy
     {
+        #region Private Methods
+
         /// <summary>
         /// Selects individual based on roulette selection method
         /// </summary>
         private Individual RouletteSelect(List<Individual> selectionPool, Random randomGen)
         {
             //total sum of fitnesses
-            double weight_sum = selectionPool.Aggregate(0f, (current, element) => current + element.ObjectiveFitness);
+            double weightSum = selectionPool.Aggregate(0f, (current, element) => current + element.ObjectiveFitness);
 
             // get a random value
-            double randomValue = randomGen.NextDouble()* weight_sum;
+            double randomValue = randomGen.NextDouble()* weightSum;
 
             double partialSum = 0;
 
@@ -41,12 +42,18 @@ namespace IFS_Thesis.EvolutionaryData.Selection
             return closestSpecies;
         }
 
+        #endregion
+
+        #region Overriden Members
+
         /// <summary>
         /// Private selection using Roulette Select
         /// </summary>
-        public override List<Individual> SelectIndividuals(List<Individual> selectionPool, int numberOfIndividualsToSelect, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, int numberOfIndividualsToSelect, Random randomGen)
         {
             List<Individual> selectedIndividuals = new List<Individual>();
+
+            var selectionPool = individualsForSelection.Clone().ToList();
 
             for (int i = 0; i < numberOfIndividualsToSelect; i++)
             {
@@ -57,7 +64,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection
                 //TODO - Add a preference
                 if(selectionPool.Count > 1)
                 { 
-                selectionPool.Remove(selectedIndividual);
+                    selectionPool.Remove(selectedIndividual);
                 }
             }
 
@@ -127,5 +134,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection
 
             return null;
         }
+
+        #endregion
     }
 }

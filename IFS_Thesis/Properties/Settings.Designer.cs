@@ -26,48 +26,48 @@ namespace IFS_Thesis.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("200")]
-        public int InitialPopulationSize {
+        public int PopulationSize {
             get {
-                return ((int)(this["InitialPopulationSize"]));
+                return ((int)(this["PopulationSize"]));
             }
             set {
-                this["InitialPopulationSize"] = value;
+                this["PopulationSize"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
-        public int N2IndividualsCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float N2IndividualsPercentage {
             get {
-                return ((int)(this["N2IndividualsCount"]));
+                return ((float)(this["N2IndividualsPercentage"]));
             }
             set {
-                this["N2IndividualsCount"] = value;
+                this["N2IndividualsPercentage"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public int N3IndividualsCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
+        public float N3IndividualsPercentage {
             get {
-                return ((int)(this["N3IndividualsCount"]));
+                return ((float)(this["N3IndividualsPercentage"]));
             }
             set {
-                this["N3IndividualsCount"] = value;
+                this["N3IndividualsPercentage"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("120")]
-        public int N4IndividualsCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.55")]
+        public float N4IndividualsPercentage {
             get {
-                return ((int)(this["N4IndividualsCount"]));
+                return ((float)(this["N4IndividualsPercentage"]));
             }
             set {
-                this["N4IndividualsCount"] = value;
+                this["N4IndividualsPercentage"] = value;
             }
         }
         
@@ -97,13 +97,13 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("40")]
-        public int N1IndividualsCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        public float N1IndividualsPercentage {
             get {
-                return ((int)(this["N1IndividualsCount"]));
+                return ((float)(this["N1IndividualsPercentage"]));
             }
             set {
-                this["N1IndividualsCount"] = value;
+                this["N1IndividualsPercentage"] = value;
             }
         }
         

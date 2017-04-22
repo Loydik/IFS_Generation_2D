@@ -63,11 +63,11 @@ namespace IFS_Thesis.EvolutionaryData
         {
             Log.Info("WELCOME TO IFS GENERATION ALGORITHM!");
             Log.Info("Initial Parameters are as follows:");
-            Log.Info($"Population Size: {Settings.Default.InitialPopulationSize}. Initial Singels Pool Size: {Settings.Default.InitialSingelPoolSize}. Mutation Probability: {Settings.Default.MutationProbability}. Average Fitness Threshold: {Settings.Default.AverageFitnessThreshold}");
+            Log.Info($"Population Size: {Settings.Default.PopulationSize}. Initial Singels Pool Size: {Settings.Default.InitialSingelPoolSize}. Mutation Probability: {Settings.Default.MutationProbability}. Average Fitness Threshold: {Settings.Default.AverageFitnessThreshold}");
             Log.Info(
-                $"Individual counts: N1 - {Settings.Default.N1IndividualsCount}; N2 - {Settings.Default.N2IndividualsCount}; N3 = {Settings.Default.N3IndividualsCount}; N4 = {Settings.Default.N4IndividualsCount}");
+                $"Individual percentages: N1 - {Settings.Default.N1IndividualsPercentage}; N2 - {Settings.Default.N2IndividualsPercentage}; N3 = {Settings.Default.N3IndividualsPercentage}; N4 = {Settings.Default.N4IndividualsPercentage}");
             Log.Info(
-                $"Draw Points Multiplier - {Settings.Default.DrawPointsMultiplier} Prc Fitness - {Settings.Default.PrcFitness} Pro Fitness - {Settings.Default.ProFitness}");
+                $"Draw Points Multiplier - {Settings.Default.DrawPointsMultiplier} Prc Fitness - {Settings.Default.PrcFitness} Pro Fitness - {Settings.Default.ProFitness} Elite Individuals Per Degree = {Settings.Default.EliteIndividualsPerDegree}");
         }
 
         /// <summary>
@@ -128,22 +128,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             _randomNumberGenerator = new Random();
 
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.InitialPopulationSize, ProbabilityVector, _randomNumberGenerator);
-
-            #region Test
-
-            //float[] ifs1 = { 0.0613f, -0.6102f, -0.501f, -0.0842f, 0.3372f, 0.0588f, 0 };
-            //float[] ifs2 = { 0.061f, -0.6101f, -0.501f, -0.0844f, 0.337f, 0.0588f, 0 };
-            //float[] ifs3 = { 0.0608f, -0.61f, -0.501f, -0.0842f, 0.3372f, 0.0588f, 0 };
-            //float[] ifs4 = { 0.0608f, -0.61f, -0.501f, -0.0843f, 0.337f, 0.0588f, 0 };
-            //float[] ifs5 = { 0.061f, -0.6101262f, -0.501f, -0.0843f, 0.3371f, 0.0588f, 0 };
-            //float[] ifs6 = { 0.0611f, -0.6102f, -0.501f, -0.0842f, 0.3372f, 0.0588f, 0 };
-
-            //var testIndividual = new Individual(new List<IfsFunction> { new IfsFunction(ifs1), new IfsFunction(ifs2), new IfsFunction(ifs3), new IfsFunction(ifs4), new IfsFunction(ifs5), new IfsFunction(ifs6) });
-
-            //var initialIndividuals = new List<Individual> { testIndividual };
-
-            #endregion
+            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, _randomNumberGenerator);
 
             _population.AddIndividuals(initialIndividuals);
 

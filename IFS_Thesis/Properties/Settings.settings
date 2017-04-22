@@ -2,17 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="IFS_Thesis.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="InitialPopulationSize" Type="System.Int32" Scope="User">
+    <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
-    <Setting Name="N2IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">20</Value>
+    <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.1</Value>
     </Setting>
-    <Setting Name="N3IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">30</Value>
+    <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.15</Value>
     </Setting>
-    <Setting Name="N4IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">120</Value>
+    <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.55</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -20,8 +20,8 @@
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.01</Value>
     </Setting>
-    <Setting Name="N1IndividualsCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">40</Value>
+    <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.2</Value>
     </Setting>
     <Setting Name="WorkingDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
