@@ -5,7 +5,8 @@ using System.Reflection;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
-using IFS_Thesis.EvolutionaryData.Selection;
+using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
+using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -198,19 +199,20 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
-            SelectionStrategy selectionStrategy = new RouletteWheelSelectionStrategy();
+            IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
+            SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
             RecombinationStrategy recombinationStrategy;
             IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
 
             var newPopulation = new Population();
 
-            // (Step 6.) Adding best individuals of each new degree 
-            var bestIndividuals = OtherUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+            //// (Step 6.) Adding best individuals of each new degree 
+            //var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
 
-            //we set those individuals as elite
-            bestIndividuals.ForEach(i => i.Elite = true);
+            ////we set those individuals as elite
+            //bestIndividuals.ForEach(i => i.Elite = true);
 
-            newPopulation.AddIndividuals(bestIndividuals);
+            //newPopulation.AddIndividuals(bestIndividuals);
 
             #region N1 Individuals
 
@@ -222,7 +224,7 @@ namespace IFS_Thesis.EvolutionaryData
             for (int i = 0; i <= n1Count/2; i++)
             {
                 //Selecting Species
-                var selectedSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+                var selectedSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
                 //selecting recombination strategy
                 recombinationStrategy = GetRecombinationStrategy(Settings.Default.OnePointCrossoverProbability,
@@ -231,7 +233,7 @@ namespace IFS_Thesis.EvolutionaryData
                 if (selectedSpecies != null)
                 {
                     var selectedIndividuals =
-                        selectionStrategy.SelectIndividuals(
+                        individualSelectionStrategy.SelectIndividuals(
                             population.Individuals
                                 .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
                                 .ToList(), 2, randomGen);
@@ -263,8 +265,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             //Step 8
             var n2Count = (int) (Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
-            // var allSingles = population.GetAllSingels();
-            //var n2Individuals = CreateIndividualsFromExistingPoolOfSingels(allSingles, count, probabilityVectors, randomGen);
             var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
             newPopulation.AddIndividuals(n2Individuals);
             newPopulation.AddIndividuals(n2Individuals);
@@ -281,18 +281,18 @@ namespace IFS_Thesis.EvolutionaryData
 
             for (int i = 0; i <= n3Count / 2; i++)
             {
-                var firstSpecies = selectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+                var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
                 if (firstSpecies != null)
                 {
-                    var secondSpecies = selectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
+                    var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
 
                     if (secondSpecies != null)
                     {
                         var firstIndividual =
-                            selectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
                         var secondIndividual =
-                            selectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
                         if (Settings.Default.ExtremeDebugging)
                         {
@@ -321,7 +321,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             for (int i = 0; i <= n4Count / 2; i++)
             {
-                var parents = selectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
+                var parents = individualSelectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
 
                 if (Settings.Default.ExtremeDebugging)
                 {
@@ -348,7 +348,7 @@ namespace IFS_Thesis.EvolutionaryData
             foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
             {
                 //Mutates individual with frequency of defined probability
-                if (OtherUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
+                if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
                 {
                     var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using IFS_Thesis.Properties;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
 {
@@ -17,13 +18,13 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
             var s = sRange[randomGen.Next(0, 2)];
 
             //r -> mutation range, a standard of 10% was chosen
-            var r = 0.1;
+            var r = Settings.Default.MutationRange;
 
             //u ∈ [0,1] uniform at random
             var u =  randomGen.NextDouble();
 
             //mutation precision, k ∈ {4,5,...20}
-            var k = 16;
+            var k = 8;
 
             //a = 2^(-u*k)
             var a = (float)Math.Pow(2, (-1) * u * k);

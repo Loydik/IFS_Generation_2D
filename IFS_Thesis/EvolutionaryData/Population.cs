@@ -85,7 +85,7 @@ namespace IFS_Thesis.EvolutionaryData
         {
             Species.Clear();
 
-            var allDegrees = OtherUtils.GetDegreesOfIndividuals(newIndividuals);
+            var allDegrees = EaUtils.GetDegreesOfIndividuals(newIndividuals);
 
             foreach (var degree in allDegrees)
             {

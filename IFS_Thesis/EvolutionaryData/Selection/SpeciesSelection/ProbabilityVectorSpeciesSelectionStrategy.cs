@@ -1,75 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IFS_Thesis.Utils;
 
-namespace IFS_Thesis.EvolutionaryData.Selection
+namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
 {
-    public class RouletteWheelSelectionStrategy : SelectionStrategy
+    public class ProbabilityVectorSpeciesSelectionStrategy : SpeciesSelectionStrategy
     {
         #region Private Methods
 
-        /// <summary>
-        /// Selects individual based on roulette selection method
-        /// </summary>
-        private Individual RouletteSelect(List<Individual> selectionPool, Random randomGen)
-        {
-            //total sum of fitnesses
-            double weightSum = selectionPool.Aggregate(0f, (current, element) => current + element.ObjectiveFitness);
-
-            // get a random value
-            double randomValue = randomGen.NextDouble()* weightSum;
-
-            double partialSum = 0;
-
-            foreach (var individual in selectionPool)
-            {
-                partialSum += individual.ObjectiveFitness;
-
-                if (partialSum >= randomValue)
-                {
-                    return individual;
-                }
-            }
-
-            return null;
-        }
-
         private Species SelectNearestSpecies(Population population, int degree)
         {
-            var closestSpecies= population.Species.Aggregate((x, y) => Math.Abs(x.DegreeOfIndividualsInSpecies - degree) < Math.Abs(y.DegreeOfIndividualsInSpecies - degree) ? x : y);
+            var closestSpecies = population.Species.Aggregate((x, y) => Math.Abs(x.DegreeOfIndividualsInSpecies - degree) < Math.Abs(y.DegreeOfIndividualsInSpecies - degree) ? x : y);
 
             return closestSpecies;
         }
 
         #endregion
 
-        #region Overriden Members
-
-        /// <summary>
-        /// Private selection using Roulette Select
-        /// </summary>
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, int numberOfIndividualsToSelect, Random randomGen)
-        {
-            List<Individual> selectedIndividuals = new List<Individual>();
-
-            var selectionPool = individualsForSelection.Clone().ToList();
-
-            for (int i = 0; i < numberOfIndividualsToSelect; i++)
-            {
-                var selectedIndividual = RouletteSelect(selectionPool, randomGen);
-
-                selectedIndividuals.Add(selectedIndividual);
-
-                //TODO - Add a preference
-                if(selectionPool.Count > 1)
-                { 
-                    selectionPool.Remove(selectedIndividual);
-                }
-            }
-
-            return selectedIndividuals;
-        }
+        #region Overriden Methods
 
         /// <summary>
         /// Selects species based on probability vector

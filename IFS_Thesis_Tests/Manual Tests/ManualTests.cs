@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.Utils;
 using NUnit.Framework;
 
@@ -49,7 +50,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             for (int i = 0; i < 10; i++)
             {
-                var fitness = new FitnessFunction().CalculateFitnessForIndividual(sourcePixels, individual, image.Width, image.Height);
+                var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourcePixels, individual, image.Width, image.Height);
                 fitnesses.Add(fitness);
             }
             

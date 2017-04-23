@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
+using IFS_Thesis.EvolutionaryData.Reinsertion;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -40,7 +42,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Best individuals per degree in a current population
         /// </summary>
-        private List<Individual> BestIndividualsPerDegree => OtherUtils.GetBestIndividualsOfEachDegree(_population, 1);
+        private List<Individual> BestIndividualsPerDegree => EaUtils.GetBestIndividualsOfEachDegree(_population, 1);
 
         /// <summary>
         /// Random number generator for the whole evolutionary run
@@ -51,6 +53,16 @@ namespace IFS_Thesis.EvolutionaryData
         /// Genetic operators
         /// </summary>
         private GeneticOperators _geneticOperators;
+
+        /// <summary>
+        /// Fitness function
+        /// </summary>
+        private IFitnessFunction _fitnessFunction;
+
+        /// <summary>
+        /// Reinsertion strategy
+        /// </summary>
+        private IReinsertionStrategy _reinsertionStrategy;
 
         #endregion
 
@@ -120,6 +132,8 @@ namespace IFS_Thesis.EvolutionaryData
 
             _geneticOperators = new GeneticOperators();
             _population = new Population();
+            _fitnessFunction = new WeightedPointsCoverageFitnessFunction();
+            _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
 
             //Initial Probability vector, 8 max
             ProbabilityVector = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
@@ -135,7 +149,7 @@ namespace IFS_Thesis.EvolutionaryData
             //we get pixels from a source image 
             _sourceImagePixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
 
-            _population.Individuals = new FitnessFunction().CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+            _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
             Individual highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
@@ -147,16 +161,21 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
                 //Generating New Population (Steps 7 - 11)
 
-                _population = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
+                var oldPopulation = _population;
 
-                _population.Individuals = new FitnessFunction().CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
+
+                newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+
+                //Reinserting individuals to population
+                _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
 
                 //Step 12
-                ProbabilityVector = new FitnessFunction().UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
                 var totalPopulationCount = _population.Count;
 
@@ -168,7 +187,7 @@ namespace IFS_Thesis.EvolutionaryData
                     Settings.Default.AverageFitnessThreshold);
 
                 //Step 14
-                _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.05f);
+                _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
 
                 //Step 15
                 if (speciesCountBefore < _population.Species.Count)

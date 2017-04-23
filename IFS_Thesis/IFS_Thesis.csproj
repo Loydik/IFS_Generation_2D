@@ -79,7 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EvolutionaryData\EvolutionaryAlgorithm.cs" />
-    <Compile Include="EvolutionaryData\FitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\WeightedPointsCoverageFitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\IFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Individual.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
@@ -93,9 +94,14 @@
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\ReasortmentStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\RecombinationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Reinsertion\DegreeBasedReinsertionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Reinsertion\IReinsertionStrategy.cs" />
     <Compile Include="EvolutionaryData\SelectionAlgorithms.cs" />
-    <Compile Include="EvolutionaryData\Selection\RouletteWheelSelectionStrategy.cs" />
-    <Compile Include="EvolutionaryData\Selection\SelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\IndividualSelection\TruncationIndividualSelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\SpeciesSelection\ProbabilityVectorSpeciesSelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\SpeciesSelection\SpeciesSelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\IndividualSelection\RouletteWheelIndividualSelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\IndividualSelection\IndividualSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Singel.cs" />
     <Compile Include="EvolutionaryData\Species.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -110,7 +116,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
-    <Compile Include="Utils\OtherUtils.cs" />
+    <Compile Include="Utils\EaUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

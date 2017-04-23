@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection;
+using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
+using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
 using IFS_Thesis.Utils;
 using Moq;
 using NUnit.Framework;
@@ -19,7 +21,7 @@ namespace IFS_Thesis_Tests.SelectionStrategiesTests
         [TestCaseSource(typeof(SpeciesSelectionStrategiesCases))]
         public void RouletteWheelTwoSpeciesSelectionTests(Population population, Species firstSpecies, int maximumDistance, int expectedRandomNumber, Species expectedSecondSpecies)
         {
-            var strategy = new RouletteWheelSelectionStrategy();
+            var strategy = new ProbabilityVectorSpeciesSelectionStrategy();
 
             var randomMock = new Mock<Random>();
 

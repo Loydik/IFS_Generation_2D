@@ -8,9 +8,9 @@ using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
 
-namespace IFS_Thesis.EvolutionaryData
+namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {
-    public class FitnessFunction
+    public class WeightedPointsCoverageFitnessFunction : IFitnessFunction
     {
         #region Logger
 
@@ -22,93 +22,11 @@ namespace IFS_Thesis.EvolutionaryData
 
         #endregion
 
-        #region Private Methods
-
-        /// <summary>
-        /// Calculates average fitness for a given degree
-        /// </summary>
-        private float GetAverageFitnessForDegree(List<Individual> individuals, int degree)
-        {
-            var average = individuals.Where(x => x.Degree == degree).Select(x => x.ObjectiveFitness).Average();
-
-            return average;
-        }
-
-        #endregion
-
         #region Public Methods
-
-        /// <summary>
-        /// TODO - test/ Needs rework
-        /// </summary>
-        public List<float> UpdateVectorOfProbabilitiesBasedOnAverageFitness(List<Individual> individuals, List<float> vector )
-        {
-            //brute add method
-
-            //foreach (var individual in individuals)
-            //{
-            //    vector[individual.Degree - 1] = vector[individual.Degree - 1] + individual.ObjectiveFitness;
-            //}
-
-            var degrees = OtherUtils.GetDegreesOfIndividuals(individuals);
-
-            foreach (var degree in degrees)
-            {
-                var averageFitnessForDegree = GetAverageFitnessForDegree(individuals, degree);
-
-                vector[degree - 1] = vector[degree - 1] + averageFitnessForDegree;
-            }
-
-            vector = OtherUtils.NormalizeVector(vector);
-
-            Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
-
-            return vector;
-        }
-
-        /// <summary>
-        /// Adapts the vector of probability distribution V D proportionally to the fitness value
-        ///of the best individual of each degree.
-        /// </summary>
-        public List<float> UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(List<Individual> bestIndividuals, List<float> vector)
-        {
-            Dictionary<int, float> bestFitnessesPerDegree = new Dictionary<int, float>();
-
-            var degrees = OtherUtils.GetDegreesOfIndividuals(bestIndividuals);
-            degrees.Sort();
-
-            foreach (var degree in degrees)
-            {
-                var bestFitnessForDegree = bestIndividuals.Single(x => x.Degree == degree).ObjectiveFitness;
-
-                vector[degree - 1] = vector[degree - 1] + bestFitnessForDegree;
-
-                bestFitnessesPerDegree.Add(degree, bestFitnessForDegree);
-            }
-
-            vector = OtherUtils.NormalizeVector(vector);
-
-            for (var index = 0; index < vector.Count; index++)
-            {
-                var probability = vector[index];
-                
-                //Setting to zero
-                if (Math.Abs(probability) > 0.00000001 && probability < 0.00000001)
-                {
-                    vector[index] = 0;
-                }
-            }
-
-            Log.Info($"Best fitnesses for degrees: [{string.Join(";", bestFitnessesPerDegree)}]");
-            Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
-
-            return vector;
-        }
 
         /// <summary>
         /// Calculate fitness for a given individual
         /// </summary>
-        /// //TODO Refactor to simpler calculations
         public float CalculateFitnessForIndividual(List<Point> sourceImagePixels, Individual individual, int width, int height)
         {
             var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
@@ -180,7 +98,6 @@ namespace IFS_Thesis.EvolutionaryData
             return individuals;
         }
 
-        #endregion
-        
+        #endregion        
     }
 }
