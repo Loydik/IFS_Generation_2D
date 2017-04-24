@@ -310,5 +310,17 @@ namespace IFS_Thesis.Properties {
                 this["MutationRange"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RecalculateFitnessAfterReinsertion {
+            get {
+                return ((bool)(this["RecalculateFitnessAfterReinsertion"]));
+            }
+            set {
+                this["RecalculateFitnessAfterReinsertion"] = value;
+            }
+        }
     }
 }

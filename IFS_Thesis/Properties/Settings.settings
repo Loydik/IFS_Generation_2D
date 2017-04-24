@@ -74,5 +74,8 @@
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.15</Value>
     </Setting>
+    <Setting Name="RecalculateFitnessAfterReinsertion" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

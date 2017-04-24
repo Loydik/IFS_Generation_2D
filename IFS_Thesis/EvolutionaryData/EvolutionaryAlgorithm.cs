@@ -174,6 +174,13 @@ namespace IFS_Thesis.EvolutionaryData
                 //Reinserting individuals to population
                 _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
 
+                if (Settings.Default.RecalculateFitnessAfterReinsertion)
+                {
+                    //recalculating fitness for whole population
+                    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
+                        _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+                }
+
                 //Step 12
                 ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
