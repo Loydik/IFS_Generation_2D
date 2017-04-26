@@ -265,7 +265,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int DrawImageEveryNthGeneration {
             get {
                 return ((int)(this["DrawImageEveryNthGeneration"]));
@@ -289,7 +289,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ExtremeDebugging {
             get {
                 return ((bool)(this["ExtremeDebugging"]));
