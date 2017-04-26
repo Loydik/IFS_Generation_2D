@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneticOperatorsTests\GeneticOperatorsTests.cs" />
+    <Compile Include="IfsTests\IfsFunction3dTests.cs" />
     <Compile Include="Manual Tests\ManualTests.cs" />
     <Compile Include="MutationStrategiesTests\MutationStrategiesTests.cs" />
     <Compile Include="RecombinationStrategiesTests\ReasortmentOperatorTests.cs" />

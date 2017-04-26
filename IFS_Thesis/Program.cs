@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.Ifs;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using Image = System.Drawing.Image;

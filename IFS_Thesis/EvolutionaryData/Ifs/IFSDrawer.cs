@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using IFS_Thesis.Properties;
-using static System.Single;
+using IFS_Thesis.Utils;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
-namespace IFS_Thesis.Utils
+namespace IFS_Thesis.EvolutionaryData.Ifs
 {
     /// <summary>
     /// Class used for drawing IFS
@@ -50,7 +50,7 @@ namespace IFS_Thesis.Utils
             var yMin = points.Min(x => x.Y);
             var yMax = points.Max(x => x.Y);
 
-            if (IsInfinity(xMax) || IsInfinity(yMax) || IsInfinity(xMin) || IsInfinity(yMin) || IsNaN(xMax) || IsNaN(yMax) || IsNaN(xMin) || IsNaN(yMin))
+            if (Single.IsInfinity(xMax) || Single.IsInfinity(yMax) || Single.IsInfinity(xMin) || Single.IsInfinity(yMin) || Single.IsNaN(xMax) || Single.IsNaN(yMax) || Single.IsNaN(xMin) || Single.IsNaN(yMin))
             {
                 redundantPixels = points.Count;
                 return new Tuple<int, List<Point>>(redundantPixels, new List<Point>());
