@@ -105,7 +105,8 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates a report image based on current generation
         /// </summary>
-        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber, string path)
+        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber,
+            string path)
         {
             //every Nth generation, save the highest fit individual as image
             if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
@@ -218,7 +219,8 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                if (Settings.Default.ExtremeDebugging)
+                //every Nth generation, save the highest fit individual as image
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
@@ -229,7 +231,9 @@ namespace IFS_Thesis.EvolutionaryData
                     }
                 }
 
-               GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber, Settings.Default.WorkingDirectory); 
+
+                GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber,
+                    Settings.Default.WorkingDirectory); 
             }
 
             return highestFitnessIndividual;
