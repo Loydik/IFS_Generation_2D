@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -74,12 +75,12 @@ namespace IFS_Thesis.EvolutionaryData
         private void OutputEvolutinaryAlgorithmParameters()
         {
             Log.Info("WELCOME TO IFS GENERATION ALGORITHM!");
-            Log.Info("Initial Parameters are as follows:");
-            Log.Info($"Population Size: {Settings.Default.PopulationSize}. Initial Singels Pool Size: {Settings.Default.InitialSingelPoolSize}. Mutation Probability: {Settings.Default.MutationProbability}. Average Fitness Threshold: {Settings.Default.AverageFitnessThreshold}");
-            Log.Info(
-                $"Individual percentages: N1 - {Settings.Default.N1IndividualsPercentage}; N2 - {Settings.Default.N2IndividualsPercentage}; N3 = {Settings.Default.N3IndividualsPercentage}; N4 = {Settings.Default.N4IndividualsPercentage}");
-            Log.Info(
-                $"Draw Points Multiplier - {Settings.Default.DrawPointsMultiplier} Prc Fitness - {Settings.Default.PrcFitness} Pro Fitness - {Settings.Default.ProFitness} Elite Individuals Per Degree = {Settings.Default.EliteIndividualsPerDegree}");
+            Log.Info("Initial settings are as follows:");
+
+            foreach (SettingsProperty currentProperty in Settings.Default.Properties)
+            {
+                Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
+            }
         }
 
         /// <summary>
