@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs.IFSGenerators
+namespace IFS_Thesis.Ifs.IFSGenerators
 {
     /// <summary>
     /// Class used for generating 3D IFS-es

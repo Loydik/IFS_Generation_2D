@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination

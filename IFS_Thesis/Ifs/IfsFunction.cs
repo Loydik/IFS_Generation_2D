@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IFS_Thesis.Utils
+namespace IFS_Thesis.Ifs
 {
     public class IfsFunction : IEquatable<IfsFunction>, ICloneable
     {

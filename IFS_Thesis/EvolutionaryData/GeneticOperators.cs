@@ -4,9 +4,11 @@ using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
+using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
 using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -197,14 +199,14 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates new population
         /// </summary>
-        public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
+        public Population.Population GenerateNewPopulation(Population.Population population, List<float> probabilityVectors, Random randomGen)
         {
             IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
             RecombinationStrategy recombinationStrategy;
             IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
 
-            var newPopulation = new Population();
+            var newPopulation = new Population.Population();
 
             //// (Step 6.) Adding best individuals of each new degree 
             //var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
@@ -364,7 +366,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Removes weakest species from a population if average fitness is below threshold, and no element has higher fitness
         /// </summary>
-        public Population RemoveWeakestSpecies(Population population, float averageFitnessThreshold)
+        public Population.Population RemoveWeakestSpecies(Population.Population population, float averageFitnessThreshold)
         {
             var weakestSpecies =
                 population.Species.Where(x => x.Individuals.Average(individual => individual.ObjectiveFitness) < averageFitnessThreshold && !x.Individuals.Any(f => f.ObjectiveFitness >= averageFitnessThreshold)).ToList();
@@ -381,7 +383,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Removes weakest species from a population if its population is below %of total
         /// </summary>
-        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, int totalPopulationCount, float percentThreshold)
+        public Population.Population RemoveSpeciesWithPopulationBelowTotal(Population.Population population, int totalPopulationCount, float percentThreshold)
         {
             var threshold = (int)(totalPopulationCount * percentThreshold);
 

@@ -1,6 +1,6 @@
-﻿using IFS_Thesis.Utils;
+﻿using IFS_Thesis.Ifs;
 
-namespace IFS_Thesis.EvolutionaryData
+namespace IFS_Thesis.EvolutionaryData.Population
 {
     public class Singel
     {

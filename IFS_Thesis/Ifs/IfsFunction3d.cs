@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs
+namespace IFS_Thesis.Ifs
 {
     /// <summary>
     /// IFS function 3d representation

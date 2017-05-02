@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 
-namespace IFS_Thesis.EvolutionaryData
+namespace IFS_Thesis.EvolutionaryData.Population
 {
     public class Individual : ICloneable
     {

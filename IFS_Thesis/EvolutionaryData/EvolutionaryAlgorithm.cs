@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
-using IFS_Thesis.EvolutionaryData.Ifs;
+using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.EvolutionaryData.Reinsertion;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -38,7 +39,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// The current Population
         /// </summary>
-        private Population _population;
+        private Population.Population _population;
 
         /// <summary>
         /// Best individuals per degree in a current population
@@ -133,7 +134,7 @@ namespace IFS_Thesis.EvolutionaryData
             OutputEvolutinaryAlgorithmParameters();
 
             _geneticOperators = new GeneticOperators();
-            _population = new Population();
+            _population = new Population.Population();
             _fitnessFunction = new WeightedPointsCoverageFitnessFunction();
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
 

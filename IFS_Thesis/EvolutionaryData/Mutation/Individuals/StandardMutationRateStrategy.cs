@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
+using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using log4net;
 

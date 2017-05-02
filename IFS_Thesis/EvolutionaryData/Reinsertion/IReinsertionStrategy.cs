@@ -11,6 +11,6 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <param name="newPopulation">New population of individuals</param>
         /// <param name="randomGen">Random number generator</param>
         /// <returns></returns>
-        Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen);
+        Population.Population ReinsertIndividuals(Population.Population oldPopulation, Population.Population newPopulation, Random randomGen);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
 using Moq;
 using NUnit.Framework;

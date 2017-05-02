@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.EvolutionaryData.Recombination;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using Moq;
 using NUnit.Framework;

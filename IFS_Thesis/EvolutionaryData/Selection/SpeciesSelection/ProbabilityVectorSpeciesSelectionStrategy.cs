@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IFS_Thesis.EvolutionaryData.Population;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
 {
@@ -8,7 +9,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
     {
         #region Private Methods
 
-        private Species SelectNearestSpecies(Population population, int degree)
+        private Species SelectNearestSpecies(Population.Population population, int degree)
         {
             var closestSpecies = population.Species.Aggregate((x, y) => Math.Abs(x.DegreeOfIndividualsInSpecies - degree) < Math.Abs(y.DegreeOfIndividualsInSpecies - degree) ? x : y);
 
@@ -23,7 +24,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
         /// Selects species based on probability vector
         /// </summary>
         /// <returns></returns>
-        public override Species SelectSpecies(Population population, List<float> probabilityVector, Random randomGen)
+        public override Species SelectSpecies(Population.Population population, List<float> probabilityVector, Random randomGen)
         {
             double randomValue = randomGen.NextDouble();
 
@@ -60,7 +61,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
         /// <summary>
         /// Selects two species according to VD and maximum distance between species 
         /// </summary>
-        public override Species SelectSecondSpecies(Population population, Species firstSpecies, int maximumDistance, Random randomGen)
+        public override Species SelectSecondSpecies(Population.Population population, Species firstSpecies, int maximumDistance, Random randomGen)
         {
             var firstSpeciesDegree = firstSpecies.DegreeOfIndividualsInSpecies;
 

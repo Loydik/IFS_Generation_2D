@@ -1,4 +1,4 @@
-﻿namespace IFS_Thesis.EvolutionaryData.Ifs.IFSDrawers
+﻿namespace IFS_Thesis.Ifs.IFSDrawers
 {
     /// <summary>
     /// Format of 3D image

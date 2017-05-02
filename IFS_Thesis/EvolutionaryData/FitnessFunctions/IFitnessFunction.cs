@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using IFS_Thesis.EvolutionaryData.Population;
 
 namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {

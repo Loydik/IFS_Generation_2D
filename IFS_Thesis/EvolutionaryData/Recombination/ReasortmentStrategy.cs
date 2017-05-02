@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using MoreLinq;
 

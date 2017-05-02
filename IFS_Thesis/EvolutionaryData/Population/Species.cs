@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IFS_Thesis.EvolutionaryData
+namespace IFS_Thesis.EvolutionaryData.Population
 {
     public class Species
     {

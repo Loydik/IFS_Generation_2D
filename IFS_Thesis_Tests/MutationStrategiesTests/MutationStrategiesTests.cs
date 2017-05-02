@@ -6,6 +6,8 @@ using System.Threading;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
+using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using NUnit.Framework;
 

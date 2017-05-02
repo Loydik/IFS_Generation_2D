@@ -2,6 +2,8 @@
 using System.Drawing;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
+using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using NUnit.Framework;
 

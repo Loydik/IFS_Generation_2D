@@ -2,7 +2,7 @@
 using System.Linq;
 using IFS_Thesis.Utils;
 
-namespace IFS_Thesis.EvolutionaryData
+namespace IFS_Thesis.EvolutionaryData.Population
 {
     public class Population
     {

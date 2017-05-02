@@ -1,4 +1,4 @@
-﻿namespace IFS_Thesis.EvolutionaryData.Ifs
+﻿namespace IFS_Thesis.Ifs
 {
     /// <summary>
     /// Represents 3d floating point 

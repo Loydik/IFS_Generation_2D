@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs
+namespace IFS_Thesis.Ifs
 {
     /// <summary>
     /// Voxel (Pixel in 3 dimensions)

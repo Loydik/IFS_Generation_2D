@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using IFS_Thesis.Properties;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs.IFSGenerators
+namespace IFS_Thesis.Ifs.IFSGenerators
 {
     /// <summary>
     /// Generates IFS 3D using Random Iteration Algorithm

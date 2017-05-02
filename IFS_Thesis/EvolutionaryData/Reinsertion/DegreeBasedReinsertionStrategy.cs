@@ -21,11 +21,11 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <summary>
         /// Reinserts individuals to a population
         /// </summary>
-        public Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen)
+        public Population.Population ReinsertIndividuals(Population.Population oldPopulation, Population.Population newPopulation, Random randomGen)
         {
             IndividualSelectionStrategy strategy = new TruncationIndividualSelectionStrategy();
 
-            var finalPopulation = new Population();
+            var finalPopulation = new Population.Population();
 
             var degreesOfIndividuals = EaUtils.GetDegreesOfIndividuals(newPopulation.Individuals);
 

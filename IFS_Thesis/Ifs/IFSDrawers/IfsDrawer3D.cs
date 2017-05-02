@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs.IFSDrawers
+namespace IFS_Thesis.Ifs.IFSDrawers
 {
     /// <summary>
     /// Abstract class representing classes which will convert a list of voxels to an image of a given format

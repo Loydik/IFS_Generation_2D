@@ -1,4 +1,4 @@
-﻿using IFS_Thesis.EvolutionaryData.Ifs;
+﻿using IFS_Thesis.Ifs;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.IfsTests

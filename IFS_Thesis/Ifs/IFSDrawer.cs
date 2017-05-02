@@ -4,10 +4,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using IFS_Thesis.Properties;
-using IFS_Thesis.Utils;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
-namespace IFS_Thesis.EvolutionaryData.Ifs
+namespace IFS_Thesis.Ifs
 {
     /// <summary>
     /// Class used for drawing IFS
