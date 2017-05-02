@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +50,18 @@
       <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.2.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cyotek.Drawing.BitmapFont.1.0.2.0\lib\net20\Cyotek.Drawing.BitmapFont.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.2015.1.715\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.2015.1.715\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -64,11 +78,15 @@
       <HintPath>..\packages\oxyplot-extensions.1.0.13\lib\net45\OxyPlot.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,7 +100,13 @@
     <Compile Include="EvolutionaryData\FitnessFunctions\WeightedPointsCoverageFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\FitnessFunctions\IFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
+    <Compile Include="EvolutionaryData\Ifs\IFSDrawers\ImageFormat3D.cs" />
+    <Compile Include="EvolutionaryData\Ifs\IFSDrawers\IfsDrawer3D.cs" />
+    <Compile Include="EvolutionaryData\Ifs\IFSGenerators\IfsGenerator3D.cs" />
     <Compile Include="EvolutionaryData\Ifs\IfsFunction3d.cs" />
+    <Compile Include="EvolutionaryData\Ifs\IFSGenerators\RandomIterationIfs3DGenerator.cs" />
+    <Compile Include="EvolutionaryData\Ifs\Point3DF.cs" />
+    <Compile Include="EvolutionaryData\Ifs\Voxel.cs" />
     <Compile Include="EvolutionaryData\Population\Individual.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\StandardMutationRateStrategy.cs" />

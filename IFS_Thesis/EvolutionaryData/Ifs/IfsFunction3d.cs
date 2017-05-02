@@ -2,6 +2,9 @@
 
 namespace IFS_Thesis.EvolutionaryData.Ifs
 {
+    /// <summary>
+    /// IFS function 3d representation
+    /// </summary>
     public class IfsFunction3D : IEquatable<IfsFunction3D>, ICloneable
     {
         #region Properties

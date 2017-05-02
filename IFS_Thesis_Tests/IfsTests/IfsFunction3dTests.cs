@@ -47,5 +47,23 @@ namespace IFS_Thesis_Tests.IfsTests
             Assert.That(ifsFunction.B2, Is.EqualTo(1.1f));
             Assert.That(ifsFunction.B3, Is.EqualTo(1.2f));
         }
+
+        [Test, Category("Voxels")]
+        public void VoxelEqualityTest()
+        {
+            var voxel1 = new Voxel(1, 2, 3);
+            var voxel2 = new Voxel(1, 2, 3);
+
+            Assert.That(voxel1, Is.EqualTo(voxel2));
+        }
+
+        [Test, Category("Voxels")]
+        public void VoxelInEqualityTest()
+        {
+            var voxel1 = new Voxel(1, 2, 4);
+            var voxel2 = new Voxel(1, 2, 3);
+
+            Assert.That(voxel1, Is.Not.EqualTo(voxel2));
+        }
     }
 }
