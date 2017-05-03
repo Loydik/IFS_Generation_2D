@@ -8,6 +8,8 @@ using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.EvolutionaryData.Reinsertion;
 using IFS_Thesis.Ifs;
+using IFS_Thesis.Ifs.IFSDrawers;
+using IFS_Thesis.Ifs.IFSGenerators;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -15,7 +17,7 @@ using log4net;
 namespace IFS_Thesis.EvolutionaryData
 {
     /// <summary>
-    /// Class which represents the Evolutionary Algorithm
+    /// Class which represents the Evolutionary Algorithm for 3D IFS
     /// </summary>
     public class EvolutionaryAlgorithm
     {
@@ -26,11 +28,6 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        /// <summary>
-        /// Pixels of the source image
-        /// </summary>
-        private List<Point> _sourceImagePixels;
 
         /// <summary>
         /// List of probabilites to generate IFS of a given degree
@@ -105,23 +102,23 @@ namespace IFS_Thesis.EvolutionaryData
             }
         }
 
-        /// <summary>
-        /// Generates a report image based on current generation
-        /// </summary>
-        private void GenerateReportImage(IfsDrawer ifsDrawer, Individual individual, int currentGenerationNumber,
-            string path)
-        {
-            //every Nth generation, save the highest fit individual as image
-            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
-            {
-                if (individual != null)
-                {
-                    ifsDrawer.SaveIfsImage(individual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
-                        path +
-                        $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}.png");
-                }
-            }
-        }
+        ///// <summary>
+        ///// Generates a report image based on current generation
+        ///// </summary>
+        //private void GenerateReportImage(IfsDrawer3D ifsDrawer, Individual individual, int currentGenerationNumber,
+        //    string path)
+        //{
+        //    //every Nth generation, save the highest fit individual as image
+        //    if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+        //    {
+        //        if (individual != null)
+        //        {
+        //            ifsDrawer.SaveIfsImage(individual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
+        //                path +
+        //                $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}.png");
+        //        }
+        //    }
+        //}
 
         #endregion
 
@@ -130,7 +127,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Start the Evolution Process
         /// </summary>
-        public Individual Start(int maxGenerations, Bitmap sourceImage, IfsDrawer drawer)
+        public Individual StartEvolution(int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator3D ifsGenerator, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
 
@@ -140,7 +137,7 @@ namespace IFS_Thesis.EvolutionaryData
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
 
             //Initial Probability vector, 8 max
-            ProbabilityVector = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
+            ProbabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
 
@@ -150,96 +147,95 @@ namespace IFS_Thesis.EvolutionaryData
 
             _population.AddIndividuals(initialIndividuals);
 
-            //we get pixels from a source image 
-            _sourceImagePixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
+            _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, _randomNumberGenerator);
 
-            _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+            //Individual highestFitnessIndividual =
+            //    _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
-            Individual highestFitnessIndividual =
-                _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+            ////Iterating for N Generations
+            //for (int i = 0; i < maxGenerations; i++)
+            //{
+            //    var currentGenerationNumber = i + 1;
 
-            //Iterating for N Generations
-            for (int i = 0; i < maxGenerations; i++)
-            {
-                var currentGenerationNumber = i + 1;
+            //    Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                Log.Info($"Starting evolving generation {currentGenerationNumber}...");
+            //    ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+            //    //Generating New Population (Steps 7 - 11)
 
-                //Generating New Population (Steps 7 - 11)
+            //    var oldPopulation = _population;
 
-                var oldPopulation = _population;
+            //    var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
 
-                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
+            //    newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
 
-                newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+            //    //Reinserting individuals to population
+            //    _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
 
-                //Reinserting individuals to population
-                _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
+            //    if (Settings.Default.RecalculateFitnessAfterReinsertion)
+            //    {
+            //        //recalculating fitness for whole population
+            //        _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
+            //            _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+            //    }
 
-                if (Settings.Default.RecalculateFitnessAfterReinsertion)
-                {
-                    //recalculating fitness for whole population
-                    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
-                        _sourceImagePixels, sourceImage.Width, sourceImage.Height);
-                }
+            //    //Step 12
+            //    ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
-                //Step 12
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+            //    var totalPopulationCount = _population.Count;
 
-                var totalPopulationCount = _population.Count;
+            //    //Removing and adding species
+            //    int speciesCountBefore = _population.Species.Count;
 
-                //Removing and adding species
-                int speciesCountBefore = _population.Species.Count;
+            //    //Step 13
+            //    _population = new GeneticOperators().RemoveWeakestSpecies(_population,
+            //        Settings.Default.AverageFitnessThreshold);
 
-                //Step 13
-                _population = new GeneticOperators().RemoveWeakestSpecies(_population,
-                    Settings.Default.AverageFitnessThreshold);
+            //    //Step 14
+            //    _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
 
-                //Step 14
-                _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
+            //    //Step 15
+            //    if (speciesCountBefore < _population.Species.Count)
+            //    {
+            //        //TODO - Implement creation of new species
+            //    }
 
-                //Step 15
-                if (speciesCountBefore < _population.Species.Count)
-                {
-                    //TODO - Implement creation of new species
-                }
+            //    Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
-                Log.Info($"Finished evolving generation {currentGenerationNumber}...");
+            //    if (Settings.Default.ExtremeDebugging)
+            //    {
+            //        Log.Debug($"Best individuals per degree are:\n {string.Join("\n", BestIndividualsPerDegree)} \n\n");
+            //        Log.Debug($"Current whole population is:\n {string.Join("\n", _population.Individuals)}");
+            //    }
 
-                if (Settings.Default.ExtremeDebugging)
-                {
-                    Log.Debug($"Best individuals per degree are:\n {string.Join("\n", BestIndividualsPerDegree)} \n\n");
-                    Log.Debug($"Current whole population is:\n {string.Join("\n", _population.Individuals)}");
-                }
+            //    highestFitnessIndividual =
+            //        _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
-                highestFitnessIndividual =
-                    _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+            //    Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
+            //    Log.Info($"Population size: {_population.Count}");
 
-                Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
-                Log.Info($"Population size: {_population.Count}");
+            //    ChangeConfiguration(currentGenerationNumber);
 
-                ChangeConfiguration(currentGenerationNumber);
+            //    //every Nth generation, save the highest fit individual as image
+            //    if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            //    {
+            //        var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+            //        System.IO.Directory.CreateDirectory(folderPath);
 
-                //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
-                {
-                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
-                    System.IO.Directory.CreateDirectory(folderPath);
-
-                    foreach (var individual in BestIndividualsPerDegree)
-                    {
-                        GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
-                    }
-                }
+            //        foreach (var individual in BestIndividualsPerDegree)
+            //        {
+            //            GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
+            //        }
+            //    }
 
 
-                GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber,
-                    Settings.Default.WorkingDirectory); 
-            }
+            //    GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber,
+            //        Settings.Default.WorkingDirectory); 
+            //}
 
-            return highestFitnessIndividual;
+            //return highestFitnessIndividual;
+
+            return new Individual(new List<IfsFunction3D>());
         }
 
         #endregion

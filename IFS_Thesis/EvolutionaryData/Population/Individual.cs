@@ -5,6 +5,9 @@ using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Population
 {
+    /// <summary>
+    /// Individual in population
+    /// </summary>
     public class Individual : ICloneable
     {
         #region Properties
@@ -15,9 +18,9 @@ namespace IFS_Thesis.EvolutionaryData.Population
         public int Degree { get; set; }
 
         /// <summary>
-        /// Signels
+        /// Signels of individual
         /// </summary>
-        public List<IfsFunction> Singels { get; set; }
+        public List<IfsFunction3D> Singels { get; set; }
 
         /// <summary>
         /// The objective fitness of an individual
@@ -33,7 +36,10 @@ namespace IFS_Thesis.EvolutionaryData.Population
 
         #region Construction
 
-        public Individual(List<IfsFunction> singels)
+        /// <summary>
+        /// Create individual from a list of singels
+        /// </summary>
+        public Individual(List<IfsFunction3D> singels)
         {
             Singels = singels;
             Degree = singels.Count;
@@ -57,7 +63,7 @@ namespace IFS_Thesis.EvolutionaryData.Population
             var clonedIndividual = (Individual) MemberwiseClone();
 
             //then we clone the singels of individual and assign them to cloned individual
-            clonedIndividual.Singels = (List<IfsFunction>)Singels.Clone();
+            clonedIndividual.Singels = (List<IfsFunction3D>)Singels.Clone();
 
             return clonedIndividual;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
+using static System.Single;
 
 namespace IFS_Thesis.Ifs.IFSGenerators
 {
@@ -49,13 +50,32 @@ namespace IFS_Thesis.Ifs.IFSGenerators
             var zMin = points.Min(z => z.Z);
             var zMax = points.Max(z => z.Z);
 
+            if (IsInfinity(xMax) || IsInfinity(yMax) || IsInfinity(zMax) || IsInfinity(xMin) || IsInfinity(yMin) || IsInfinity(zMin) || IsNaN(xMax) || IsNaN(yMax) || IsNaN(zMax) || IsNaN(xMin) || IsNaN(yMin) || IsNaN(zMin))
+            {
+                //invalid IFS in this case
+                return new HashSet<Voxel>();
+            }
+
             var xDelta = xMax - xMin;
             var yDelta = yMax - yMin;
             var zDelta = zMax - zMin;
 
-            var scaleX = imgx - 1 / xDelta;
-            var scaleY = imgy - 1 / yDelta;
-            var scaleZ = imgz - 1 / zDelta;
+            var scaleX = (imgx - 1) / xDelta;
+            var scaleY = (imgy - 1) / yDelta;
+            var scaleZ = (imgz - 1) / zDelta;
+
+            try
+            {
+                Convert.ToInt32(xDelta * scaleX);
+                Convert.ToInt32(xDelta * scaleY);
+                Convert.ToInt32(xDelta * scaleZ);
+            }
+
+            catch (OverflowException)
+            {
+                //invalid IFS in this case
+                return new HashSet<Voxel>();
+            }
 
             foreach (var point in points)
             {

@@ -25,13 +25,49 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:/tmp/IFS Images")]
+        public string WorkingDirectory {
+            get {
+                return ((string)(this["WorkingDirectory"]));
+            }
+            set {
+                this["WorkingDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int PopulationSize {
             get {
                 return ((int)(this["PopulationSize"]));
             }
             set {
                 this["PopulationSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
+        public int InitialSingelPoolSize {
+            get {
+                return ((int)(this["InitialSingelPoolSize"]));
+            }
+            set {
+                this["InitialSingelPoolSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        public float N1IndividualsPercentage {
+            get {
+                return ((float)(this["N1IndividualsPercentage"]));
+            }
+            set {
+                this["N1IndividualsPercentage"] = value;
             }
         }
         
@@ -85,6 +121,18 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
+        public float MutationRange {
+            get {
+                return ((float)(this["MutationRange"]));
+            }
+            set {
+                this["MutationRange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
         public float AverageFitnessThreshold {
             get {
@@ -92,30 +140,6 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["AverageFitnessThreshold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
-        public float N1IndividualsPercentage {
-            get {
-                return ((float)(this["N1IndividualsPercentage"]));
-            }
-            set {
-                this["N1IndividualsPercentage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:/tmp/IFS Images")]
-        public string WorkingDirectory {
-            get {
-                return ((string)(this["WorkingDirectory"]));
-            }
-            set {
-                this["WorkingDirectory"] = value;
             }
         }
         
@@ -157,7 +181,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public int DrawPointsMultiplier {
             get {
                 return ((int)(this["DrawPointsMultiplier"]));
@@ -241,13 +265,13 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
-        public int InitialSingelPoolSize {
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        public int ImageZ {
             get {
-                return ((int)(this["InitialSingelPoolSize"]));
+                return ((int)(this["ImageZ"]));
             }
             set {
-                this["InitialSingelPoolSize"] = value;
+                this["ImageZ"] = value;
             }
         }
         
@@ -289,18 +313,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
-        public float MutationRange {
-            get {
-                return ((float)(this["MutationRange"]));
-            }
-            set {
-                this["MutationRange"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool RecalculateFitnessAfterReinsertion {
             get {
@@ -308,18 +320,6 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["RecalculateFitnessAfterReinsertion"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
-        public int ImageZ {
-            get {
-                return ((int)(this["ImageZ"]));
-            }
-            set {
-                this["ImageZ"] = value;
             }
         }
         

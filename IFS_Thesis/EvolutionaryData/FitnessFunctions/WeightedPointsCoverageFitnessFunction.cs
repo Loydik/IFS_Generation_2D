@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.Ifs;
+using IFS_Thesis.Ifs.IFSGenerators;
 using IFS_Thesis.Properties;
-using IFS_Thesis.Utils;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
@@ -29,22 +28,22 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculate fitness for a given individual
         /// </summary>
-        public float CalculateFitnessForIndividual(List<Point> sourceImagePixels, Individual individual, int width, int height)
+        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ, Random randomGen)
         {
-            var result = new IfsDrawer().GetIfsPixels(individual.Singels, width,
-                height);
+            var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ,
+                randomGen);
 
-            var redundantPixels = result.Item1;
-            var generatedPixels = result.Item2;
+            //var redundantPixels = result.Item1;
+            //var generatedPixels = result.Item2;
 
-            if (generatedPixels.Count == 0)
+            if (generatedVoxels.Count == 0)
             {
                 return 0;
             }
 
             // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
 
-            var matchingPixels = generatedPixels.Intersect(sourceImagePixels).ToList();
+            var matchingVoxels = generatedVoxels.Intersect(sourceImageVoxels).ToList();
 
             //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
 
@@ -53,18 +52,18 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
             //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
 
             //NA
-            var na = generatedPixels.Count;
+            var na = generatedVoxels.Count;
 
             //NI
-            var ni = sourceImagePixels.Count;
+            var ni = sourceImageVoxels.Count;
 
             //NND
-            var notDrawnPoints = ni - matchingPixels.Count;
+            var notDrawnPoints = ni - matchingVoxels.Count;
 
             //NNN
-            var pointsNotNeeded = na - matchingPixels.Count;
+            var pointsNotNeeded = na - matchingVoxels.Count;
 
-            pointsNotNeeded = pointsNotNeeded + redundantPixels;
+            //pointsNotNeeded = pointsNotNeeded + redundantPixels;
 
             var rc = notDrawnPoints / (float)ni;
 
@@ -78,22 +77,22 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculates fintess for given individuals using source Image pixels
         /// </summary>
-        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, List<Point> sourceImagePixels, int imageWidth, int imageHeight)
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ, Random randomGen)
         {
             Log.Debug("Started calculating fitness for all individuals");
 
             //For each individual which is not elite we calculate fitness
-            Parallel.ForEach(individuals, individual =>
-            {
-                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImagePixels, individual, imageWidth, imageHeight);
+            //Parallel.ForEach(individuals, individual =>
+            //{
+            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
 
-            });
+            //});
 
             //For debugging
-            //foreach (var individual in individuals)
-            //{
-            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImagePixels, individual, imageWidth, imageHeight);
-            //}
+            foreach (var individual in individuals)
+            {
+                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
+            }
 
             Log.Debug("Ended calculating fitness for all individuals");
 

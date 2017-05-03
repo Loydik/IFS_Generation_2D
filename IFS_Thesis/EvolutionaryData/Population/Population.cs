@@ -4,10 +4,21 @@ using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Population
 {
+    /// <summary>
+    /// Population of individuals
+    /// </summary>
     public class Population
     {
+        #region Properties
+
+        /// <summary>
+        /// List of Species in current population
+        /// </summary>
         public List<Species> Species { get; set; }
 
+        /// <summary>
+        /// List of individuals in current population
+        /// </summary>
         public List<Individual> Individuals
         {
             get { return GetAllIndividuals(); }
@@ -20,18 +31,34 @@ namespace IFS_Thesis.EvolutionaryData.Population
             }
         }
 
+        /// <summary>
+        /// Total count of individuals in population
+        /// </summary>
         public int Count => Individuals.Count;
 
+        #endregion
+
+        #region Construction
+
+        /// <summary>
+        /// Create new empty population
+        /// </summary>
         public Population()
         {
             Species =  new List<Species>();
         }
 
-        //for testing only
+        /// <summary>
+        /// for testing only
+        /// </summary>
         public Population(List<Species> species)
         {
             Species = species;
         }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Add individual to population
@@ -47,11 +74,11 @@ namespace IFS_Thesis.EvolutionaryData.Population
 
             else
             {
-              var newSpecies = new Species(individual.Degree);
+                var newSpecies = new Species(individual.Degree);
 
-              newSpecies.Individuals.Add(individual);
+                newSpecies.Individuals.Add(individual);
 
-              Species.Add(newSpecies);
+                Species.Add(newSpecies);
             }
         }
 
@@ -68,7 +95,7 @@ namespace IFS_Thesis.EvolutionaryData.Population
 
         public void RemoveIndividual(Individual individual)
         {
-             Species.Single(x => x.DegreeOfIndividualsInSpecies == individual.Degree).Individuals.Remove(individual);
+            Species.Single(x => x.DegreeOfIndividualsInSpecies == individual.Degree).Individuals.Remove(individual);
         }
 
         /// <summary>
@@ -117,5 +144,7 @@ namespace IFS_Thesis.EvolutionaryData.Population
 
             return singels;
         }
+
+        #endregion
     }
 }

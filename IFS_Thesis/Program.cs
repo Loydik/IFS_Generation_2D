@@ -48,20 +48,18 @@ namespace IFS_Thesis
             Directory.CreateDirectory(Settings.Default.WorkingDirectory);
 
             var randomGen = new Random();
-
             var ifsGenerator = new RandomIterationIfs3DGenerator();
-            var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, randomGen);
-            new IfsDrawer3D().SaveImage(initialImagePath, voxels, ImageFormat3D.Obj);
-            new IfsDrawer3D().SaveImage(initialImagePath, voxels, ImageFormat3D.Stl);
+            var ifsDrawer = new IfsDrawer3D();
 
-            //var drawer = new IfsDrawer();
-            //drawer.SaveIfsImage(sierpinskiPentagon, imageSizeX, imageSizeY, initialImagePath);
+            var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, randomGen);
+            ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Obj);
+            ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
             //Bitmap image = (Bitmap)Image.FromFile(initialImagePath, true);
 
-            //var ea = new EvolutionaryAlgorithm();
+            var ea = new EvolutionaryAlgorithm();
 
-            //var highest = ea.Start(Settings.Default.NumberOfGenerations, image, drawer);
+            var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
 
             //drawer.SaveIfsImage(highest.Singels, image.Width, image.Height, finalGeneratedImagePath);
         }

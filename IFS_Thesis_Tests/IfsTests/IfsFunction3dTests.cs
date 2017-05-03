@@ -1,4 +1,6 @@
-﻿using IFS_Thesis.Ifs;
+﻿using System.Collections.Generic;
+using System.Linq;
+using IFS_Thesis.Ifs;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.IfsTests
@@ -64,6 +66,30 @@ namespace IFS_Thesis_Tests.IfsTests
             var voxel2 = new Voxel(1, 2, 3);
 
             Assert.That(voxel1, Is.Not.EqualTo(voxel2));
+        }
+
+
+        [Test, Category("Voxels")]
+        public void VoxelsHashsetIntersectTest()
+        {
+            var voxel1 = new Voxel(1, 2, 4);
+            var voxel2 = new Voxel(1, 2, 3);
+            var voxel3 = new Voxel(1, 2, 5);
+            var voxel4 = new Voxel(1, 3, 3);
+            var voxel5 = new Voxel(1, 1, 3);
+
+            var voxel6 = new Voxel(9, 2, 3);
+            var voxel7 = new Voxel(1, 2, 3);
+            var voxel8 = new Voxel(1, 2, 5);
+            var voxel9 = new Voxel(10, 2, 3);
+            var voxel10 = new Voxel(1, 2, 4);
+
+            var hashset1 = new HashSet<Voxel> {voxel1, voxel2, voxel3, voxel4, voxel5};
+            var hashset2 = new HashSet<Voxel> {voxel6, voxel7, voxel8, voxel9, voxel10};
+
+            var intersect = hashset1.Intersect(hashset2).ToList();
+
+            Assert.That(intersect.Count, Is.EqualTo(3));
         }
     }
 }
