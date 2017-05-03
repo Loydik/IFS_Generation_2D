@@ -60,6 +60,7 @@
     <Compile Include="GeneticOperatorsTests\GeneticOperatorsTests.cs" />
     <Compile Include="IfsTests\IfsFunction3dTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecombinationStrategiesTests\InterSpeciesCrossoverTests.cs" />
     <Compile Include="RecombinationStrategiesTests\OnePointCrossoverTests.cs" />
     <Compile Include="SelectionStrategiesTests\SpeciesSelectionStrategiesTests.cs" />
   </ItemGroup>

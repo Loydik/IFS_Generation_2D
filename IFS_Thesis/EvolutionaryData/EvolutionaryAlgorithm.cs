@@ -167,20 +167,20 @@ namespace IFS_Thesis.EvolutionaryData
 
                 var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
 
-                //newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+                newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, _randomNumberGenerator);
 
                 //Reinserting individuals to population
                 _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
 
-                //if (Settings.Default.RecalculateFitnessAfterReinsertion)
-                //{
-                //    //recalculating fitness for whole population
-                //    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
-                //        _sourceImagePixels, sourceImage.Width, sourceImage.Height);
-                //}
+                if (Settings.Default.RecalculateFitnessAfterReinsertion)
+                {
+                    //recalculating fitness for whole population
+                    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
+                        sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, _randomNumberGenerator);
+                }
 
-                ////Step 12
-                //ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                //Step 12
+                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
 
                 //var totalPopulationCount = _population.Count;
 
@@ -200,21 +200,21 @@ namespace IFS_Thesis.EvolutionaryData
                 //    //TODO - Implement creation of new species
                 //}
 
-                //Log.Info($"Finished evolving generation {currentGenerationNumber}...");
+                Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
-                //if (Settings.Default.ExtremeDebugging)
-                //{
-                //    Log.Debug($"Best individuals per degree are:\n {string.Join("\n", BestIndividualsPerDegree)} \n\n");
-                //    Log.Debug($"Current whole population is:\n {string.Join("\n", _population.Individuals)}");
-                //}
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    Log.Debug($"Best individuals per degree are:\n {string.Join("\n", BestIndividualsPerDegree)} \n\n");
+                    Log.Debug($"Current whole population is:\n {string.Join("\n", _population.Individuals)}");
+                }
 
-                //highestFitnessIndividual =
-                //    _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+                highestFitnessIndividual =
+                    _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
-                //Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
-                //Log.Info($"Population size: {_population.Count}");
+                Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
+                Log.Info($"Population size: {_population.Count}");
 
-                //ChangeConfiguration(currentGenerationNumber);
+                ChangeConfiguration(currentGenerationNumber);
 
                 ////every Nth generation, save the highest fit individual as image
                 //if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)

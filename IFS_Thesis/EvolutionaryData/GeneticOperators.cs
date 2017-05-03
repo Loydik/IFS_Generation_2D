@@ -279,46 +279,46 @@ namespace IFS_Thesis.EvolutionaryData
 
             #endregion
 
-            //#region N3 Individuals
+            #region N3 Individuals
 
-            ////Step 9
-            //var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
+            //Step 9
+            var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
 
-            //var n3Individuals = new List<Individual>();
+            var n3Individuals = new List<Individual>();
 
-            //for (int i = 0; i <= n3Count / 2; i++)
-            //{
-            //    var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+            for (int i = 0; i <= n3Count / 2; i++)
+            {
+                var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
-            //    if (firstSpecies != null)
-            //    {
-            //        var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
+                if (firstSpecies != null)
+                {
+                    var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
 
-            //        if (secondSpecies != null)
-            //        {
-            //            var firstIndividual =
-            //                individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
-            //            var secondIndividual =
-            //                individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+                    if (secondSpecies != null)
+                    {
+                        var firstIndividual =
+                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+                        var secondIndividual =
+                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
-            //            if (Settings.Default.ExtremeDebugging)
-            //            {
-            //                Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
-            //            }
+                        if (Settings.Default.ExtremeDebugging)
+                        {
+                            Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
+                        }
 
-            //            recombinationStrategy = new InterSpeciesCrossoverStrategy();
+                        recombinationStrategy = new InterSpeciesCrossoverStrategy();
 
-            //            var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
-            //                randomGen);
-            //            n3Individuals.AddRange(children);
-            //        }
-            //    }
-            //}
+                        var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
+                            randomGen);
+                        n3Individuals.AddRange(children);
+                    }
+                }
+            }
 
-            //newPopulation.AddIndividuals(n3Individuals);
-            //Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
+            newPopulation.AddIndividuals(n3Individuals);
+            Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
 
-            //#endregion
+            #endregion
 
             //#region N4 Individuals
 

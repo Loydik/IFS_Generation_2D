@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using MoreLinq;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
@@ -19,7 +19,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             Individual parentWithLesserDegree = (Individual)secondParent.Clone();
 
             //we get the crossover point at random
-            var crossoverPoint = randomGen.Next(1, 5);
+            var crossoverPoint = randomGen.Next(1, 11);
 
             if (firstParent.Degree < secondParent.Degree)
             {

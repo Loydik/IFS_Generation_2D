@@ -101,6 +101,7 @@
     <Compile Include="EvolutionaryData\FitnessFunctions\IFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Recombination\ArithmeticCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\RecombinationStrategy.cs" />
     <Compile Include="EvolutionaryData\Reinsertion\DegreeBasedReinsertionStrategy.cs" />
