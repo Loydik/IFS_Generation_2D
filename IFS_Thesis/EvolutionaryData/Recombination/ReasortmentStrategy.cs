@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 using MoreLinq;
@@ -12,7 +12,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     {
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
-            List<IfsFunction> allSignels = new List<IfsFunction>();
+            List<IfsFunction3D> allSignels = new List<IfsFunction3D>();
 
             //cloning to prevent unexpected behavior
             var firstParentClone = (Individual)firstParent.Clone();

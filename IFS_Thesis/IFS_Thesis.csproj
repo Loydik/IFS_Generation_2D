@@ -103,6 +103,7 @@
     <Compile Include="EvolutionaryData\Recombination\ArithmeticCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\ReasortmentStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\RecombinationStrategy.cs" />
     <Compile Include="EvolutionaryData\Reinsertion\DegreeBasedReinsertionStrategy.cs" />
     <Compile Include="EvolutionaryData\Reinsertion\IReinsertionStrategy.cs" />

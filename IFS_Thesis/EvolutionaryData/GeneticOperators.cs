@@ -320,34 +320,34 @@ namespace IFS_Thesis.EvolutionaryData
 
             #endregion
 
-            //#region N4 Individuals
+            #region N4 Individuals
 
-            ////Step 10
-            //var n4Count = Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize;
-            //var n4Individuals = new List<Individual>();
+            //Step 10
+            var n4Count = Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize;
+            var n4Individuals = new List<Individual>();
 
-            //for (int i = 0; i <= n4Count / 2; i++)
-            //{
-            //    var parents = individualSelectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
+            for (int i = 0; i <= n4Count / 2; i++)
+            {
+                var parents = individualSelectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
 
-            //    if (Settings.Default.ExtremeDebugging)
-            //    {
-            //        Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
-            //    }
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
+                }
 
-            //    recombinationStrategy = new ReasortmentStrategy();
+                recombinationStrategy = new ReasortmentStrategy();
 
-            //    if (parents[0] != null && parents[1] != null)
-            //    {
-            //        var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
-            //        n4Individuals.AddRange(children);
-            //    }
-            //}
+                if (parents[0] != null && parents[1] != null)
+                {
+                    var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
+                    n4Individuals.AddRange(children);
+                }
+            }
 
-            //newPopulation.AddIndividuals(n4Individuals);
-            //Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
+            newPopulation.AddIndividuals(n4Individuals);
+            Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
 
-            //#endregion
+            #endregion
 
             //#region Mutation
 

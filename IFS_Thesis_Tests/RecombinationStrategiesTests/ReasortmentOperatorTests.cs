@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IFS_Thesis.EvolutionaryData;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.Ifs;
-using IFS_Thesis.Utils;
 using MoreLinq;
 using NUnit.Framework;
 
@@ -19,17 +17,17 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             var strategy = new ReasortmentStrategy();
 
-            var parent1 = new Individual(new List<IfsFunction>
+            var parent1 = new Individual(new List<IfsFunction3D>
             {
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f)
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
             });
-            var parent2 = new Individual(new List<IfsFunction>
+            var parent2 = new Individual(new List<IfsFunction3D>
             {
-                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f),
-                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f),
+                new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
             });
 
             var producedIndividuals = strategy.ProduceOffsprings(parent1, parent2, new Random());
@@ -44,15 +42,15 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             var strategy = new ReasortmentStrategy();
 
-            var allSingels = new List<IfsFunction>
+            var allSingels = new List<IfsFunction3D>
             {
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f),
-                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f),
-                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f),
-                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f),
-                new IfsFunction(0.86f, 0.04f, -0.04f, 0.85f, 0.1f, 0.6f, 0.85f)
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
+                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
+                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
             };
 
             var parent1 = new Individual(allSingels.Take(4).ToList());
