@@ -28,10 +28,9 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculate fitness for a given individual
         /// </summary>
-        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ, Random randomGen)
+        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ)
         {
-            var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ,
-                randomGen);
+            var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ);
 
             //var redundantPixels = result.Item1;
             //var generatedPixels = result.Item2;
@@ -77,14 +76,14 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculates fintess for given individuals using source Image pixels
         /// </summary>
-        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ, Random randomGen)
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ)
         {
             Log.Debug("Started calculating fitness for all individuals");
 
             //For each individual which is not elite we calculate fitness
             Parallel.ForEach(individuals, individual =>
             {
-                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
+                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ);
 
             });
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
+using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
 using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
@@ -55,20 +57,20 @@ namespace IFS_Thesis.EvolutionaryData
             return new ArithmeticCrossoverStrategy();
         }
 
-        ///// <summary>
-        ///// Gets Mutation strategy based on probabilities
-        ///// </summary>
-        //private RealValueMutationStrategy GetMutationStrategy(float randomMutationProbability, Random randomGen)
-        //{
-        //    var result = randomGen.NextDouble();
+        /// <summary>
+        /// Gets Mutation strategy based on probabilities
+        /// </summary>
+        private RealValueMutationStrategy GetMutationStrategy(float randomMutationProbability, Random randomGen)
+        {
+            var result = randomGen.NextDouble();
 
-        //    if (result <= randomMutationProbability)
-        //    {
-        //        return new RandomMutationStrategy();
-        //    }
+            if (result <= randomMutationProbability)
+            {
+                return new RandomMutationStrategy();
+            }
 
-        //    return new ControlledMutationStrategy();
-        //}
+            return new ControlledMutationStrategy();
+        }
 
         #endregion
 
@@ -209,7 +211,7 @@ namespace IFS_Thesis.EvolutionaryData
             IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
             RecombinationStrategy recombinationStrategy;
-            //IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
+            IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
 
             var newPopulation = new Population();
 
@@ -349,25 +351,25 @@ namespace IFS_Thesis.EvolutionaryData
 
             #endregion
 
-            //#region Mutation
+            #region Mutation
 
-            ////Step 11
-            ////Mutate all individuals except elite ones
+            //Step 11
+            //Mutate all individuals except elite ones
 
-            //foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
-            //{
-            //    //Mutates individual with frequency of defined probability
-            //    if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
-            //    {
-            //        var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
+            foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
+            {
+                //Mutates individual with frequency of defined probability
+                if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
+                {
+                    var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
 
-            //        var currentIndividual = individual;
+                    var currentIndividual = individual;
 
-            //        individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
-            //    }
-            //}
+                    individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
+                }
+            }
 
-            //#endregion
+            #endregion
 
             return newPopulation;
         }

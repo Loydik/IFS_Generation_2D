@@ -100,6 +100,11 @@
     <Compile Include="EvolutionaryData\FitnessFunctions\WeightedPointsCoverageFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\FitnessFunctions\IFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Individuals\StandardMutationRateStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\ControlledMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\RandomMutationStrategy.cs" />
+    <Compile Include="EvolutionaryData\Mutation\Variables\RealValueMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\ArithmeticCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />

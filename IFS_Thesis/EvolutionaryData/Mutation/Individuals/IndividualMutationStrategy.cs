@@ -1,6 +1,6 @@
 ﻿using System;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
-using IFS_Thesis.EvolutionaryData.Population;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
 {

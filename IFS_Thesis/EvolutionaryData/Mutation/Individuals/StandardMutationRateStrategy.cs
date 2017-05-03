@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
-using IFS_Thesis.EvolutionaryData.Population;
 using IFS_Thesis.Ifs;
-using IFS_Thesis.Utils;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
@@ -22,14 +21,14 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
         /// Gets possible range for coefficient at given index
         /// </summary>
         /// <param name="index">index of coefficient</param>
-        /// <remarks>(-1, 1) for a,b,c,d and (-10,10) for e,f</remarks>
+        /// <remarks>(-1, 1) for a variables and (-10,10) for b variables</remarks>
         private Tuple<int, int> GetRangeForIndex(int index)
         {
-            if (index >= 0 && index <= 3 )
+            if (index >= 0 && index <= 8 )
             {
                 return new Tuple<int, int>(-1, 1);
             }
-            if (index >= 4 && index <= 5)
+            if (index >= 9 && index <= 11)
             {
                 return new Tuple<int, int>(-10, 10);
             }
@@ -48,22 +47,40 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
             switch (index)
             {
                 case 0:
-                    name = "a";
+                    name = "a11";
                     break;
                 case 1:
-                    name = "b";
+                    name = "a12";
                     break;
                 case 2:
-                    name = "c";
+                    name = "a13";
                     break;
                 case 3:
-                    name = "d";
+                    name = "a21";
                     break;
                 case 4:
-                    name = "e";
+                    name = "a22";
                     break;
                 case 5:
-                    name = "f";
+                    name = "a23";
+                    break;
+                case 6:
+                    name = "a31";
+                    break;
+                case 7:
+                    name = "a32";
+                    break;
+                case 8:
+                    name = "a33";
+                    break;
+                case 9:
+                    name = "b1";
+                    break;
+                case 10:
+                    name = "b2";
+                    break;
+                case 11:
+                    name = "b3";
                     break;
                 default:
                     name = "error";
@@ -83,10 +100,10 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
             if(mutationRate == null)
             { 
                 //by default, mutation rate is 1/n (n -> number of variables/coefficients)
-                mutationRate = 1f / (individual.Singels.Count*6f);
+                mutationRate = 1f / (individual.Singels.Count*12f);
             }
 
-            var newSingels = new List<IfsFunction>();
+            var newSingels = new List<IfsFunction3D>();
 
             //can be optimized
             foreach (var singel in individual.Singels)
@@ -110,7 +127,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                     tempCoefficients.Add(tempCoefficient);
                 }
 
-                newSingels.Add(new IfsFunction(tempCoefficients.ToArray()));
+                newSingels.Add(new IfsFunction3D(tempCoefficients.ToArray()));
             }
 
             individual.Singels = newSingels;

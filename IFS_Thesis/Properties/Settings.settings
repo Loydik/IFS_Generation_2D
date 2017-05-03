@@ -24,10 +24,10 @@
       <Value Profile="(Default)">0.55</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.5</Value>
+      <Value Profile="(Default)">0.6</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.15</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.01</Value>
@@ -51,10 +51,10 @@
       <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.05</Value>
+      <Value Profile="(Default)">0.7</Value>
     </Setting>
     <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.95</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">256</Value>
