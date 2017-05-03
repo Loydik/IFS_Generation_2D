@@ -97,23 +97,27 @@ namespace IFS_Thesis.EvolutionaryData
             }
         }
 
-        ///// <summary>
-        ///// Generates a report image based on current generation
-        ///// </summary>
-        //private void GenerateReportImage(IfsDrawer3D ifsDrawer, Individual individual, int currentGenerationNumber,
-        //    string path)
-        //{
-        //    //every Nth generation, save the highest fit individual as image
-        //    if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
-        //    {
-        //        if (individual != null)
-        //        {
-        //            ifsDrawer.SaveIfsImage(individual.Singels, Settings.Default.ImageX, Settings.Default.ImageY,
-        //                path +
-        //                $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}.png");
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// Generates a report image based on current generation
+        /// </summary>
+        private void GenerateReportImage(IfsDrawer3D ifsDrawer, IfsGenerator3D ifsGenerator, Individual individual, int currentGenerationNumber,
+            string path)
+        {
+            //every Nth generation, save the highest fit individual as image
+            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            {
+                if (individual != null)
+                {
+                    var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, Settings.Default.ImageX,
+                        Settings.Default.ImageY, Settings.Default.ImageZ);
+
+                    ifsDrawer.SaveImage(path +
+                        $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Obj);
+                    ifsDrawer.SaveImage(path +
+                        $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Stl);
+                }
+            }
+        }
 
         #endregion
 
@@ -135,8 +139,6 @@ namespace IFS_Thesis.EvolutionaryData
             ProbabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
-
-            //_randomNumberGenerator = new Random();
 
             var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
 
@@ -211,21 +213,26 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                ////every Nth generation, save the highest fit individual as image
-                //if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
-                //{
-                //    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
-                //    System.IO.Directory.CreateDirectory(folderPath);
+                //every Nth generation, save the highest fit individual as image
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+                {
+                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                    System.IO.Directory.CreateDirectory(folderPath);
 
-                //    foreach (var individual in BestIndividualsPerDegree)
-                //    {
-                //        GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
-                //    }
-                //}
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        foreach (var individual in BestIndividualsPerDegree)
+                        {
+                            GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
+                        }
+                    }
 
-
-                //GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber,
-                //    Settings.Default.WorkingDirectory);
+                    else
+                    {
+                        GenerateReportImage(drawer, ifsGenerator, highestFitnessIndividual, currentGenerationNumber, folderPath);
+                    }
+                }
+                
             }
 
             return highestFitnessIndividual;

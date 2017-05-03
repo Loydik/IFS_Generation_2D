@@ -6,22 +6,22 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200</Value>
+      <Value Profile="(Default)">150</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.15</Value>
+      <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.55</Value>
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.6</Value>
@@ -30,10 +30,10 @@
       <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4000</Value>
+      <Value Profile="(Default)">50000</Value>
     </Setting>
     <Setting Name="PrcFitness" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="DrawPointsMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.7</Value>

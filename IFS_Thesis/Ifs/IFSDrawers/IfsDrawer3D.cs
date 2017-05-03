@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
+using log4net;
 
 namespace IFS_Thesis.Ifs.IFSDrawers
 {
@@ -13,6 +15,12 @@ namespace IFS_Thesis.Ifs.IFSDrawers
     public class IfsDrawer3D
     {
         #region Private Fields
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Exporter
@@ -76,12 +84,20 @@ namespace IFS_Thesis.Ifs.IFSDrawers
                     throw new ArgumentOutOfRangeException(nameof(imageFormat), imageFormat, null);
             }
 
-            var cloudPoints = ConvertVoxelsTo3DPointCloud(voxels);
-            path = path + _fileExtension;
-
-            using (Stream filestream = File.Create(path))
+            if (voxels.Count != 0)
             {
-                _exporter.Export(cloudPoints, filestream);
+                var cloudPoints = ConvertVoxelsTo3DPointCloud(voxels);
+                path = path + _fileExtension;
+
+                using (Stream filestream = File.Create(path))
+                {
+                    _exporter.Export(cloudPoints, filestream);
+                }
+            }
+
+            else
+            {
+                Log.Error("Voxels count was 0, could not generate an image");
             }
         }
 

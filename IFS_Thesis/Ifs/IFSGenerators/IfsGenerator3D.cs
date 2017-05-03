@@ -66,9 +66,14 @@ namespace IFS_Thesis.Ifs.IFSGenerators
 
             try
             {
-                Convert.ToInt32(xDelta * scaleX);
-                Convert.ToInt32(xDelta * scaleY);
-                Convert.ToInt32(xDelta * scaleZ);
+                foreach (var point in points)
+                {
+                    var jx = Convert.ToInt32((point.X - xMin) * scaleX);
+                    var jy = Convert.ToInt32((point.Y - yMin) * scaleY);
+                    var jz = Convert.ToInt32((point.Z - zMin) * scaleZ);
+
+                    voxels.Add(new Voxel(jx, jy, jz));
+                }
             }
 
             catch (OverflowException)
@@ -77,15 +82,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
                 return new HashSet<Voxel>();
             }
 
-            foreach (var point in points)
-            {
-                var jx = Convert.ToInt32((point.X - xMin) * scaleX);
-                var jy = Convert.ToInt32((point.Y - yMin) * scaleY);
-                var jz = Convert.ToInt32((point.Z - zMin) * scaleZ);
-
-                voxels.Add(new Voxel(jx, jy, jz));                
-            }
-
+            
             //Remove duplicated voxels
             voxels = voxels.Distinct().ToHashSet();
 

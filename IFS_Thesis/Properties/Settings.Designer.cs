@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
         public int PopulationSize {
             get {
                 return ((int)(this["PopulationSize"]));
@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
         public float N1IndividualsPercentage {
             get {
                 return ((float)(this["N1IndividualsPercentage"]));
@@ -85,7 +85,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
         public float N3IndividualsPercentage {
             get {
                 return ((float)(this["N3IndividualsPercentage"]));
@@ -97,7 +97,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.55")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
         public float N4IndividualsPercentage {
             get {
                 return ((float)(this["N4IndividualsPercentage"]));
@@ -133,7 +133,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float AverageFitnessThreshold {
             get {
                 return ((float)(this["AverageFitnessThreshold"]));
@@ -145,7 +145,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
         public int NumberOfGenerations {
             get {
                 return ((int)(this["NumberOfGenerations"]));
@@ -181,7 +181,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int DrawPointsMultiplier {
             get {
                 return ((int)(this["DrawPointsMultiplier"]));
