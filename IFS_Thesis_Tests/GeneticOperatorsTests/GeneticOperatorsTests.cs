@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.GeneticOperatorsTests

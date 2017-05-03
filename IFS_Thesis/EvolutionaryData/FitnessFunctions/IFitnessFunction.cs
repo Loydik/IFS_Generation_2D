@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Ifs.IFSGenerators;
 

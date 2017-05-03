@@ -24,7 +24,7 @@ namespace IFS_Thesis
 
             var initialImagePath = Settings.Default.WorkingDirectory + "/tested_ifs";
 
-            var finalGeneratedImagePath = Settings.Default.WorkingDirectory + @"/highest_fitness_final.png";
+            var finalEvolvedImagePath = Settings.Default.WorkingDirectory + "/final_evolved_ifs";
 
             int imageSizeX = Settings.Default.ImageX;
             int imageSizeY = Settings.Default.ImageY;
@@ -34,7 +34,7 @@ namespace IFS_Thesis
 
             #region IFS Definitions 3D
 
-            var sierpinskiPyramid = new List<IfsFunction3D>()
+            var sierpinskiPyramid = new List<IfsFunction3D>
             {
                 new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
                 new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
@@ -55,13 +55,13 @@ namespace IFS_Thesis
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
-            //Bitmap image = (Bitmap)Image.FromFile(initialImagePath, true);
-
             var ea = new EvolutionaryAlgorithm();
 
             var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
 
-            //drawer.SaveIfsImage(highest.Singels, image.Width, image.Height, finalGeneratedImagePath);
+            voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ, randomGen);
+            ifsDrawer.SaveImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);
+            ifsDrawer.SaveImage(finalEvolvedImagePath, voxels, ImageFormat3D.Stl);
         }
     }
 }

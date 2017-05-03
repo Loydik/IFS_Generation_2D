@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Utils;
 
-namespace IFS_Thesis.EvolutionaryData.Population
+namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 {
     /// <summary>
     /// Individual in population

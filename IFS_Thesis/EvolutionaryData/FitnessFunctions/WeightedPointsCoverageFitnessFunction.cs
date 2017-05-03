@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Ifs.IFSGenerators;
 using IFS_Thesis.Properties;
@@ -82,17 +82,17 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
             Log.Debug("Started calculating fitness for all individuals");
 
             //For each individual which is not elite we calculate fitness
-            //Parallel.ForEach(individuals, individual =>
-            //{
-            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
-
-            //});
-
-            //For debugging
-            foreach (var individual in individuals)
+            Parallel.ForEach(individuals, individual =>
             {
                 individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
-            }
+
+            });
+
+            ////For debugging
+            //foreach (var individual in individuals)
+            //{
+            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
+            //}
 
             Log.Debug("Ended calculating fitness for all individuals");
 

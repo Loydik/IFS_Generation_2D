@@ -1,4 +1,5 @@
 ﻿using System;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 
 namespace IFS_Thesis.EvolutionaryData.Reinsertion
 {
@@ -11,6 +12,6 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <param name="newPopulation">New population of individuals</param>
         /// <param name="randomGen">Random number generator</param>
         /// <returns></returns>
-        Population.Population ReinsertIndividuals(Population.Population oldPopulation, Population.Population newPopulation, Random randomGen);
+        Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen);
     }
 }

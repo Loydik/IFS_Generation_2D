@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
-using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
@@ -28,8 +27,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             // a ∈ (0,1)
             var a = randomGen.NextDouble();
 
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
+            var firstSingels = new List<IfsFunction3D>();
+            var secondSingels = new List<IfsFunction3D>();
 
             //For each IFS function
             for (int i = 0; i < firstParentClone.Degree; i++)
@@ -37,11 +36,11 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 var firstParentCoefficients = firstParentClone.Singels[i];
                 var secondParentCoefficients = secondParentClone.Singels[i];
 
-                var firstChildCoefficients = new float[6];
-                var secondChildCoefficients = new float[6];
+                var firstChildCoefficients = new float[12];
+                var secondChildCoefficients = new float[12];
 
                 //For each coefficient
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < 12; j++)
                 {
                    var x1 =
                         a * firstParentCoefficients.Coefficients[j] +
@@ -55,8 +54,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                     secondChildCoefficients[j] = (float) Math.Round(x2, 4, MidpointRounding.AwayFromZero);
                 }
 
-                firstSingels.Add(new IfsFunction(firstChildCoefficients));
-                secondSingels.Add(new IfsFunction(secondChildCoefficients));
+                firstSingels.Add(new IfsFunction3D(firstChildCoefficients));
+                secondSingels.Add(new IfsFunction3D(secondChildCoefficients));
             }
 
             var individual1 = new Individual(firstSingels);

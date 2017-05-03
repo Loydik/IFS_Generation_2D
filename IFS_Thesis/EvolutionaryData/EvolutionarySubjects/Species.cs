@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IFS_Thesis.EvolutionaryData.Population
+namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 {
     /// <summary>
     /// Species of individuals (same degree)

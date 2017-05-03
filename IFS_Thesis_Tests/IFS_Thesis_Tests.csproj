@@ -57,8 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneticOperatorsTests\GeneticOperatorsTests.cs" />
     <Compile Include="IfsTests\IfsFunction3dTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecombinationStrategiesTests\OnePointCrossoverTests.cs" />
+    <Compile Include="SelectionStrategiesTests\SpeciesSelectionStrategiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

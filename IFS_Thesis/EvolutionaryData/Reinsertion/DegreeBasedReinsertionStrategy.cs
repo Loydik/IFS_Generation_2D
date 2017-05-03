@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
 using IFS_Thesis.Utils;
 using log4net;
@@ -21,11 +22,11 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <summary>
         /// Reinserts individuals to a population
         /// </summary>
-        public Population.Population ReinsertIndividuals(Population.Population oldPopulation, Population.Population newPopulation, Random randomGen)
+        public Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen)
         {
             IndividualSelectionStrategy strategy = new TruncationIndividualSelectionStrategy();
 
-            var finalPopulation = new Population.Population();
+            var finalPopulation = new Population();
 
             var degreesOfIndividuals = EaUtils.GetDegreesOfIndividuals(newPopulation.Individuals);
 

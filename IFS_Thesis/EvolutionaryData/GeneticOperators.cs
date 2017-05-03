@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.Recombination;
+using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
+using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
@@ -37,20 +40,20 @@ namespace IFS_Thesis.EvolutionaryData
             return coefficient;
         }
 
-        ///// <summary>
-        ///// Gets Recombination strategy (either one-point crossover or arithmetic crossover) based on probabilities
-        ///// </summary>
-        //private RecombinationStrategy GetRecombinationStrategy(float onePointCrossoverProbability, Random randomGen)
-        //{
-        //    var result = randomGen.NextDouble();
+        /// <summary>
+        /// Gets Recombination strategy (either one-point crossover or arithmetic crossover) based on probabilities
+        /// </summary>
+        private RecombinationStrategy GetRecombinationStrategy(float onePointCrossoverProbability, Random randomGen)
+        {
+            var result = randomGen.NextDouble();
 
-        //    if (result <= onePointCrossoverProbability)
-        //    {
-        //        return new OnePointCrossoverStrategy();
-        //    }
+            if (result <= onePointCrossoverProbability)
+            {
+                return new OnePointCrossoverStrategy();
+            }
 
-        //    return new ArithmeticCrossoverStrategy();
-        //}
+            return new ArithmeticCrossoverStrategy();
+        }
 
         ///// <summary>
         ///// Gets Mutation strategy based on probabilities
@@ -198,177 +201,181 @@ namespace IFS_Thesis.EvolutionaryData
             return generatedIndividuals;
         }
 
-        ///// <summary>
-        ///// Generates new population
-        ///// </summary>
-        //public Population.Population GenerateNewPopulation(Population.Population population, List<float> probabilityVectors, Random randomGen)
-        //{
-        //    IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
-        //    SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
-        //    RecombinationStrategy recombinationStrategy;
-        //    IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
+        /// <summary>
+        /// Generates new population
+        /// </summary>
+        public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
+        {
+            IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
+            SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
+            RecombinationStrategy recombinationStrategy;
+            //IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
 
-        //    var newPopulation = new Population.Population();
+            var newPopulation = new Population();
 
-        //    //// (Step 6.) Adding best individuals of each new degree 
-        //    //var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+            //// (Step 6.) Adding best individuals of each new degree 
+            //var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
 
-        //    ////we set those individuals as elite
-        //    //bestIndividuals.ForEach(i => i.Elite = true);
+            ////we set those individuals as elite
+            //bestIndividuals.ForEach(i => i.Elite = true);
 
-        //    //newPopulation.AddIndividuals(bestIndividuals);
+            //newPopulation.AddIndividuals(bestIndividuals);
 
-        //    #region N1 Individuals
+            #region N1 Individuals
 
-        //    //Step 7
-        //    var n1Count = Settings.Default.N1IndividualsPercentage * Settings.Default.PopulationSize;
+            //Step 7
+            var n1Count = Settings.Default.N1IndividualsPercentage * Settings.Default.PopulationSize;
 
-        //    var n1Individuals = new List<Individual>();
+            var n1Individuals = new List<Individual>();
 
-        //    for (int i = 0; i <= n1Count/2; i++)
-        //    {
-        //        //Selecting Species
-        //        var selectedSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+            for (int i = 0; i <= n1Count / 2; i++)
+            {
+                //Selecting Species
+                var selectedSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
-        //        //selecting recombination strategy
-        //        recombinationStrategy = GetRecombinationStrategy(Settings.Default.OnePointCrossoverProbability,
-        //            randomGen);
+                //selecting recombination strategy
+                recombinationStrategy = GetRecombinationStrategy(Settings.Default.OnePointCrossoverProbability,
+                    randomGen);
 
-        //        if (selectedSpecies != null)
-        //        {
-        //            var selectedIndividuals =
-        //                individualSelectionStrategy.SelectIndividuals(
-        //                    population.Individuals
-        //                        .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
-        //                        .ToList(), 2, randomGen);
+                if (selectedSpecies != null)
+                {
+                    var selectedIndividuals =
+                        individualSelectionStrategy.SelectIndividuals(
+                            population.Individuals
+                                .Where(x => x.Degree.Equals(selectedSpecies.DegreeOfIndividualsInSpecies))
+                                .ToList(), 2, randomGen);
 
-        //            if (Settings.Default.ExtremeDebugging)
-        //            {
-        //                Log.Debug($"Selected N1 individuals for recombination: \n {string.Join("\n", selectedIndividuals)} \n");
-        //            }
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Selected N1 individuals for recombination: \n {string.Join("\n", selectedIndividuals)} \n");
+                    }
 
-        //            var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
-        //                selectedIndividuals[1],
-        //                randomGen);
-        //            n1Individuals.AddRange(offspring);
+                    var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
+                        selectedIndividuals[1],
+                        randomGen);
+                    n1Individuals.AddRange(offspring);
 
-        //            Log.Debug($"Generated 2 individuals using {recombinationStrategy.GetType()}");
-        //        }
-        //        else
-        //        {
-        //            Log.Warn($"There was a problem with selecting species (Step 7). Population count - {population.Count}. \n Probability vectors - {probabilityVectors}");
-        //        }
-        //    }
+                    Log.Debug($"Generated 2 individuals using {recombinationStrategy.GetType()}");
+                }
+                else
+                {
+                    Log.Warn($"There was a problem with selecting species (Step 7). Population count - {population.Count}. \n Probability vectors - {probabilityVectors}");
+                }
+            }
 
-        //    newPopulation.AddIndividuals(n1Individuals);
-        //    Log.Debug($"Added {n1Individuals.Count} N1 individuals to new population");
+            newPopulation.AddIndividuals(n1Individuals);
+            Log.Debug($"Added {n1Individuals.Count} N1 individuals to new population");
 
-        //    #endregion
+            #endregion
 
-        //    #region N2 Individuals
+            #region N2 Individuals
 
-        //    //Step 8
-        //    var n2Count = (int) (Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
-        //    var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
-        //    newPopulation.AddIndividuals(n2Individuals);
-        //    newPopulation.AddIndividuals(n2Individuals);
-        //    Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
+            //Step 8
+            var n2Count = (int)(Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
+            var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
+            newPopulation.AddIndividuals(n2Individuals);
+            newPopulation.AddIndividuals(n2Individuals);
+            Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
 
-        //    #endregion
+            #endregion
 
-        //    #region N3 Individuals
+            //#region N3 Individuals
 
-        //    //Step 9
-        //    var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
+            ////Step 9
+            //var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
 
-        //    var n3Individuals = new List<Individual>();
+            //var n3Individuals = new List<Individual>();
 
-        //    for (int i = 0; i <= n3Count / 2; i++)
-        //    {
-        //        var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
+            //for (int i = 0; i <= n3Count / 2; i++)
+            //{
+            //    var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
-        //        if (firstSpecies != null)
-        //        {
-        //            var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
+            //    if (firstSpecies != null)
+            //    {
+            //        var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
 
-        //            if (secondSpecies != null)
-        //            {
-        //                var firstIndividual =
-        //                    individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
-        //                var secondIndividual =
-        //                    individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+            //        if (secondSpecies != null)
+            //        {
+            //            var firstIndividual =
+            //                individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+            //            var secondIndividual =
+            //                individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
 
-        //                if (Settings.Default.ExtremeDebugging)
-        //                {
-        //                    Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
-        //                }
+            //            if (Settings.Default.ExtremeDebugging)
+            //            {
+            //                Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
+            //            }
 
-        //                recombinationStrategy = new InterSpeciesCrossoverStrategy();
+            //            recombinationStrategy = new InterSpeciesCrossoverStrategy();
 
-        //                var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
-        //                    randomGen);
-        //                n3Individuals.AddRange(children);
-        //            }
-        //        }
-        //    }
+            //            var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
+            //                randomGen);
+            //            n3Individuals.AddRange(children);
+            //        }
+            //    }
+            //}
 
-        //    newPopulation.AddIndividuals(n3Individuals);
-        //    Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
+            //newPopulation.AddIndividuals(n3Individuals);
+            //Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
 
-        //    #endregion
+            //#endregion
 
-        //    #region N4 Individuals
+            //#region N4 Individuals
 
-        //    //Step 10
-        //    var n4Count = Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize;
-        //    var n4Individuals = new List<Individual>();
+            ////Step 10
+            //var n4Count = Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize;
+            //var n4Individuals = new List<Individual>();
 
-        //    for (int i = 0; i <= n4Count / 2; i++)
-        //    {
-        //        var parents = individualSelectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
+            //for (int i = 0; i <= n4Count / 2; i++)
+            //{
+            //    var parents = individualSelectionStrategy.SelectIndividuals(population.Individuals, 2, randomGen);
 
-        //        if (Settings.Default.ExtremeDebugging)
-        //        {
-        //            Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
-        //        }
+            //    if (Settings.Default.ExtremeDebugging)
+            //    {
+            //        Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
+            //    }
 
-        //        recombinationStrategy = new ReasortmentStrategy();
+            //    recombinationStrategy = new ReasortmentStrategy();
 
-        //        if (parents[0] != null && parents[1] != null)
-        //        {
-        //            var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
-        //            n4Individuals.AddRange(children);
-        //        }
-        //    }
+            //    if (parents[0] != null && parents[1] != null)
+            //    {
+            //        var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
+            //        n4Individuals.AddRange(children);
+            //    }
+            //}
 
-        //    newPopulation.AddIndividuals(n4Individuals);
-        //    Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
+            //newPopulation.AddIndividuals(n4Individuals);
+            //Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
 
-        //    #endregion
+            //#endregion
 
-        //    //Step 11
-        //    //Mutate all individuals except elite ones
+            //#region Mutation
 
-        //    foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
-        //    {
-        //        //Mutates individual with frequency of defined probability
-        //        if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
-        //        {
-        //            var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
+            ////Step 11
+            ////Mutate all individuals except elite ones
 
-        //            var currentIndividual = individual;
+            //foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
+            //{
+            //    //Mutates individual with frequency of defined probability
+            //    if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
+            //    {
+            //        var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
 
-        //            individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
-        //        }
-        //    }
+            //        var currentIndividual = individual;
 
-        //    return newPopulation;
-        //}
+            //        individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
+            //    }
+            //}
+
+            //#endregion
+
+            return newPopulation;
+        }
 
         /// <summary>
         /// Removes weakest species from a population if average fitness is below threshold, and no element has higher fitness
         /// </summary>
-        public Population.Population RemoveWeakestSpecies(Population.Population population, float averageFitnessThreshold)
+        public Population RemoveWeakestSpecies(Population population, float averageFitnessThreshold)
         {
             var weakestSpecies =
                 population.Species.Where(x => x.Individuals.Average(individual => individual.ObjectiveFitness) < averageFitnessThreshold && !x.Individuals.Any(f => f.ObjectiveFitness >= averageFitnessThreshold)).ToList();
@@ -385,7 +392,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Removes weakest species from a population if its population is below %of total
         /// </summary>
-        public Population.Population RemoveSpeciesWithPopulationBelowTotal(Population.Population population, int totalPopulationCount, float percentThreshold)
+        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, int totalPopulationCount, float percentThreshold)
         {
             var threshold = (int)(totalPopulationCount * percentThreshold);
 

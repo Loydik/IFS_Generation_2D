@@ -2,7 +2,7 @@
 using System.Linq;
 using IFS_Thesis.Utils;
 
-namespace IFS_Thesis.EvolutionaryData.Population
+namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 {
     /// <summary>
     /// Population of individuals

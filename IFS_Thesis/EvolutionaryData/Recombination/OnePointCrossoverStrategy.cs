@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using IFS_Thesis.EvolutionaryData.Population;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
-using IFS_Thesis.Utils;
+
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
@@ -22,8 +22,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             //we get the crossover point at random
             var crossoverPoint = randomGen.Next(1, firstParentClone.Degree - 1);
 
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
+            var firstSingels = new List<IfsFunction3D>();
+            var secondSingels = new List<IfsFunction3D>();
 
             for (int i = 0; i < firstParentClone.Degree; i++)
             {

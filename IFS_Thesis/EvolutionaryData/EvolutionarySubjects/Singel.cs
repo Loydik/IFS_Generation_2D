@@ -1,6 +1,6 @@
 ﻿using IFS_Thesis.Ifs;
 
-namespace IFS_Thesis.EvolutionaryData.Population
+namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 {
     /// <summary>
     /// Single genotypic element (single Ifs function)
