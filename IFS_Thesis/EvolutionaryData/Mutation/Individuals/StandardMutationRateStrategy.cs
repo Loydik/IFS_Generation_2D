@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.Ifs;
+using IFS_Thesis.Properties;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
@@ -121,7 +122,12 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                     {
                         var range = GetRangeForIndex(index);
                         tempCoefficient = strategy.Mutate(tempCoefficient, randomGen, range);
-                        Log.Debug($"Mutated coefficient {GetCoefficientNameByIndex(index)} from {coefficient} to {tempCoefficient} using {strategy.GetType().Name}");
+
+                        if (Settings.Default.ExtremeDebugging)
+                        {
+                            Log.Debug(
+                                $"Mutated coefficient {GetCoefficientNameByIndex(index)} from {coefficient} to {tempCoefficient} using {strategy.GetType().Name}");
+                        }
                     }
 
                     tempCoefficients.Add(tempCoefficient);
