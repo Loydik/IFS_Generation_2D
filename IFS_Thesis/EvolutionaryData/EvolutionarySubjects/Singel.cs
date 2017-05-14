@@ -10,21 +10,21 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         /// <summary>
         /// Coefficients of a singel
         /// </summary>
-        public IfsFunction3D Coefficients { get; set; }
+        public IfsFunction Coefficients { get; set; }
 
-        public Singel(IfsFunction3D coefficients)
+        public Singel(IfsFunction coefficients)
         {
             Coefficients = coefficients;
         }
 
-        #region Converting to and from IfsFunction3D
+        #region Converting to and from IfsFunction
 
-        public static implicit operator IfsFunction3D(Singel x)
+        public static implicit operator IfsFunction(Singel x)
         {
             return x.Coefficients;
         }
 
-        public static explicit operator Singel(IfsFunction3D x)
+        public static explicit operator Singel(IfsFunction x)
         {
             Singel singel = new Singel(x);
 

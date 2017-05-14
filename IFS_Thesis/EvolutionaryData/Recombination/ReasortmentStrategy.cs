@@ -12,7 +12,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     {
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
-            List<IfsFunction3D> allSignels = new List<IfsFunction3D>();
+            List<IfsFunction> allSignels = new List<IfsFunction>();
 
             //cloning to prevent unexpected behavior
             var firstParentClone = (Individual)firstParent.Clone();

@@ -101,7 +101,7 @@ namespace IFS_Thesis.EvolutionaryData
             var b2 = GetRandomCoefficient(random, range2);
             var b3 = GetRandomCoefficient(random, range2);
 
-            var coefficients = new IfsFunction3D(a11,a12,a13,a21,a22,a23,a31,a32,a33,b1,b2,b3);
+            var coefficients = new IfsFunction(a11,a12,a13,a21,a22,a23,a31,a32,a33,b1,b2,b3);
 
             var singel = new Singel(coefficients);
 

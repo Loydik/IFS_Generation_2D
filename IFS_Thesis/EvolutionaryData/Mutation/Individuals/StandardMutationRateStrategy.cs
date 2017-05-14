@@ -103,7 +103,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                 mutationRate = 1f / (individual.Singels.Count*12f);
             }
 
-            var newSingels = new List<IfsFunction3D>();
+            var newSingels = new List<IfsFunction>();
 
             //can be optimized
             foreach (var singel in individual.Singels)
@@ -127,7 +127,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                     tempCoefficients.Add(tempCoefficient);
                 }
 
-                newSingels.Add(new IfsFunction3D(tempCoefficients.ToArray()));
+                newSingels.Add(new IfsFunction(tempCoefficients.ToArray()));
             }
 
             individual.Singels = newSingels;

@@ -11,8 +11,8 @@ namespace IFS_Thesis_Tests.IfsTests
         [Test, Category("IfsFunction")]
         public void IfsFunctionEqualityTest()
         {
-            var firstIfsFunction = new IfsFunction3D(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f, 1.3f);
-            var secondIfsFunction = new IfsFunction3D(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f, 1.3f);
+            var firstIfsFunction = new IfsFunction(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f, 1.3f);
+            var secondIfsFunction = new IfsFunction(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f, 1.3f);
 
             Assert.That(firstIfsFunction, Is.EqualTo(secondIfsFunction));
         }
@@ -22,9 +22,9 @@ namespace IFS_Thesis_Tests.IfsTests
         {
             var coefficients = new[] { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f };
 
-            var firstIfsFunction = new IfsFunction3D(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f);
+            var firstIfsFunction = new IfsFunction(0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f);
 
-            var secondIfsFunction = new IfsFunction3D(coefficients);
+            var secondIfsFunction = new IfsFunction(coefficients);
 
             Assert.That(firstIfsFunction, Is.EqualTo(secondIfsFunction));
         }
@@ -34,7 +34,7 @@ namespace IFS_Thesis_Tests.IfsTests
         {
             var coefficients = new[] { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f };
 
-            var ifsFunction = new IfsFunction3D(coefficients);
+            var ifsFunction = new IfsFunction(coefficients);
 
             Assert.That(ifsFunction.A11, Is.EqualTo(0.1f));
             Assert.That(ifsFunction.A12, Is.EqualTo(0.2f));

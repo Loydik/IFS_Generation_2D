@@ -7,12 +7,12 @@ namespace IFS_Thesis.Ifs.IFSGenerators
     /// <summary>
     /// Generates IFS 3D using Random Iteration Algorithm
     /// </summary>
-    public class RandomIterationIfs3DGenerator : IfsGenerator3D
+    public class RandomIterationIfsGenerator : IfsGenerator
     {
         /// <summary>
         /// Generates voxels for a given Ifs function
         /// </summary>
-        public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction3D> ifsMappings, int imageX, int imageY, int imageZ)
+        public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY, int imageZ)
         {
             var resultPoints = new HashSet<Point3Df>();
             var randomGen = new Random();

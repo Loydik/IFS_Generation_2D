@@ -119,9 +119,10 @@
     <Compile Include="EvolutionaryData\Selection\SpeciesSelection\SpeciesSelectionStrategy.cs" />
     <Compile Include="Ifs\IFSDrawers\ImageFormat3D.cs" />
     <Compile Include="Ifs\IFSDrawers\IfsDrawer3D.cs" />
-    <Compile Include="Ifs\IFSGenerators\IfsGenerator3D.cs" />
-    <Compile Include="Ifs\IfsFunction3d.cs" />
-    <Compile Include="Ifs\IFSGenerators\RandomIterationIfs3DGenerator.cs" />
+    <Compile Include="Ifs\IFSGenerators\IfsGenerator.cs" />
+    <Compile Include="Ifs\IfsFunction.cs" />
+    <Compile Include="Ifs\IFSGenerators\PointRecursiveIfsGenerator.cs" />
+    <Compile Include="Ifs\IFSGenerators\RandomIterationIfsGenerator.cs" />
     <Compile Include="Ifs\Point3DF.cs" />
     <Compile Include="Ifs\Voxel.cs" />
     <Compile Include="EvolutionaryData\EvolutionarySubjects\Individual.cs" />

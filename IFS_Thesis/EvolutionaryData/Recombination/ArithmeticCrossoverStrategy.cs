@@ -27,8 +27,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             // a ∈ (0,1)
             var a = randomGen.NextDouble();
 
-            var firstSingels = new List<IfsFunction3D>();
-            var secondSingels = new List<IfsFunction3D>();
+            var firstSingels = new List<IfsFunction>();
+            var secondSingels = new List<IfsFunction>();
 
             //For each IFS function
             for (int i = 0; i < firstParentClone.Degree; i++)
@@ -54,8 +54,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                     secondChildCoefficients[j] = (float) Math.Round(x2, 4, MidpointRounding.AwayFromZero);
                 }
 
-                firstSingels.Add(new IfsFunction3D(firstChildCoefficients));
-                secondSingels.Add(new IfsFunction3D(secondChildCoefficients));
+                firstSingels.Add(new IfsFunction(firstChildCoefficients));
+                secondSingels.Add(new IfsFunction(secondChildCoefficients));
             }
 
             var individual1 = new Individual(firstSingels);

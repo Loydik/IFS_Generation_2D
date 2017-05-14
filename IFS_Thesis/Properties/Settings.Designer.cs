@@ -181,7 +181,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int DrawPointsMultiplier {
             get {
                 return ((int)(this["DrawPointsMultiplier"]));
@@ -332,6 +332,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["IgnoreProbabilities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int NumberOfRecursions {
+            get {
+                return ((int)(this["NumberOfRecursions"]));
+            }
+            set {
+                this["NumberOfRecursions"] = value;
             }
         }
     }

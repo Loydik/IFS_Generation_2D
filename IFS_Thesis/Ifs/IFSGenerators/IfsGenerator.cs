@@ -9,7 +9,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
     /// <summary>
     /// Class used for generating 3D IFS-es
     /// </summary>
-    public abstract class IfsGenerator3D
+    public abstract class IfsGenerator
     {
         #region Protected Members
 
@@ -19,7 +19,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         /// <param name="ifsFunction">IFS Function to make transformation with</param>
         /// <param name="currentPoint">Current point</param>
         /// <returns></returns>
-        protected Point3Df Apply3DIfsTransformation(IfsFunction3D ifsFunction, Point3Df currentPoint)
+        protected Point3Df Apply3DIfsTransformation(IfsFunction ifsFunction, Point3Df currentPoint)
         {
             var x0 = currentPoint.X;
             var y0 = currentPoint.Y;
@@ -81,11 +81,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
                 //invalid IFS in this case
                 return new HashSet<Voxel>();
             }
-
             
-            //Remove duplicated voxels
-            voxels = voxels.Distinct().ToHashSet();
-
             return voxels;
         }
 
@@ -94,7 +90,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         /// <summary>
         /// Generate Voxels for given IFS
         /// </summary>
-        public abstract HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction3D> ifsMappings, int imageX, int imageY,
+        public abstract HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY,
             int imageZ);
     }
 }

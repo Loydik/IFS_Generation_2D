@@ -33,22 +33,22 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             #region Test Case Data
 
-            var firstParent = new Individual(new List<IfsFunction3D>
+            var firstParent = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f)
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f)
             });
 
 
-            var secondParent = new Individual(new List<IfsFunction3D>
+            var secondParent = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f)
+                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f)
             });
 
             #endregion
@@ -81,22 +81,22 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             #region Test Case Data
 
-            var firstParent = new Individual(new List<IfsFunction3D>
+            var firstParent = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f)
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, 0.6f, 0.2f, 1.1f, 2f, 3f)
             });
 
 
-            var secondParent = new Individual(new List<IfsFunction3D>
+            var secondParent = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
-                new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f)
+                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, 0.6f, 0.2f, 1.1f, 2f, 3f)
             });
 
             #endregion
@@ -121,33 +121,33 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
             //crossover at point 1 
             yield return new object[]
             {
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
                 1
             };
@@ -155,33 +155,33 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
             //crossover at point 3
             yield return new object[]
             {
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
-                    new IfsFunction3D(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
+                    new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
+                    new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
                 }),
                 3
             };
@@ -189,21 +189,21 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
             //crossover on point 1 with parent degree 1
             yield return new object[]
             {
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f)
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f)
+                    new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+                    new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
                 }),
                 1
             };
@@ -221,25 +221,25 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
 
             yield return new object[]
             {
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.382f, 0.25f, 0.7f, 0.382f, 0.0f, 2.0f, 0.382f, 0.25f, 0.7f, 0.382f, 0.0f, 2.0f),
-                    new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f)
+                    new IfsFunction(0.382f, 0.25f, 0.7f, 0.382f, 0.0f, 2.0f, 0.382f, 0.25f, 0.7f, 0.382f, 0.0f, 2.0f),
+                    new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1f, 0.3f, 0.7f, 0.16f, 0.0f, 0.1f, 0.1f, 0.3f, 0.7f, 0.16f, 0.0f, 0.1f),
-                    new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f)
+                    new IfsFunction(0.1f, 0.3f, 0.7f, 0.16f, 0.0f, 0.1f, 0.1f, 0.3f, 0.7f, 0.16f, 0.0f, 0.1f),
+                    new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.2974f, 0.265f, 0.7f, 0.3154f, 0.0f, 1.43f, 0.2974f, 0.265f, 0.7f, 0.3154f, 0.0f, 1.43f),
-                    new IfsFunction3D(0.5224f, 0.012f, -0.012f, 0.5224f, 0.4326f, 0.48f, 0.5224f, 0.012f, -0.012f, 0.5224f, 0.4326f, 0.48f)
+                    new IfsFunction(0.2974f, 0.265f, 0.7f, 0.3154f, 0.0f, 1.43f, 0.2974f, 0.265f, 0.7f, 0.3154f, 0.0f, 1.43f),
+                    new IfsFunction(0.5224f, 0.012f, -0.012f, 0.5224f, 0.4326f, 0.48f, 0.5224f, 0.012f, -0.012f, 0.5224f, 0.4326f, 0.48f)
                 }),
-                new Individual(new List<IfsFunction3D>
+                new Individual(new List<IfsFunction>
                 {
-                    new IfsFunction3D(0.1846f, 0.285f, 0.7f, 0.2266f, 0.0f, 0.67f, 0.1846f, 0.285f, 0.7f, 0.2266f, 0.0f, 0.67f),
-                    new IfsFunction3D(0.7096f, 0.028f, -0.028f, 0.7096f, 0.1854f, 1.12f, 0.7096f, 0.028f, -0.028f, 0.7096f, 0.1854f, 1.12f)
+                    new IfsFunction(0.1846f, 0.285f, 0.7f, 0.2266f, 0.0f, 0.67f, 0.1846f, 0.285f, 0.7f, 0.2266f, 0.0f, 0.67f),
+                    new IfsFunction(0.7096f, 0.028f, -0.028f, 0.7096f, 0.1854f, 1.12f, 0.7096f, 0.028f, -0.028f, 0.7096f, 0.1854f, 1.12f)
                 }),
                 0.7
             };

@@ -28,7 +28,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculate fitness for a given individual
         /// </summary>
-        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ)
+        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ)
         {
             var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ);
 
@@ -42,7 +42,8 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
 
-            var matchingVoxels = generatedVoxels.Intersect(sourceImageVoxels).ToList();
+            var matchingVoxelsCount = generatedVoxels.Intersect(sourceImageVoxels).Count();
+
 
             //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
 
@@ -57,10 +58,10 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
             var ni = sourceImageVoxels.Count;
 
             //NND
-            var notDrawnPoints = ni - matchingVoxels.Count;
+            var notDrawnPoints = ni - matchingVoxelsCount;
 
             //NNN
-            var pointsNotNeeded = na - matchingVoxels.Count;
+            var pointsNotNeeded = na - matchingVoxelsCount;
 
             //pointsNotNeeded = pointsNotNeeded + redundantPixels;
 
@@ -70,13 +71,14 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
 
+
             return fitness;
         }
 
         /// <summary>
         /// Calculates fintess for given individuals using source Image pixels
         /// </summary>
-        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator3D ifsGenerator, int imageX, int imageY, int imageZ)
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ)
         {
             Log.Debug("Started calculating fitness for all individuals");
 

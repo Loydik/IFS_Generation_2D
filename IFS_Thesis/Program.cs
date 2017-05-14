@@ -34,12 +34,12 @@ namespace IFS_Thesis
 
             #region IFS Definitions 3D
 
-            var sierpinskiPyramid = new List<IfsFunction3D>
+            var sierpinskiPyramid = new List<IfsFunction>
             {
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
             };
 
             #endregion
@@ -48,7 +48,7 @@ namespace IFS_Thesis
             Directory.CreateDirectory(Settings.Default.WorkingDirectory);
 
             var randomGen = new Random();
-            var ifsGenerator = new RandomIterationIfs3DGenerator();
+            var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
 
             var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ);

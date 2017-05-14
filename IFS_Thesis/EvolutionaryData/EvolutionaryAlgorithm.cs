@@ -100,7 +100,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates a report image based on current generation
         /// </summary>
-        private void GenerateReportImage(IfsDrawer3D ifsDrawer, IfsGenerator3D ifsGenerator, Individual individual, int currentGenerationNumber,
+        private void GenerateReportImage(IfsDrawer3D ifsDrawer, IfsGenerator ifsGenerator, Individual individual, int currentGenerationNumber,
             string path)
         {
             //every Nth generation, save the highest fit individual as image
@@ -126,7 +126,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Start the Evolution Process
         /// </summary>
-        public Individual StartEvolution(int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator3D ifsGenerator, Random randomGen)
+        public Individual StartEvolution(int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
 
@@ -156,7 +156,13 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+
+                if (currentGenerationNumber > 300)
+                {
+                    ProbabilityVector =
+                        EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree,
+                            ProbabilityVector);
+                }
 
                 //Generating New Population (Steps 7 - 11)
 
@@ -176,8 +182,13 @@ namespace IFS_Thesis.EvolutionaryData
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ);
                 }
 
-                //Step 12
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                if (currentGenerationNumber > 300)
+                {
+                    //Step 12
+                    ProbabilityVector =
+                        EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree,
+                            ProbabilityVector);
+                }
 
                 //var totalPopulationCount = _population.Count;
 

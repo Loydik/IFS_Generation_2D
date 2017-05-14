@@ -17,17 +17,17 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             var strategy = new ReasortmentStrategy();
 
-            var parent1 = new Individual(new List<IfsFunction3D>
+            var parent1 = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
             });
-            var parent2 = new Individual(new List<IfsFunction3D>
+            var parent2 = new Individual(new List<IfsFunction>
             {
-                new IfsFunction3D(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
             });
 
             var producedIndividuals = strategy.ProduceOffsprings(parent1, parent2, new Random());
@@ -42,15 +42,15 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
         {
             var strategy = new ReasortmentStrategy();
 
-            var allSingels = new List<IfsFunction3D>
+            var allSingels = new List<IfsFunction>
             {
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
-                new IfsFunction3D(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
             };
 
             var parent1 = new Individual(allSingels.Take(4).ToList());
