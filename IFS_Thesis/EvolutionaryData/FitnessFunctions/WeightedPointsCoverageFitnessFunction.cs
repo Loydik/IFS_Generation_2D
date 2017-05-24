@@ -69,13 +69,6 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var ro = pointsNotNeeded / (float)na;
 
-            if (na < sourceImageVoxels.Count)
-            {
-                ro = (1 - ro);
-                ro = ro * na / ni;
-                ro = (1 - ro);
-            }
-
             var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
 
             return fitness;
