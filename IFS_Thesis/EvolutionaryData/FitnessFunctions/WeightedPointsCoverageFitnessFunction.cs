@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -22,6 +21,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         #endregion
+
 
         #region Public Methods
 
@@ -71,7 +71,6 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
 
-
             return fitness;
         }
 
@@ -92,7 +91,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
             ////For debugging
             //foreach (var individual in individuals)
             //{
-            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, randomGen);
+            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ);
             //}
 
             Log.Debug("Ended calculating fitness for all individuals");
