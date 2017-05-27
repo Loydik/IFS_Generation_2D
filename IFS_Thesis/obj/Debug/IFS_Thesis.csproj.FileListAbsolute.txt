@@ -54,4 +54,3 @@ C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\HelixToolkit.xml
 C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\HelixToolkit.Wpf.pdb
 C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\HelixToolkit.Wpf.xml
 C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\bin\Debug\Cyotek.Drawing.BitmapFont.dll
-C:\Users\Loydik\Source\Repos\MasterThesis\IFS_Thesis\obj\Debug\IFS_Thesis.csprojResolveAssemblyReference.cache

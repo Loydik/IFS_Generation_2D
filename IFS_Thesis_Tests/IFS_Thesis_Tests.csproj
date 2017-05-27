@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FitnessFunctionTests\FitnessFunctionTests.cs" />
     <Compile Include="GeneticOperatorsTests\GeneticOperatorsTests.cs" />
     <Compile Include="IfsTests\IfsFunction3dTests.cs" />
     <Compile Include="Manual Tests\ManualTests.cs" />

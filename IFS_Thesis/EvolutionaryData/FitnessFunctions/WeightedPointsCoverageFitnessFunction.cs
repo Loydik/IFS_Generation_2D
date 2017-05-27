@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -22,8 +23,62 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
         #endregion
 
-
         #region Public Methods
+
+        /// <summary>
+        /// Calculates fitness based on parameters
+        /// </summary>
+        public float CalculateFitness(int generatedVoxelsCount, int sourceImageVoxelsCount, int matchingVoxelsCount, int prcFitness, int proFitness)
+        {
+            float percentToSubtract = 0;
+
+            if (generatedVoxelsCount < sourceImageVoxelsCount)
+            {
+                //calculating percentage error
+                var pError = (float)(sourceImageVoxelsCount - generatedVoxelsCount) / sourceImageVoxelsCount;
+                pError = Math.Abs(pError);
+                percentToSubtract = pError;
+            }
+
+            if (generatedVoxelsCount > sourceImageVoxelsCount)
+            {
+                //calculating percentage difference
+                var pDiff = (generatedVoxelsCount - sourceImageVoxelsCount) /
+                            ((generatedVoxelsCount + sourceImageVoxelsCount) / 2.0f);
+
+                pDiff = Math.Abs(pDiff);
+
+                percentToSubtract = pDiff / 2;
+            }
+
+            //NA
+            var na = generatedVoxelsCount;
+
+            //NI
+            var ni = sourceImageVoxelsCount;
+
+            //NND
+            var notDrawnPoints = ni - matchingVoxelsCount;
+
+            //NNN
+            var pointsNotNeeded = na - matchingVoxelsCount;
+
+            var rc = notDrawnPoints / (float)ni;
+            var ro = pointsNotNeeded / (float)na;
+
+            var fitness = prcFitness * (1 - rc) + proFitness * (1 - ro);
+
+            var fitnessAdjustment = fitness * percentToSubtract;
+
+            fitness = fitness - fitnessAdjustment;
+
+            if (fitness < 0)
+            {
+                return  0;
+            }
+
+            return fitness;
+        }
 
         /// <summary>
         /// Calculate fitness for a given individual
@@ -44,32 +99,14 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var matchingVoxelsCount = generatedVoxels.Intersect(sourceImageVoxels).Count();
 
-
             //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
 
             //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
 
             //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
 
-            //NA
-            var na = generatedVoxels.Count;
-
-            //NI
-            var ni = sourceImageVoxels.Count;
-
-            //NND
-            var notDrawnPoints = ni - matchingVoxelsCount;
-
-            //NNN
-            var pointsNotNeeded = na - matchingVoxelsCount;
-
-            //pointsNotNeeded = pointsNotNeeded + redundantPixels;
-
-            var rc = notDrawnPoints / (float)ni;
-
-            var ro = pointsNotNeeded / (float)na;
-
-            var fitness = Settings.Default.PrcFitness * (1 - rc) + Settings.Default.ProFitness * (1 - ro);
+            var fitness = CalculateFitness(generatedVoxels.Count, sourceImageVoxels.Count, matchingVoxelsCount,
+                Settings.Default.PrcFitness, Settings.Default.ProFitness);
 
             return fitness;
         }
