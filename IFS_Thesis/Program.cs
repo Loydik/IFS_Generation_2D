@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Ifs.IFSDrawers;
 using IFS_Thesis.Ifs.IFSGenerators;
 using IFS_Thesis.Properties;
-using IFS_Thesis.Utils;
-using MoreLinq;
-using Image = System.Drawing.Image;
+using log4net;
+
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace IFS_Thesis
 {
     public class Program
     {
+        #region Logger
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+         #endregion
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -54,6 +62,8 @@ namespace IFS_Thesis
             var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ);
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Stl);
+
+            Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
 
             var ea = new EvolutionaryAlgorithm();
 

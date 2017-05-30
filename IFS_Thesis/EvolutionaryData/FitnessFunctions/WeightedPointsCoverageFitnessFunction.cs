@@ -37,7 +37,11 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
                 //calculating percentage error
                 var pError = (float)(sourceImageVoxelsCount - generatedVoxelsCount) / sourceImageVoxelsCount;
                 pError = Math.Abs(pError);
-                percentToSubtract = pError;
+
+                if (pError > 0.7)
+                {
+                    percentToSubtract = pError;
+                }
             }
 
             if (generatedVoxelsCount > sourceImageVoxelsCount)
@@ -48,7 +52,10 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
                 pDiff = Math.Abs(pDiff);
 
-                percentToSubtract = pDiff / 2;
+                if (pDiff > 0.5)
+                {
+                    percentToSubtract = pDiff / 2;
+                }
             }
 
             //NA
