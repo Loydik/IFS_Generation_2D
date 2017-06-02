@@ -40,7 +40,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
         #region Tests
 
-        [Test, Category("Manual")/*, Ignore("Manual Test")*/]
+        [Test, Category("Manual"), Ignore("Manual Test")]
         public void TestFitnessForIndividual()
         {
             var imagePath = Settings.Default.WorkingDirectory + "/manual_tested_ifs";
@@ -48,12 +48,12 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             var sourceIndividual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
 
-            var sourceVoxels = new PointRecursiveIfsGenerator().GenerateVoxelsForIfs(sourceIndividual.Singels, 256, 256, 256);
+            var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, 256, 256, 256);
 
             var fitnesses  = new List<float>();
-            var individual = CreateIndividualFromSingelsString("[-0.028,0.0637,0.5636,-0.3166,-0.5621,0.7151,-0.0617,0.4357,0.3051,-3.6201,-1.3762,0.0286,0];[-0.7519,0.2488,0.0497,-0.2554,-0.0946,0.3691,-0.1365,0.2763,0.1917,-0.6295,-3.6185,-3.4825,0];[0.7056,0.1143,0.0002,-0.2973,-0.5573,0.5338,-0.0654,0.529,0.2854,-4.9092,-1.0659,0.8751,0];[0.2861,-0.5518,-0.6816,-0.8142,0.8623,-0.4619,-0.1592,0.6662,0.1943,-7.7947,3.8023,3.3423,0];[-0.7519,0.2488,0.0497,-0.2548,-0.0946,0.3691,-0.1365,0.2763,0.1917,-0.6274,-3.6169,-3.4803,0];[0.6468,0.1315,0.0083,-0.2984,-0.3687,0.5329,-0.0698,0.3615,0.1492,-7.8404,-2.7105,-2.9107,0]");
+            var individual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,1,0.5,0,0,0,0.1];[0.5,0,0,0,0.5,0,0,0.1,0.5,0.5,0,0,0];[0.52,0,0,0,0.52,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, individual, ifsGenerator, 256, 256, 256);
                 fitnesses.Add(fitness);

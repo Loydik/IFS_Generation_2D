@@ -86,13 +86,14 @@ namespace IFS_Thesis_Tests.FitnessFunctionTests
                 averageFitness
             };
 
-            yield return new object[]
-            {
-                2000, //generated voxels count
-                1000, //source image voxels count
-                1000, //matching voxels count
-                averageFitness
-            };
+            //Ignore for now
+            //yield return new object[]
+            //{
+            //    2000, //generated voxels count
+            //    1000, //source image voxels count
+            //    1000, //matching voxels count
+            //    averageFitness
+            //};
         }
     }
 

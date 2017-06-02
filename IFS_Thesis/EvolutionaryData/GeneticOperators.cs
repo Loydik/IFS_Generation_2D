@@ -85,7 +85,7 @@ namespace IFS_Thesis.EvolutionaryData
             var range1 = new Tuple<int, int>(-1, 1);
 
             //range for e,f coefficients
-            var range2 = new Tuple<int, int>(-10, 10);
+            var range2 = new Tuple<int, int>(-5, 5);
 
             var a11 = GetRandomCoefficient(random, range1);
             var a12 = GetRandomCoefficient(random, range1);

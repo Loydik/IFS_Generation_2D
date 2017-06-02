@@ -82,14 +82,14 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private void ChangeConfiguration(int currentGeneration)
         {
-            //On 1000th generation, decrease the value of pro to refine points coverage
-            if (currentGeneration == 3000)
-            {
-                Settings.Default.ProFitness = 3;
-                Log.Info($"Changed the value of Pro fitness to {Settings.Default.ProFitness}");
-            }
+            ////On 1000th generation, decrease the value of pro to refine points coverage
+            //if (currentGeneration == 3000)
+            //{
+            //    Settings.Default.ProFitness = 3;
+            //    Log.Info($"Changed the value of Pro fitness to {Settings.Default.ProFitness}");
+            //}
 
-            if (currentGeneration == 3000)
+            if (currentGeneration == 10000)
             {
                 Settings.Default.ControlledMutationProbability = 0.8f;
                 Settings.Default.RandomMutationProbability = 0.2f;
@@ -182,7 +182,7 @@ namespace IFS_Thesis.EvolutionaryData
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ);
                 }
 
-                if (currentGenerationNumber > 300)
+                if (currentGenerationNumber > 500)
                 {
                     //Step 12
                     ProbabilityVector =

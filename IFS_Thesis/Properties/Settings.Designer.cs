@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int PopulationSize {
             get {
                 return ((int)(this["PopulationSize"]));
@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
         public float N1IndividualsPercentage {
             get {
                 return ((float)(this["N1IndividualsPercentage"]));
@@ -97,7 +97,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
         public float N4IndividualsPercentage {
             get {
                 return ((float)(this["N4IndividualsPercentage"]));
@@ -109,7 +109,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.7")]
         public float MutationProbability {
             get {
                 return ((float)(this["MutationProbability"]));
@@ -121,7 +121,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
         public float MutationRange {
             get {
                 return ((float)(this["MutationRange"]));
@@ -193,7 +193,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public float ArithmeticCrossoverProbability {
             get {
                 return ((float)(this["ArithmeticCrossoverProbability"]));
@@ -205,7 +205,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public float OnePointCrossoverProbability {
             get {
                 return ((float)(this["OnePointCrossoverProbability"]));
@@ -277,7 +277,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public int DrawImageEveryNthGeneration {
             get {
                 return ((int)(this["DrawImageEveryNthGeneration"]));
@@ -320,18 +320,6 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["RecalculateFitnessAfterReinsertion"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IgnoreProbabilities {
-            get {
-                return ((bool)(this["IgnoreProbabilities"]));
-            }
-            set {
-                this["IgnoreProbabilities"] = value;
             }
         }
         
