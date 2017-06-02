@@ -132,8 +132,12 @@ namespace IFS_Thesis.EvolutionaryData
 
             _geneticOperators = new GeneticOperators();
             _population = new Population();
+
             _fitnessFunction = new WeightedPointsCoverageFitnessFunction();
+            Log.Info($"Fitness function is {_fitnessFunction.GetType()}");
+
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
+            Log.Info($"Reinsertion strategy is {_reinsertionStrategy.GetType()}");
 
             //Initial Probability vector, 8 max
             ProbabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
@@ -142,12 +146,20 @@ namespace IFS_Thesis.EvolutionaryData
 
             var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
 
+            Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
+
             _population.AddIndividuals(initialIndividuals);
+
+            Log.Info("Added generated individuals to the population.");
 
             _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ);
 
-            Individual highestFitnessIndividual =
+            Log.Info("Calcualted fitness for generated individuals.");
+
+            var highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+
+            Log.Info($"Highest fitness individual of generated ones is {highestFitnessIndividual}.\n");
 
             //Iterating for N Generations
             for (int i = 0; i < maxGenerations; i++)
@@ -156,8 +168,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-
-                if (currentGenerationNumber > 300)
+                if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
                 {
                     ProbabilityVector =
                         EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree,
@@ -170,10 +181,20 @@ namespace IFS_Thesis.EvolutionaryData
 
                 var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, randomGen);
 
+                Log.Info("Generated new population");
+
                 newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ);
 
-                //Reinserting individuals to population
-                _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
+                if (Settings.Default.UseReinsertion)
+                {
+                    //Reinserting individuals to population
+                    _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
+                }
+
+                else
+                {
+                    _population = newPopulation;
+                }
 
                 if (Settings.Default.RecalculateFitnessAfterReinsertion)
                 {
@@ -182,7 +203,7 @@ namespace IFS_Thesis.EvolutionaryData
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ);
                 }
 
-                if (currentGenerationNumber > 500)
+                if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
                 {
                     //Step 12
                     ProbabilityVector =

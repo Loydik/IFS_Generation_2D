@@ -334,5 +334,29 @@ namespace IFS_Thesis.Properties {
                 this["NumberOfRecursions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseReinsertion {
+            get {
+                return ((bool)(this["UseReinsertion"]));
+            }
+            set {
+                this["UseReinsertion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int UpdateProbabilityVectorAfterNGenerations {
+            get {
+                return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
+            }
+            set {
+                this["UpdateProbabilityVectorAfterNGenerations"] = value;
+            }
+        }
     }
 }
