@@ -215,13 +215,18 @@ namespace IFS_Thesis.EvolutionaryData
 
             var newPopulation = new Population();
 
-            //// (Step 6.) Adding best individuals of each new degree 
-            //var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+            if (Settings.Default.UseReinsertion == false)
+            {
+                // (Step 6.) Adding best individuals of each new degree 
+                var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
 
-            ////we set those individuals as elite
-            //bestIndividuals.ForEach(i => i.Elite = true);
+                //we set those individuals as elite
+                bestIndividuals.ForEach(i => i.Elite = true);
 
-            //newPopulation.AddIndividuals(bestIndividuals);
+                newPopulation.AddIndividuals(bestIndividuals);
+
+                Log.Info("Added elite individuals to new population");
+            }
 
             #region N1 Individuals
 
