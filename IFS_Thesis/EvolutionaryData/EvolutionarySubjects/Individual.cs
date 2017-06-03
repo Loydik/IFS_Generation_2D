@@ -51,7 +51,7 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 
         public override string ToString()
         {
-            return $"Degree - {Degree}, Fitness - {ObjectiveFitness}\n Singles:{string.Join(";", Singels)}";
+            return $"Degree - {Degree}, Fitness - {ObjectiveFitness}, Elite - {Elite} Singles:{string.Join(";", Singels)} \n";
         }
 
         /// <summary>

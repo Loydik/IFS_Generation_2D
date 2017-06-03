@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
+using IFS_Thesis.Properties;
+using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
@@ -10,6 +13,16 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     /// </summary>
     public class ArithmeticCrossoverStrategy : RecombinationStrategy
     {
+        #region Logger
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
         /// <summary>
         /// Produces offsprings using arithmetic crossover operator
         /// </summary>
@@ -26,6 +39,11 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
 
             // a ∈ (0,1)
             var a = randomGen.NextDouble();
+
+            if (Settings.Default.ExtremeDebugging)
+            {
+                Log.Debug($"Value of a in arithmetic crossover is: {a}");
+            }
 
             var firstSingels = new List<IfsFunction>();
             var secondSingels = new List<IfsFunction>();

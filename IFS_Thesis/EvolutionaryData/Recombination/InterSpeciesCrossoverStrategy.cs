@@ -1,13 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.Properties;
+using log4net;
 using MoreLinq;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
     public class InterSpeciesCrossoverStrategy : RecombinationStrategy
     {
+        #region Logger
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
             if (firstParent == null || secondParent == null || firstParent.Degree == secondParent.Degree)
@@ -15,11 +28,16 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 return new List<Individual>();
             }
 
-            Individual parentWithBiggerDegree = (Individual)firstParent.Clone();
-            Individual parentWithLesserDegree = (Individual)secondParent.Clone();
+            var parentWithBiggerDegree = (Individual)firstParent.Clone();
+            var parentWithLesserDegree = (Individual)secondParent.Clone();
 
             //we get the crossover point at random
             var crossoverPoint = randomGen.Next(1, 11);
+
+            if (Settings.Default.ExtremeDebugging)
+            {
+                Log.Debug($"Crossover point in inter-species crossover is: {crossoverPoint}");
+            }
 
             if (firstParent.Degree < secondParent.Degree)
             {
@@ -44,8 +62,8 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 secondSingels[i].Coefficients = secondIfsFunction.ToArray();
             }
 
-            Individual individual1 = new Individual(firstSingels);
-            Individual individual2 = new Individual(secondSingels);
+            var individual1 = new Individual(firstSingels);
+            var individual2 = new Individual(secondSingels);
 
             return new List<Individual> { individual1, individual2 };
         }

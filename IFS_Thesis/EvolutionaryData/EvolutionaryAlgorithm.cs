@@ -82,12 +82,8 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private void ChangeConfiguration(int currentGeneration)
         {
-            ////On 1000th generation, decrease the value of pro to refine points coverage
-            //if (currentGeneration == 3000)
-            //{
-            //    Settings.Default.ProFitness = 3;
-            //    Log.Info($"Changed the value of Pro fitness to {Settings.Default.ProFitness}");
-            //}
+            //Every 100th generation we turn on extreme debugging
+            Settings.Default.ExtremeDebugging = currentGeneration % 100 == 0;
 
             if (currentGeneration == 10000)
             {

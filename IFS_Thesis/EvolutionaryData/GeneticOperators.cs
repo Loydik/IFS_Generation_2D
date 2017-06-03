@@ -254,7 +254,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                     if (Settings.Default.ExtremeDebugging)
                     {
-                        Log.Debug($"Selected N1 individuals for recombination: \n {string.Join("\n", selectedIndividuals)} \n");
+                        Log.Debug($"Selected N1 individuals for recombination: \n {string.Join("\n", selectedIndividuals)} \n Recombination strategy: {recombinationStrategy.GetType()}");
                     }
 
                     var offspring = recombinationStrategy.ProduceOffsprings(selectedIndividuals[0],
@@ -262,7 +262,10 @@ namespace IFS_Thesis.EvolutionaryData
                         randomGen);
                     n1Individuals.AddRange(offspring);
 
-                    Log.Debug($"Generated 2 individuals using {recombinationStrategy.GetType()}");
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", offspring)}");
+                    }
                 }
                 else
                 {
@@ -281,8 +284,12 @@ namespace IFS_Thesis.EvolutionaryData
             var n2Count = (int)(Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
             var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
             newPopulation.AddIndividuals(n2Individuals);
-            newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
+
+            if (Settings.Default.ExtremeDebugging)
+            {
+                Log.Debug($"Added N2 individuals into population: : \n {string.Join("\n", n2Individuals)}");
+            }
 
             #endregion
 
@@ -318,6 +325,12 @@ namespace IFS_Thesis.EvolutionaryData
                         var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
                             randomGen);
                         n3Individuals.AddRange(children);
+
+                        if (Settings.Default.ExtremeDebugging)
+                        {
+                            Log.Debug($"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", children)}");
+                        }
+
                     }
                 }
             }
@@ -339,7 +352,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 if (Settings.Default.ExtremeDebugging)
                 {
-                    Log.Debug($"Selected N4 individuals for recombination: \n {string.Join("\n", parents)} \n");
+                    Log.Debug($"Selected N4 individuals for reasortment: \n {string.Join("\n", parents)} \n");
                 }
 
                 recombinationStrategy = new ReasortmentStrategy();
@@ -348,6 +361,11 @@ namespace IFS_Thesis.EvolutionaryData
                 {
                     var children = recombinationStrategy.ProduceOffsprings(parents[0], parents[1], randomGen);
                     n4Individuals.AddRange(children);
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", children)}");
+                    }
                 }
             }
 
@@ -360,7 +378,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             //Step 11
             //Mutate all individuals except elite ones
-
             foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
             {
                 //Mutates individual with frequency of defined probability
@@ -368,9 +385,19 @@ namespace IFS_Thesis.EvolutionaryData
                 {
                     var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
 
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Selected individual for mutation: {individual} using {mutationStrategy.GetType()}");
+                    }
+
                     var currentIndividual = individual;
 
                     individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Individual after mutation: {currentIndividual}");
+                    }
                 }
             }
 

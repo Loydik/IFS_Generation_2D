@@ -8,10 +8,10 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <summary>
         /// Reinsert individuals into population after recombination
         /// </summary>
-        /// <param name="oldPopulation">Old population of individuals</param>
-        /// <param name="newPopulation">New population of individuals</param>
+        /// <param name="previousGeneration">Old population of individuals</param>
+        /// <param name="newGeneration">New population of individuals</param>
         /// <param name="randomGen">Random number generator</param>
         /// <returns></returns>
-        Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen);
+        Population ReinsertIndividuals(Population previousGeneration, Population newGeneration, Random randomGen);
     }
 }
