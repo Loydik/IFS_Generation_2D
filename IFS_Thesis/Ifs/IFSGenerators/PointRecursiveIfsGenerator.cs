@@ -29,14 +29,14 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         }
 
         public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY,
-            int imageZ)
+            int imageZ, int multiplier)
         {
             var resultPoints = new HashSet<Point3Df>();
 
             //we start at B1, B2, B3
             var q0 = new Point3Df(ifsMappings[0].B1, ifsMappings[0].B2, ifsMappings[0].B3);
 
-            var l = Settings.Default.NumberOfRecursions;
+            var l = multiplier;
 
             ApplyPointRecursiveAlgortithm(resultPoints, q0, l, ifsMappings);
 

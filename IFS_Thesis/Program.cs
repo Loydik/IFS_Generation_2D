@@ -59,7 +59,7 @@ namespace IFS_Thesis
             var ifsGenerator = new PointRecursiveIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
 
-            var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ);
+            var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
@@ -69,7 +69,7 @@ namespace IFS_Thesis
 
             var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
 
-            voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ);
+            voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveImage(finalEvolvedImagePath, voxels, ImageFormat3D.Stl);
         }

@@ -181,13 +181,13 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int DrawPointsMultiplier {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int IfsGenerationMultiplier {
             get {
-                return ((int)(this["DrawPointsMultiplier"]));
+                return ((int)(this["IfsGenerationMultiplier"]));
             }
             set {
-                this["DrawPointsMultiplier"] = value;
+                this["IfsGenerationMultiplier"] = value;
             }
         }
         
@@ -325,18 +325,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
-        public int NumberOfRecursions {
-            get {
-                return ((int)(this["NumberOfRecursions"]));
-            }
-            set {
-                this["NumberOfRecursions"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UseReinsertion {
             get {
@@ -356,6 +344,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["UpdateProbabilityVectorAfterNGenerations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseFitnessAdjustment {
+            get {
+                return ((bool)(this["UseFitnessAdjustment"]));
+            }
+            set {
+                this["UseFitnessAdjustment"] = value;
             }
         }
     }

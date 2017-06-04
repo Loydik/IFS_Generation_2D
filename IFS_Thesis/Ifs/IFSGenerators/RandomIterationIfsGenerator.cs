@@ -12,7 +12,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         /// <summary>
         /// Generates voxels for a given Ifs function
         /// </summary>
-        public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY, int imageZ)
+        public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY, int imageZ, int multiplier)
         {
             var resultPoints = new HashSet<Point3Df>();
             var randomGen = new Random();
@@ -24,7 +24,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
 
             //we ignore first 100 iterations
             var minIterations = 100;
-            var maxIterations = imageX * imageY * Settings.Default.DrawPointsMultiplier;
+            var maxIterations = imageX * imageY * multiplier;
 
             for (int k = 0; k < maxIterations; k++)
             {

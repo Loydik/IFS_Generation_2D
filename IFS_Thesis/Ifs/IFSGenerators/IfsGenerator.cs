@@ -91,6 +91,6 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         /// Generate Voxels for given IFS
         /// </summary>
         public abstract HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY,
-            int imageZ);
+            int imageZ, int multiplier);
     }
 }

@@ -23,12 +23,12 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
         #endregion
 
-        #region Public Methods
+        #region Private Methods
 
         /// <summary>
-        /// Calculates fitness based on parameters
+        /// Gets fitness adjusment for fitness function
         /// </summary>
-        public float CalculateFitness(int generatedVoxelsCount, int sourceImageVoxelsCount, int matchingVoxelsCount, int prcFitness, int proFitness)
+        private float GetFitnessAdjustment(int generatedVoxelsCount, int sourceImageVoxelsCount, float currentFitness)
         {
             float percentToSubtract = 0;
 
@@ -58,6 +58,20 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
                 }
             }
 
+            var fitnessAdjustment = currentFitness * percentToSubtract;
+
+            return fitnessAdjustment;
+        }
+        
+        #endregion
+        
+        #region Public Methods
+
+        /// <summary>
+        /// Calculates fitness based on parameters
+        /// </summary>
+        public float CalculateFitness(int generatedVoxelsCount, int sourceImageVoxelsCount, int matchingVoxelsCount, int prcFitness, int proFitness)
+        {
             //NA
             var na = generatedVoxelsCount;
 
@@ -75,13 +89,16 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var fitness = prcFitness * (1 - rc) + proFitness * (1 - ro);
 
-            var fitnessAdjustment = fitness * percentToSubtract;
-
-            fitness = fitness - fitnessAdjustment;
-
-            if (fitness < 0)
+            if (Settings.Default.UseFitnessAdjustment)
             {
-                return  0;
+                var fitnessAdjustment = GetFitnessAdjustment(generatedVoxelsCount, sourceImageVoxelsCount, fitness);
+
+                fitness = fitness - fitnessAdjustment;
+
+                if (fitness < 0)
+                {
+                    return 0;
+                }
             }
 
             return fitness;
@@ -90,9 +107,9 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculate fitness for a given individual
         /// </summary>
-        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ)
+        public float CalculateFitnessForIndividual(HashSet<Voxel> sourceImageVoxels, Individual individual, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ, int multiplier)
         {
-            var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ);
+            var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ, multiplier);
 
             //var redundantPixels = result.Item1;
             //var generatedPixels = result.Item2;
@@ -121,14 +138,14 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         /// <summary>
         /// Calculates fintess for given individuals using source Image pixels
         /// </summary>
-        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ)
+        public List<Individual> CalculateFitnessForIndividuals(List<Individual> individuals, HashSet<Voxel> sourceImageVoxels, IfsGenerator ifsGenerator, int imageX, int imageY, int imageZ, int multiplier)
         {
             Log.Debug("Started calculating fitness for all individuals");
 
             //For each individual which is not elite we calculate fitness
             Parallel.ForEach(individuals, individual =>
             {
-                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ);
+                individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, multiplier);
 
             });
 

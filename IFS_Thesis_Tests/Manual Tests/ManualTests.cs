@@ -40,22 +40,25 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
         #region Tests
 
-        [Test, Category("Manual"), Ignore("Manual Test")]
+        [Test, Category("Manual")/*, Ignore("Manual Test")*/]
         public void TestFitnessForIndividual()
         {
             var imagePath = Settings.Default.WorkingDirectory + "/manual_tested_ifs";
             var ifsGenerator = new PointRecursiveIfsGenerator();
+            var multiplier = 5;
 
             var sourceIndividual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
 
-            var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, 256, 256, 256);
+            var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, 256, 256, 256, multiplier);
 
             var fitnesses  = new List<float>();
-            var individual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,1,0.5,0,0,0,0.1];[0.5,0,0,0,0.5,0,0,0.1,0.5,0.5,0,0,0];[0.52,0,0,0,0.52,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
+            var individual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
 
-            for (int i = 0; i < 10; i++)
+            //multiplier = 5;
+
+            for (int i = 0; i < 5; i++)
             {
-                var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, individual, ifsGenerator, 256, 256, 256);
+                var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, individual, ifsGenerator, 256, 256, 256, multiplier);
                 fitnesses.Add(fitness);
             }
             
@@ -63,7 +66,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             if (true)
             {
-                var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, 256, 256, 256);
+                var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, 256, 256, 256, multiplier);
                 new IfsDrawer3D().SaveImage(imagePath, voxels, ImageFormat3D.Obj);
             }
         }
