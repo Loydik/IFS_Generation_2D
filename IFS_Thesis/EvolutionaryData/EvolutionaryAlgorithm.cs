@@ -140,7 +140,19 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
 
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
+            #region Generating 20000 random individuals and taking the best
+
+            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, 20000, ProbabilityVector, randomGen);
+
+            initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
+                sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
+                Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+
+            initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
+
+            initialIndividuals = initialIndividuals.Take(Settings.Default.PopulationSize).ToList();
+
+            #endregion
 
             Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
 

@@ -56,7 +56,7 @@ namespace IFS_Thesis
             Directory.CreateDirectory(Settings.Default.WorkingDirectory);
 
             var randomGen = new Random();
-            var ifsGenerator = new PointRecursiveIfsGenerator();
+            var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
 
             var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);

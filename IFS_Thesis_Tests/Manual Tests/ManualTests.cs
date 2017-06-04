@@ -39,6 +39,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             return new Individual(individualSingels);
         }
+
         #endregion
 
         #region Tests
@@ -50,14 +51,17 @@ namespace IFS_Thesis_Tests.Manual_Tests
             var imageFolder = Settings.Default.WorkingDirectory;
             var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
-            var multiplier = 4;
+            var multiplier = 3;
+            var dimensionX = 256;
+            var dimensionY = 256;
+            var dimensionZ = 256;
 
             var sourceIndividual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0]");
 
-            var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, 256, 256, 256, multiplier);
+            var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, dimensionX, dimensionY, dimensionZ, multiplier);
 
             var fitnesses  = new List<float>();
-            var evolvedIndividual = CreateIndividualFromSingelsString("[0.0915,-0.3506,0.2751,0.6231,0.5583,0.1258,-0.3545,0.5043,0.1859,0.2367,1.0815,-0.9695,0];[0.695,0.9145,-0.4235,0.9693,0.8423,-0.5622,0.1324,0.1215,0.9321,0.2761,-0.5929,-2.0653,0];[-0.2003,-0.3831,0.2452,0.6239,0.5611,0.2289,-0.3724,0.5144,0.1534,-1.163,1.2783,-0.9919,0];[0.147,0.6151,-0.8121,0.015,-0.0227,0.193,-0.1244,-0.4044,-0.5459,0.4398,2.2517,0.1128,0]");
+            var evolvedIndividual = CreateIndividualFromSingelsString("[0.6,0,0,0,0.7,0,0,0.1,0.5,0,0,0,0];[0.6,0,0,0,0.54,0,0,0,0.3,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.7,0,0];[0.5,0,0,0,0.5,0,0,0.1,0.5,0,0.2,0.5,0]");
 
             for (int i = 0; i < 5; i++)
             {
@@ -69,7 +73,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             if (true)
             {
-                var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(evolvedIndividual.Singels, 256, 256, 256, multiplier);
+                var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(evolvedIndividual.Singels, dimensionX, dimensionY, dimensionZ, multiplier);
                 var matchingVoxels = generatedVoxels.Intersect(sourceVoxels).ToHashSet();
                 var voxelsDrawnOutside = generatedVoxels.Except(matchingVoxels).ToHashSet();
 
