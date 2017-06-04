@@ -107,9 +107,9 @@ namespace IFS_Thesis.EvolutionaryData
                     var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, Settings.Default.ImageX,
                         Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
 
-                    ifsDrawer.SaveImage(path +
+                    ifsDrawer.SaveVoxelImage(path +
                         $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Obj);
-                    ifsDrawer.SaveImage(path +
+                    ifsDrawer.SaveVoxelImage(path +
                         $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Stl);
                 }
             }
