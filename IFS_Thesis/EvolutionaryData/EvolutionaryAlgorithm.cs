@@ -85,7 +85,7 @@ namespace IFS_Thesis.EvolutionaryData
             //Every 100th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 100 == 0;
 
-            if (currentGeneration == 10000)
+            if (currentGeneration == 2000)
             {
                 Settings.Default.ControlledMutationProbability = 0.8f;
                 Settings.Default.RandomMutationProbability = 0.2f;
@@ -140,17 +140,36 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
 
-            #region Generating 20000 random individuals and taking the best
+            List<Individual> initialIndividuals;
 
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, 20000, ProbabilityVector, randomGen);
+            #region Generating 10k random individuals and taking the best
 
-            initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
-                sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
-                Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+            if (Settings.Default.Generate10kIndividuals)
+            {
+                Log.Info("Started generation of 10k initial individuals");
 
-            initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
+                initialIndividuals = new GeneticOperators().CreateIndividuals(
+                    Settings.Default.InitialSingelPoolSize, 10000, ProbabilityVector, randomGen);
 
-            initialIndividuals = initialIndividuals.Take(Settings.Default.PopulationSize).ToList();
+                Log.Info("Ended generation of 10k initial individuals. Starting fitness calculation");
+
+                initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
+                    sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
+                    Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+
+                initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
+
+                initialIndividuals = initialIndividuals.Take(Settings.Default.PopulationSize).ToList();
+            }
+
+            else
+            {
+                initialIndividuals = new GeneticOperators().CreateIndividuals(
+                   Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
+                initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+            }
+
+            Log.Info("Calcualted fitness for generated individuals.");
 
             #endregion
 
@@ -160,9 +179,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info("Added generated individuals to the population.");
 
-            _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-
-            Log.Info("Calcualted fitness for generated individuals.");
+            _population.Individuals = initialIndividuals;
 
             var highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
@@ -204,7 +221,7 @@ namespace IFS_Thesis.EvolutionaryData
                     _population = newPopulation;
                 }
 
-                if (Settings.Default.RecalculateFitnessAfterReinsertion)
+                if (Settings.Default.RecalculateFitnessAfterReinsertion && Settings.Default.UseReinsertion)
                 {
                     //recalculating fitness for whole population
                     _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,

@@ -61,9 +61,10 @@ namespace IFS_Thesis_Tests.Manual_Tests
             var sourceVoxels = ifsGenerator.GenerateVoxelsForIfs(sourceIndividual.Singels, dimensionX, dimensionY, dimensionZ, multiplier);
 
             var fitnesses  = new List<float>();
-            var evolvedIndividual = CreateIndividualFromSingelsString("[0.6,0,0,0,0.7,0,0,0.1,0.5,0,0,0,0];[0.6,0,0,0,0.54,0,0,0,0.3,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.7,0,0];[0.5,0,0,0,0.5,0,0,0.1,0.5,0,0.2,0.5,0]");
+            //var evolvedIndividual = CreateIndividualFromSingelsString("[0.6,0,0,0,0.7,0,0,0.1,0.5,0,0,0,0];[0.6,0,0,0,0.54,0,0,0,0.3,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.7,0,0];[0.5,0,0,0,0.5,0,0,0.1,0.5,0,0.2,0.5,0]");
+            var evolvedIndividual = CreateIndividualFromSingelsString("[0.6244,-0.0936,-0.009,-0.2673,0.6478,0.1498,-0.2479,0.9187,0.4801,-2.2215,0.5717,0.1361,0];[0.583,-0.0973,0.0199,0.5286,0.853,0.6949,0.108,0.3852,-0.1908,-1.1803,3.2106,-2.0057,0];[0.5362,-0.0856,0.0185,-0.1908,0.5927,-0.0635,-0.2072,0.1731,0.1931,-2.2637,0.2895,0.014,0];[-0.8579,-0.2052,-0.1806,0.5436,0.8497,0.6855,0.1017,0.385,-0.1848,-1.2126,3.3475,-2.0857,0];[0.6231,-0.0876,-0.0081,-0.2659,0.6476,0.1495,-0.2473,0.8762,0.4788,-0.8526,0.0606,-0.0994,0]");
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, evolvedIndividual, ifsGenerator, 256, 256, 256, multiplier);
                 fitnesses.Add(fitness);
