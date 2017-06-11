@@ -27,7 +27,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
         private Individual CreateIndividualFromSingelsString(string singelsString)
         {
             var individualSingels = new List<IfsFunction>();
-            var singels = singelsString.Split(';');
+            var singels = singelsString.Trim().Split(';');
 
             foreach (var singel in singels)
             {
@@ -62,11 +62,11 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             var fitnesses  = new List<float>();
             //var evolvedIndividual = CreateIndividualFromSingelsString("[0.6,0,0,0,0.7,0,0,0.1,0.5,0,0,0,0];[0.6,0,0,0,0.54,0,0,0,0.3,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.7,0,0];[0.5,0,0,0,0.5,0,0,0.1,0.5,0,0.2,0.5,0]");
-            var evolvedIndividual = CreateIndividualFromSingelsString("[0.6244,-0.0936,-0.009,-0.2673,0.6478,0.1498,-0.2479,0.9187,0.4801,-2.2215,0.5717,0.1361,0];[0.583,-0.0973,0.0199,0.5286,0.853,0.6949,0.108,0.3852,-0.1908,-1.1803,3.2106,-2.0057,0];[0.5362,-0.0856,0.0185,-0.1908,0.5927,-0.0635,-0.2072,0.1731,0.1931,-2.2637,0.2895,0.014,0];[-0.8579,-0.2052,-0.1806,0.5436,0.8497,0.6855,0.1017,0.385,-0.1848,-1.2126,3.3475,-2.0857,0];[0.6231,-0.0876,-0.0081,-0.2659,0.6476,0.1495,-0.2473,0.8762,0.4788,-0.8526,0.0606,-0.0994,0]");
+            var evolvedIndividual = CreateIndividualFromSingelsString("[-0.3342,-0.4563,0.2808,-0.25,0.7359,-0.3295,0.1859,0.0776,0.3743,-1.3749,2.327,1.4122,0];[-0.3346,-0.4565,0.281,-0.2656,0.7463,-0.3348,0.1857,0.0778,0.3742,-1.3727,2.3189,1.412,0];[-0.3342,-0.4569,0.2807,-0.2658,0.7249,-0.339,0.1862,0.0776,0.3742,-1.3723,2.460522,1.4126,0];[-0.3339,-0.4569,0.2792621,-0.2516,0.7113,-0.3619,0.1862,0.0776,0.3741,-1.3727,2.3285,1.4121,0];[-0.3337,-0.4569,0.28,-0.2533,0.7232,-0.3406827,0.1862,0.0776,0.3742,-1.3731,2.3303,1.4123,0];[-0.3339,-0.4569,0.2799,-0.2516,0.7113,-0.3619,0.1862,0.0776,0.3741,-1.3727,2.3325,1.4126,0];[-0.3361,-0.4554,0.2797,0.331,0.4806,0.25,0.0801,0.1888,0.7384,-1.3712,2.328,1.4121,0]");
 
             for (int i = 0; i < 10; i++)
             {
-                var fitness = new WeightedPointsCoverageFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, evolvedIndividual, ifsGenerator, 256, 256, 256, multiplier);
+                var fitness = new WeightedPointsCoverageObjectiveFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, evolvedIndividual, ifsGenerator, 256, 256, 256, multiplier);
                 fitnesses.Add(fitness);
             }
             
@@ -94,6 +94,25 @@ namespace IFS_Thesis_Tests.Manual_Tests
             var clone = (Individual) individual.Clone();
 
             Assert.That(individual.GetHashCode(), Does.Not.EqualTo(clone.GetHashCode()));
+        }
+
+
+        [Test, Category("Manual")]
+        public void TestLinearRanking()
+        {
+            var individual1 = new Individual { ObjectiveFitness = 0.9f };
+            var individual2 = new Individual { ObjectiveFitness = 0.1f };
+            var individual3 = new Individual { ObjectiveFitness = 1.2f };
+            var individual4 = new Individual { ObjectiveFitness = 0.3f };
+            var individual5 = new Individual { ObjectiveFitness = 0.001f };
+
+            var testPopulation = new List<Individual> { individual1, individual2, individual3, individual4, individual5 };
+            var expectedRanked = new List<Individual> {individual5, individual2, individual4, individual1, individual3};
+
+            var rankedPopulation = new LinearRankingFitnessFunction().AssignRankingFitnessToIndividuals(testPopulation,
+                1.5f);
+
+            Assert.That(rankedPopulation.OrderBy(i => i.RankFitness).ToList(), Is.EqualTo(expectedRanked));
         }
 
         #endregion

@@ -97,8 +97,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EvolutionaryData\EvolutionaryAlgorithm.cs" />
-    <Compile Include="EvolutionaryData\FitnessFunctions\WeightedPointsCoverageFitnessFunction.cs" />
-    <Compile Include="EvolutionaryData\FitnessFunctions\IFitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\LinearRankingFitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\IRankingFitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\WeightedPointsCoverageObjectiveFitnessFunction.cs" />
+    <Compile Include="EvolutionaryData\FitnessFunctions\IObjectiveFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\GeneticOperators.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\IndividualMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Mutation\Individuals\StandardMutationRateStrategy.cs" />

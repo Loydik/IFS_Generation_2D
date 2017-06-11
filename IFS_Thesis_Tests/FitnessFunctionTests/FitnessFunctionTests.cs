@@ -13,12 +13,13 @@ namespace IFS_Thesis_Tests.FitnessFunctionTests
         [TestCaseSource(typeof(FitnessFunctionCases))]
         public void TestFitnessFunctionRange(int generatedVoxelsCount, int sourceImageVoxelsCount, int matchingVoxelsCount, Tuple<float, float> expectedFitnessRange)
         {
-            var fitnessFunction = new WeightedPointsCoverageFitnessFunction();
+            var fitnessFunction = new WeightedPointsCoverageObjectiveFitnessFunction();
             var fitness = fitnessFunction.CalculateFitness(generatedVoxelsCount, sourceImageVoxelsCount,
                 matchingVoxelsCount, 1, 1);
 
             Assert.That(fitness, Is.InRange(expectedFitnessRange.Item1, expectedFitnessRange.Item2));
         }
+
     }
 
     #region Test Cases

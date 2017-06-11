@@ -11,7 +11,7 @@ using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {
-    public class WeightedPointsCoverageFitnessFunction : IFitnessFunction
+    public class WeightedPointsCoverageObjectiveFitnessFunction : IObjectiveFitnessFunction
     {
         #region Logger
 

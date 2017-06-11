@@ -15,19 +15,19 @@
       <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.35</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
@@ -69,7 +69,7 @@
       <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ExtremeDebugging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -86,8 +86,11 @@
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Generate10kIndividuals" Type="System.Boolean" Scope="User">
+    <Setting Name="Generate10xIndividuals" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.75</Value>
     </Setting>
   </Settings>
 </SettingsFile>

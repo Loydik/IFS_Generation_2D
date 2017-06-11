@@ -52,7 +52,12 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Fitness function
         /// </summary>
-        private IFitnessFunction _fitnessFunction;
+        private IObjectiveFitnessFunction _objectiveFitnessFunction;
+
+        /// <summary>
+        /// Rank-based fitness function
+        /// </summary>
+        private IRankingFitnessFunction _rankBasedFitnessFunction;
 
         /// <summary>
         /// Reinsertion strategy
@@ -129,8 +134,11 @@ namespace IFS_Thesis.EvolutionaryData
             _geneticOperators = new GeneticOperators();
             _population = new Population();
 
-            _fitnessFunction = new WeightedPointsCoverageFitnessFunction();
-            Log.Info($"Fitness function is {_fitnessFunction.GetType()}");
+            _objectiveFitnessFunction = new WeightedPointsCoverageObjectiveFitnessFunction();
+            Log.Info($"Objective fitness function is {_objectiveFitnessFunction.GetType()}");
+
+            _rankBasedFitnessFunction = new LinearRankingFitnessFunction();
+            Log.Info($"Rank based fitness function is {_rankBasedFitnessFunction.GetType()}");
 
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
             Log.Info($"Reinsertion strategy is {_reinsertionStrategy.GetType()}");
@@ -142,18 +150,18 @@ namespace IFS_Thesis.EvolutionaryData
 
             List<Individual> initialIndividuals;
 
-            #region Generating 10k random individuals and taking the best
+            #region Generating 10x random individuals and taking the best
 
-            if (Settings.Default.Generate10kIndividuals)
+            if (Settings.Default.Generate10xIndividuals)
             {
-                Log.Info("Started generation of 10k initial individuals");
+                Log.Info("Started generation of 10x initial individuals");
 
                 initialIndividuals = new GeneticOperators().CreateIndividuals(
-                    Settings.Default.InitialSingelPoolSize, 10000, ProbabilityVector, randomGen);
+                    Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize*10, ProbabilityVector, randomGen);
 
-                Log.Info("Ended generation of 10k initial individuals. Starting fitness calculation");
+                Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
 
-                initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
+                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
                     sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
                     Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
 
@@ -166,7 +174,7 @@ namespace IFS_Thesis.EvolutionaryData
             {
                 initialIndividuals = new GeneticOperators().CreateIndividuals(
                    Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
-                initialIndividuals = _fitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             }
 
             Log.Info("Calcualted fitness for generated individuals.");
@@ -175,11 +183,12 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
 
+            initialIndividuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(initialIndividuals,
+                Settings.Default.SelectionPressure);
+
             _population.AddIndividuals(initialIndividuals);
 
             Log.Info("Added generated individuals to the population.");
-
-            _population.Individuals = initialIndividuals;
 
             var highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
@@ -208,7 +217,9 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info("Generated new population");
 
-                newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+                newPopulation.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+                newPopulation.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(newPopulation.Individuals,
+                Settings.Default.SelectionPressure);
 
                 if (Settings.Default.UseReinsertion)
                 {
@@ -224,8 +235,10 @@ namespace IFS_Thesis.EvolutionaryData
                 if (Settings.Default.RecalculateFitnessAfterReinsertion && Settings.Default.UseReinsertion)
                 {
                     //recalculating fitness for whole population
-                    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
+                    _population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
+                       Settings.Default.SelectionPressure);
                 }
 
                 if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
@@ -266,6 +279,7 @@ namespace IFS_Thesis.EvolutionaryData
                     _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
                 Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
+                Log.Info($"Average population fitness: {_population.Individuals.Average(x => x.ObjectiveFitness):#.#####}");
                 Log.Info($"Population size: {_population.Count}");
 
                 ChangeConfiguration(currentGenerationNumber);

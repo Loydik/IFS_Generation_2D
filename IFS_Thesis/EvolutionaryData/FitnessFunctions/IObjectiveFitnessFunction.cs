@@ -6,7 +6,7 @@ using IFS_Thesis.Ifs.IFSGenerators;
 
 namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {
-    public interface IFitnessFunction
+    public interface IObjectiveFitnessFunction
     {
         /// <summary>
         /// Calculate fitness for a given individual
