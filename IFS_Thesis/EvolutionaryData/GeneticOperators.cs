@@ -208,7 +208,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         public Population GenerateNewPopulation(Population population, List<float> probabilityVectors, Random randomGen)
         {
-            IndividualSelectionStrategy individualSelectionStrategy = new RouletteWheelIndividualSelectionStrategy();
+            IndividualSelectionStrategy individualSelectionStrategy = new StochasticUniversalSamplingIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
             RecombinationStrategy recombinationStrategy;
             IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();

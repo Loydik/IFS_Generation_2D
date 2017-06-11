@@ -116,6 +116,7 @@
     <Compile Include="EvolutionaryData\Reinsertion\IReinsertionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\IndividualSelection\IndividualSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\IndividualSelection\RouletteWheelIndividualSelectionStrategy.cs" />
+    <Compile Include="EvolutionaryData\Selection\IndividualSelection\StochasticUniversalSamplingIndividualSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\IndividualSelection\TruncationIndividualSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\SpeciesSelection\ProbabilityVectorSpeciesSelectionStrategy.cs" />
     <Compile Include="EvolutionaryData\Selection\SpeciesSelection\SpeciesSelectionStrategy.cs" />

@@ -373,7 +373,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.75")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public float SelectionPressure {
             get {
                 return ((float)(this["SelectionPressure"]));
