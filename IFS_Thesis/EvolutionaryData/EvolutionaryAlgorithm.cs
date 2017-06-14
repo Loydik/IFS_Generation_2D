@@ -225,6 +225,8 @@ namespace IFS_Thesis.EvolutionaryData
                 {
                     //Reinserting individuals to population
                     _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
+                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
+                       Settings.Default.SelectionPressure);
                 }
 
                 else
