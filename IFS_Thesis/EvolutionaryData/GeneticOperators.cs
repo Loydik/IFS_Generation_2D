@@ -282,7 +282,9 @@ namespace IFS_Thesis.EvolutionaryData
 
             //Step 8
             var n2Count = (int)(Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
-            var n2Individuals = CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
+
+            var n2Individuals = Settings.Default.N2IndividualsFromExistingPoolOfSingels ? CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count, probabilityVectors, randomGen) : CreateIndividuals(1000, n2Count, probabilityVectors, randomGen);
+            
             newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
 

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">150</Value>
+      <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
@@ -81,7 +81,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">500</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -91,6 +91,9 @@
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
       <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

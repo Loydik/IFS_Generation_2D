@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
         public int PopulationSize {
             get {
                 return ((int)(this["PopulationSize"]));
@@ -181,7 +181,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int IfsGenerationMultiplier {
             get {
                 return ((int)(this["IfsGenerationMultiplier"]));
@@ -337,7 +337,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int UpdateProbabilityVectorAfterNGenerations {
             get {
                 return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
@@ -380,6 +380,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["SelectionPressure"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool N2IndividualsFromExistingPoolOfSingels {
+            get {
+                return ((bool)(this["N2IndividualsFromExistingPoolOfSingels"]));
+            }
+            set {
+                this["N2IndividualsFromExistingPoolOfSingels"] = value;
             }
         }
     }
