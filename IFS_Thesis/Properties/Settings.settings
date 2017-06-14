@@ -6,28 +6,28 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200</Value>
+      <Value Profile="(Default)">150</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.35</Value>
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.5</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
+      <Value Profile="(Default)">0.2</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
@@ -51,10 +51,10 @@
       <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.7</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">256</Value>
