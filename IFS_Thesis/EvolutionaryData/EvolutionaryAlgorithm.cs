@@ -64,6 +64,11 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private IReinsertionStrategy _reinsertionStrategy;
 
+        /// <summary>
+        /// Genetic Universum - initial set of singels
+        /// </summary>
+        private List<Singel> _geneticUniversum;
+
         #endregion
 
         #region Private Methods
@@ -92,10 +97,18 @@ namespace IFS_Thesis.EvolutionaryData
 
             if (currentGeneration == 2000)
             {
-                Settings.Default.ControlledMutationProbability = 0.8f;
-                Settings.Default.RandomMutationProbability = 0.2f;
-                Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
+                Settings.Default.N3IndividualsPercentage = Settings.Default.N3IndividualsPercentage - 0.2f;
+                Settings.Default.N1IndividualsPercentage = Settings.Default.N1IndividualsPercentage + 0.1f;
+                Settings.Default.N4IndividualsPercentage = Settings.Default.N4IndividualsPercentage + 0.1f;
+                Log.Info($"Changed the proportions of N individuals. Now they are N1:{Settings.Default.N1IndividualsPercentage} N2:{Settings.Default.N2IndividualsPercentage} N3:{Settings.Default.N3IndividualsPercentage} N4:{Settings.Default.N4IndividualsPercentage}");
             }
+
+            //if (currentGeneration == 2000)
+            //{
+            //    Settings.Default.ControlledMutationProbability = 0.8f;
+            //    Settings.Default.RandomMutationProbability = 0.2f;
+            //    Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
+            //}
         }
 
         /// <summary>
@@ -148,6 +161,9 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
 
+            _geneticUniversum = _geneticOperators.GeneratePoolOfSingels(Settings.Default.InitialSingelPoolSize,
+                randomGen);
+
             List<Individual> initialIndividuals;
 
             #region Generating 10x random individuals and taking the best
@@ -156,8 +172,8 @@ namespace IFS_Thesis.EvolutionaryData
             {
                 Log.Info("Started generation of 10x initial individuals");
 
-                initialIndividuals = new GeneticOperators().CreateIndividuals(
-                    Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize*10, ProbabilityVector, randomGen);
+                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
+                    _geneticUniversum, Settings.Default.PopulationSize*10, ProbabilityVector, randomGen);
 
                 Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
 
@@ -172,8 +188,8 @@ namespace IFS_Thesis.EvolutionaryData
 
             else
             {
-                initialIndividuals = new GeneticOperators().CreateIndividuals(
-                   Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
+                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
+                   _geneticUniversum, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
                 initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             }
 
@@ -213,7 +229,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 var oldPopulation = _population;
 
-                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, randomGen);
+                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, _geneticUniversum, ProbabilityVector, randomGen);
 
                 Log.Info("Generated new population");
 
@@ -241,14 +257,6 @@ namespace IFS_Thesis.EvolutionaryData
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
                     _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
                        Settings.Default.SelectionPressure);
-                }
-
-                if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
-                {
-                    //Step 12
-                    ProbabilityVector =
-                        EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree,
-                            ProbabilityVector);
                 }
 
                 //var totalPopulationCount = _population.Count;
