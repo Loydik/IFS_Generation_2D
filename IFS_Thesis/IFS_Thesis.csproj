@@ -108,6 +108,7 @@
     <Compile Include="EvolutionaryData\Mutation\Variables\RandomMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Mutation\Variables\RealValueMutationStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\ArithmeticCrossoverStrategy.cs" />
+    <Compile Include="EvolutionaryData\Recombination\DiscreteRecombinationStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\InterSpeciesCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\OnePointCrossoverStrategy.cs" />
     <Compile Include="EvolutionaryData\Recombination\ReasortmentStrategy.cs" />
