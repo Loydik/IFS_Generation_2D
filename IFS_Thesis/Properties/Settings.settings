@@ -6,19 +6,19 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">360</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.8</Value>
+      <Value Profile="(Default)">0.75</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.05</Value>
+      <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>
@@ -27,7 +27,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>
@@ -63,7 +63,7 @@
       <Value Profile="(Default)">256</Value>
     </Setting>
     <Setting Name="DrawImageEveryNthGeneration" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
@@ -75,7 +75,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UseReinsertion" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -100,6 +100,12 @@
     </Setting>
     <Setting Name="DiscreteRecombinationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.4</Value>
+    </Setting>
+    <Setting Name="ParentsReinserted" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.1</Value>
+    </Setting>
+    <Setting Name="OffspringReinserted" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
     </Setting>
   </Settings>
 </SettingsFile>

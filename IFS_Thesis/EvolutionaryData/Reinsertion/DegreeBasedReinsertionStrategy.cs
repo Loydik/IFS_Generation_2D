@@ -43,8 +43,11 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
                 var oldSubpopulation = previousGeneration.Individuals.Where(x => x.Degree == degree).ToList();
                 var newSubpopulation = newGeneration.Individuals.Where(x => x.Degree == degree).ToList();
 
-                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, rankingFitnessFunction, individualsCount / 2, randomGen);
-                var bestParents = strategy.SelectIndividuals(oldSubpopulation, rankingFitnessFunction, individualsCount / 2, randomGen);
+                var parentsToReinsertCount = (int) (individualsCount * Settings.Default.ParentsReinserted);
+                var offspringToReinsertCount = (int)(individualsCount * Settings.Default.OffspringReinserted);
+
+                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, rankingFitnessFunction, offspringToReinsertCount, randomGen);
+                var bestParents = strategy.SelectIndividuals(oldSubpopulation, rankingFitnessFunction, parentsToReinsertCount, randomGen);
 
                 finalPopulation.AddIndividuals(bestParents);
                 finalPopulation.AddIndividuals(bestOffspring);
