@@ -1,4 +1,5 @@
 ﻿using System;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals

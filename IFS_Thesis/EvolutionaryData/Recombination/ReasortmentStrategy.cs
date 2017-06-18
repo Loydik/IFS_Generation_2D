@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Utils;
 using MoreLinq;
 
@@ -27,7 +28,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             var firstChild = new Individual(firstChildSingels);
             var secondChild = new Individual(secondChildSingels);
 
-            return new List<Individual> {firstChild, secondChild};
+            return new List<Individual> { firstChild, secondChild };
         }
     }
 }

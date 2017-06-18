@@ -1,16 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.Ifs.IFSDrawers;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
-using Image = System.Drawing.Image;
+using log4net;
+
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace IFS_Thesis
 {
     public class Program
     {
+        #region Logger
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+         #endregion
+
+        [STAThread]
         static void Main(string[] args)
         {
             #region Image Parameters
@@ -24,7 +39,7 @@ namespace IFS_Thesis
             #endregion
 
             #region IFS Definitions
-            
+
             //Sierpinski Triangle - degree 3 (Equal probabilities)
             var sierpinskiTriangle = new List<IfsFunction> { new IfsFunction(0.5f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.333f), new IfsFunction(0.5f, 0.0f, 0.0f, 0.5f, 0.5f, 0.0f, 0.333f), new IfsFunction(0.5f, 0.0f, 0.0f, 0.5f, 0.25f, 0.433f, 0.333f) };
 
@@ -47,9 +62,13 @@ namespace IFS_Thesis
 
             Bitmap image = (Bitmap)Image.FromFile(initialImagePath, true);
 
+            var sourceImagePixels = new ImageParser().GetMatchingPixels(image, Color.Black);
+
+            var randomGen = new Random();
+
             var ea = new EvolutionaryAlgorithm();
 
-            var highest = ea.Start(Settings.Default.NumberOfGenerations, image, drawer);
+            var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, sourceImagePixels, drawer, randomGen);
 
             drawer.SaveIfsImage(highest.Singels, image.Width, image.Height, finalGeneratedImagePath);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using MoreLinq;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination

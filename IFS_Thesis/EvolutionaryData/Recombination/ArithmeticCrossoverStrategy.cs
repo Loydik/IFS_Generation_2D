@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
@@ -41,16 +42,16 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 //For each coefficient
                 for (int j = 0; j < 6; j++)
                 {
-                   var x1 =
-                        a * firstParentCoefficients.Coefficients[j] +
-                        (1 - a) * secondParentCoefficients.Coefficients[j];
+                    var x1 =
+                         a * firstParentCoefficients.Coefficients[j] +
+                         (1 - a) * secondParentCoefficients.Coefficients[j];
 
-                    var x2 = 
+                    var x2 =
                         (1 - a) * firstParentCoefficients.Coefficients[j] +
                         a * secondParentCoefficients.Coefficients[j];
 
-                    firstChildCoefficients[j] = (float) Math.Round(x1, 4, MidpointRounding.AwayFromZero);
-                    secondChildCoefficients[j] = (float) Math.Round(x2, 4, MidpointRounding.AwayFromZero);
+                    firstChildCoefficients[j] = (float)Math.Round(x1, 4, MidpointRounding.AwayFromZero);
+                    secondChildCoefficients[j] = (float)Math.Round(x2, 4, MidpointRounding.AwayFromZero);
                 }
 
                 firstSingels.Add(new IfsFunction(firstChildCoefficients));

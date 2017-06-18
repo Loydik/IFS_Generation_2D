@@ -57,17 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FitnessFunctionTests\FitnessFunctionTests.cs" />
     <Compile Include="GeneticOperatorsTests\GeneticOperatorsTests.cs" />
     <Compile Include="Manual Tests\ManualTests.cs" />
     <Compile Include="MutationStrategiesTests\MutationStrategiesTests.cs" />
-    <Compile Include="RecombinationStrategiesTests\ReasortmentOperatorTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecombinationStrategiesTests\InterSpeciesCrossoverTests.cs" />
     <Compile Include="RecombinationStrategiesTests\OnePointCrossoverTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecombinationStrategiesTests\ReasortmentOperatorTests.cs" />
     <Compile Include="SelectionStrategiesTests\SpeciesSelectionStrategiesTests.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IFS_Thesis\IFS_Thesis.csproj">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
@@ -15,7 +16,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
         private Individual RouletteSelect(List<Individual> selectionPool, Random randomGen)
         {
             //total sum of fitnesses
-            double weightSum = selectionPool.Aggregate(0f, (current, element) => current + element.ObjectiveFitness);
+            double weightSum = selectionPool.Aggregate(0f, (current, element) => current + element.RankFitness);
 
             // get a random value
             double randomValue = randomGen.NextDouble()* weightSum;
@@ -24,7 +25,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
 
             foreach (var individual in selectionPool)
             {
-                partialSum += individual.ObjectiveFitness;
+                partialSum += individual.RankFitness;
 
                 if (partialSum >= randomValue)
                 {
@@ -48,7 +49,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
 
             var selectionPool = individualsForSelection.Clone().ToList();
 
-            selectionPool = selectionPool.OrderByDescending(i => i.ObjectiveFitness).ToList();
+            selectionPool = selectionPool.OrderByDescending(i => i.RankFitness).ToList();
 
             for (int i = 0; i < numberOfIndividualsToSelect; i++)
             {

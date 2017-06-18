@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
 {

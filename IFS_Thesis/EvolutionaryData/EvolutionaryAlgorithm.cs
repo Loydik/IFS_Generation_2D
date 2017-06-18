@@ -4,8 +4,10 @@ using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Reinsertion;
+using IFS_Thesis.Ifs.IFSDrawers;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -13,7 +15,7 @@ using log4net;
 namespace IFS_Thesis.EvolutionaryData
 {
     /// <summary>
-    /// Class which represents the Evolutionary Algorithm
+    /// Class which represents the Evolutionary Algorithm for 3D IFS
     /// </summary>
     public class EvolutionaryAlgorithm
     {
@@ -24,11 +26,6 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        /// <summary>
-        /// Pixels of the source image
-        /// </summary>
-        private List<Point> _sourceImagePixels;
 
         /// <summary>
         /// List of probabilites to generate IFS of a given degree
@@ -46,11 +43,6 @@ namespace IFS_Thesis.EvolutionaryData
         private List<Individual> BestIndividualsPerDegree => EaUtils.GetBestIndividualsOfEachDegree(_population, 1);
 
         /// <summary>
-        /// Random number generator for the whole evolutionary run
-        /// </summary>
-        private Random _randomNumberGenerator;
-
-        /// <summary>
         /// Genetic operators
         /// </summary>
         private GeneticOperators _geneticOperators;
@@ -58,12 +50,22 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Fitness function
         /// </summary>
-        private IFitnessFunction _fitnessFunction;
+        private IObjectiveFitnessFunction _objectiveFitnessFunction;
+
+        /// <summary>
+        /// Rank-based fitness function
+        /// </summary>
+        private IRankingFitnessFunction _rankBasedFitnessFunction;
 
         /// <summary>
         /// Reinsertion strategy
         /// </summary>
         private IReinsertionStrategy _reinsertionStrategy;
+
+        /// <summary>
+        /// Genetic Universum - initial set of singels
+        /// </summary>
+        private List<Singel> _geneticUniversum;
 
         #endregion
 
@@ -88,19 +90,23 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private void ChangeConfiguration(int currentGeneration)
         {
-            //On 1000th generation, decrease the value of pro to refine points coverage
-            if (currentGeneration == 1000)
+            //Every 100th generation we turn on extreme debugging
+            Settings.Default.ExtremeDebugging = currentGeneration % 100 == 0;
+
+            if (currentGeneration == 2000)
             {
-                Settings.Default.ProFitness = 3;
-                Log.Info($"Changed the value of Pro fitness to {Settings.Default.ProFitness}");
+                Settings.Default.N3IndividualsPercentage = Settings.Default.N3IndividualsPercentage - 0.2f;
+                Settings.Default.N1IndividualsPercentage = Settings.Default.N1IndividualsPercentage + 0.1f;
+                Settings.Default.N4IndividualsPercentage = Settings.Default.N4IndividualsPercentage + 0.1f;
+                Log.Info($"Changed the proportions of N individuals. Now they are N1:{Settings.Default.N1IndividualsPercentage} N2:{Settings.Default.N2IndividualsPercentage} N3:{Settings.Default.N3IndividualsPercentage} N4:{Settings.Default.N4IndividualsPercentage}");
             }
 
-            if (currentGeneration == 1500)
-            {
-                Settings.Default.ControlledMutationProbability = 0.7f;
-                Settings.Default.RandomMutationProbability = 0.3f;
-                Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
-            }
+            //if (currentGeneration == 2000)
+            //{
+            //    Settings.Default.ControlledMutationProbability = 0.8f;
+            //    Settings.Default.RandomMutationProbability = 0.2f;
+            //    Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
+            //}
         }
 
         /// <summary>
@@ -128,33 +134,75 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Start the Evolution Process
         /// </summary>
-        public Individual Start(int maxGenerations, Bitmap sourceImage, IfsDrawer drawer)
+        public Individual StartEvolution(int maxGenerations, List<Point> sourceImagePixels, IfsDrawer drawer, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
 
             _geneticOperators = new GeneticOperators();
             _population = new Population();
-            _fitnessFunction = new WeightedPointsCoverageFitnessFunction();
+
+            _objectiveFitnessFunction = new WeightedPointsCoverageObjectiveFitnessFunction();
+            Log.Info($"Objective fitness function is {_objectiveFitnessFunction.GetType()}");
+
+            _rankBasedFitnessFunction = new LinearRankingFitnessFunction();
+            Log.Info($"Rank based fitness function is {_rankBasedFitnessFunction.GetType()}");
+
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
+            Log.Info($"Reinsertion strategy is {_reinsertionStrategy.GetType()}");
 
             //Initial Probability vector, 8 max
-            ProbabilityVector = new List<float> {0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f};
+            ProbabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", ProbabilityVector)}]");
 
-            _randomNumberGenerator = new Random();
+            _geneticUniversum = _geneticOperators.GeneratePoolOfSingels(Settings.Default.InitialSingelPoolSize,
+                randomGen);
 
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(Settings.Default.InitialSingelPoolSize, Settings.Default.PopulationSize, ProbabilityVector, _randomNumberGenerator);
+            List<Individual> initialIndividuals;
+
+            #region Generating 10x random individuals and taking the best
+
+            if (Settings.Default.Generate10xIndividuals)
+            {
+                Log.Info("Started generation of 10x initial individuals");
+
+                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
+                    _geneticUniversum, Settings.Default.PopulationSize*10, ProbabilityVector, randomGen);
+
+                Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
+
+                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
+                    sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
+
+                initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
+
+                initialIndividuals = initialIndividuals.Take(Settings.Default.PopulationSize).ToList();
+            }
+
+            else
+            {
+                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
+                   _geneticUniversum, Settings.Default.PopulationSize, ProbabilityVector, randomGen);
+                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
+            }
+
+            Log.Info("Calcualted fitness for generated individuals.");
+
+            #endregion
+
+            Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
+
+            initialIndividuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(initialIndividuals,
+                Settings.Default.SelectionPressure);
 
             _population.AddIndividuals(initialIndividuals);
 
-            //we get pixels from a source image 
-            _sourceImagePixels = new ImageParser().GetMatchingPixels(sourceImage, Color.Black);
+            Log.Info("Added generated individuals to the population.");
 
-            _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
-
-            Individual highestFitnessIndividual =
+            var highestFitnessIndividual =
                 _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+
+            Log.Info($"Highest fitness individual of generated ones is {highestFitnessIndividual}.\n");
 
             //Iterating for N Generations
             for (int i = 0; i < maxGenerations; i++)
@@ -163,46 +211,64 @@ namespace IFS_Thesis.EvolutionaryData
 
                 Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
+                {
+                    ProbabilityVector =
+                        EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree,
+                            ProbabilityVector);
+                }
 
                 //Generating New Population (Steps 7 - 11)
 
                 var oldPopulation = _population;
 
-                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, ProbabilityVector, _randomNumberGenerator);
+                var newPopulation = _geneticOperators.GenerateNewPopulation(_population, _geneticUniversum, ProbabilityVector, randomGen);
 
-                newPopulation.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+                Log.Info("Generated new population");
 
-                //Reinserting individuals to population
-                _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, _randomNumberGenerator);
+                newPopulation.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
+                newPopulation.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(newPopulation.Individuals,
+                Settings.Default.SelectionPressure);
 
-                if (Settings.Default.RecalculateFitnessAfterReinsertion)
+                if (Settings.Default.UseReinsertion)
+                {
+                    //Reinserting individuals to population
+                    _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
+                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
+                       Settings.Default.SelectionPressure);
+                }
+
+                else
+                {
+                    _population = newPopulation;
+                }
+
+                if (Settings.Default.RecalculateFitnessAfterReinsertion && Settings.Default.UseReinsertion)
                 {
                     //recalculating fitness for whole population
-                    _population.Individuals = _fitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
-                        _sourceImagePixels, sourceImage.Width, sourceImage.Height);
+                    _population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
+                        sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
+                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
+                       Settings.Default.SelectionPressure);
                 }
 
-                //Step 12
-                ProbabilityVector = EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(BestIndividualsPerDegree, ProbabilityVector);
+                //var totalPopulationCount = _population.Count;
 
-                var totalPopulationCount = _population.Count;
+                ////Removing and adding species
+                //int speciesCountBefore = _population.Species.Count;
 
-                //Removing and adding species
-                int speciesCountBefore = _population.Species.Count;
+                ////Step 13
+                //_population = new GeneticOperators().RemoveWeakestSpecies(_population,
+                //    Settings.Default.AverageFitnessThreshold);
 
-                //Step 13
-                _population = new GeneticOperators().RemoveWeakestSpecies(_population,
-                    Settings.Default.AverageFitnessThreshold);
+                ////Step 14
+                //_population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
 
-                //Step 14
-                _population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
-
-                //Step 15
-                if (speciesCountBefore < _population.Species.Count)
-                {
-                    //TODO - Implement creation of new species
-                }
+                ////Step 15
+                //if (speciesCountBefore < _population.Species.Count)
+                //{
+                //    //TODO - Implement creation of new species
+                //}
 
                 Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
@@ -216,25 +282,42 @@ namespace IFS_Thesis.EvolutionaryData
                     _population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
 
                 Log.Info($"Highest fitness individual in the population is {highestFitnessIndividual}.\n");
+                Log.Info($"Average population fitness: {_population.Individuals.Average(x => x.ObjectiveFitness):#.#####}");
                 Log.Info($"Population size: {_population.Count}");
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+                if (currentGenerationNumber % 1000 == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
 
-                    foreach (var individual in BestIndividualsPerDegree)
+                    foreach (var individual in _population.Individuals)
                     {
                         GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
                     }
                 }
 
+                //every Nth generation, save the highest fit individual as image
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 1000 != 0)
+                {
+                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                    System.IO.Directory.CreateDirectory(folderPath);
 
-                GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber,
-                    Settings.Default.WorkingDirectory); 
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        foreach (var individual in BestIndividualsPerDegree)
+                        {
+                            GenerateReportImage(drawer, individual, currentGenerationNumber, folderPath);
+                        }
+                    }
+
+                    else
+                    {
+                        GenerateReportImage(drawer, highestFitnessIndividual, currentGenerationNumber, folderPath);
+                    }
+                }
+                
             }
 
             return highestFitnessIndividual;

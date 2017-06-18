@@ -25,90 +25,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public int PopulationSize {
-            get {
-                return ((int)(this["PopulationSize"]));
-            }
-            set {
-                this["PopulationSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
-        public float N2IndividualsPercentage {
-            get {
-                return ((float)(this["N2IndividualsPercentage"]));
-            }
-            set {
-                this["N2IndividualsPercentage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
-        public float N3IndividualsPercentage {
-            get {
-                return ((float)(this["N3IndividualsPercentage"]));
-            }
-            set {
-                this["N3IndividualsPercentage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.55")]
-        public float N4IndividualsPercentage {
-            get {
-                return ((float)(this["N4IndividualsPercentage"]));
-            }
-            set {
-                this["N4IndividualsPercentage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
-        public float MutationProbability {
-            get {
-                return ((float)(this["MutationProbability"]));
-            }
-            set {
-                this["MutationProbability"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
-        public float AverageFitnessThreshold {
-            get {
-                return ((float)(this["AverageFitnessThreshold"]));
-            }
-            set {
-                this["AverageFitnessThreshold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
-        public float N1IndividualsPercentage {
-            get {
-                return ((float)(this["N1IndividualsPercentage"]));
-            }
-            set {
-                this["N1IndividualsPercentage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:/tmp/IFS Images")]
         public string WorkingDirectory {
             get {
@@ -121,7 +37,115 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public int PopulationSize {
+            get {
+                return ((int)(this["PopulationSize"]));
+            }
+            set {
+                this["PopulationSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
+        public int InitialSingelPoolSize {
+            get {
+                return ((int)(this["InitialSingelPoolSize"]));
+            }
+            set {
+                this["InitialSingelPoolSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.8")]
+        public float N1IndividualsPercentage {
+            get {
+                return ((float)(this["N1IndividualsPercentage"]));
+            }
+            set {
+                this["N1IndividualsPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        public float N2IndividualsPercentage {
+            get {
+                return ((float)(this["N2IndividualsPercentage"]));
+            }
+            set {
+                this["N2IndividualsPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        public float N3IndividualsPercentage {
+            get {
+                return ((float)(this["N3IndividualsPercentage"]));
+            }
+            set {
+                this["N3IndividualsPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float N4IndividualsPercentage {
+            get {
+                return ((float)(this["N4IndividualsPercentage"]));
+            }
+            set {
+                this["N4IndividualsPercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float MutationProbability {
+            get {
+                return ((float)(this["MutationProbability"]));
+            }
+            set {
+                this["MutationProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        public float MutationRange {
+            get {
+                return ((float)(this["MutationRange"]));
+            }
+            set {
+                this["MutationRange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float AverageFitnessThreshold {
+            get {
+                return ((float)(this["AverageFitnessThreshold"]));
+            }
+            set {
+                this["AverageFitnessThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
         public int NumberOfGenerations {
             get {
                 return ((int)(this["NumberOfGenerations"]));
@@ -158,18 +182,18 @@ namespace IFS_Thesis.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int DrawPointsMultiplier {
+        public int IfsGenerationMultiplier {
             get {
-                return ((int)(this["DrawPointsMultiplier"]));
+                return ((int)(this["IfsGenerationMultiplier"]));
             }
             set {
-                this["DrawPointsMultiplier"] = value;
+                this["IfsGenerationMultiplier"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
         public float ArithmeticCrossoverProbability {
             get {
                 return ((float)(this["ArithmeticCrossoverProbability"]));
@@ -193,19 +217,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IgnoreProbabilities {
-            get {
-                return ((bool)(this["IgnoreProbabilities"]));
-            }
-            set {
-                this["IgnoreProbabilities"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
         public float RandomMutationProbability {
             get {
                 return ((float)(this["RandomMutationProbability"]));
@@ -217,7 +229,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.95")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
         public float ControlledMutationProbability {
             get {
                 return ((float)(this["ControlledMutationProbability"]));
@@ -253,19 +265,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
-        public int InitialSingelPoolSize {
-            get {
-                return ((int)(this["InitialSingelPoolSize"]));
-            }
-            set {
-                this["InitialSingelPoolSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int DrawImageEveryNthGeneration {
             get {
                 return ((int)(this["DrawImageEveryNthGeneration"]));
@@ -277,7 +277,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int EliteIndividualsPerDegree {
             get {
                 return ((int)(this["EliteIndividualsPerDegree"]));
@@ -301,18 +301,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
-        public float MutationRange {
-            get {
-                return ((float)(this["MutationRange"]));
-            }
-            set {
-                this["MutationRange"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool RecalculateFitnessAfterReinsertion {
             get {
@@ -320,6 +308,114 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["RecalculateFitnessAfterReinsertion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseReinsertion {
+            get {
+                return ((bool)(this["UseReinsertion"]));
+            }
+            set {
+                this["UseReinsertion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int UpdateProbabilityVectorAfterNGenerations {
+            get {
+                return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
+            }
+            set {
+                this["UpdateProbabilityVectorAfterNGenerations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseFitnessAdjustment {
+            get {
+                return ((bool)(this["UseFitnessAdjustment"]));
+            }
+            set {
+                this["UseFitnessAdjustment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Generate10xIndividuals {
+            get {
+                return ((bool)(this["Generate10xIndividuals"]));
+            }
+            set {
+                this["Generate10xIndividuals"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
+        public float SelectionPressure {
+            get {
+                return ((float)(this["SelectionPressure"]));
+            }
+            set {
+                this["SelectionPressure"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool N2IndividualsFromExistingPoolOfSingels {
+            get {
+                return ((bool)(this["N2IndividualsFromExistingPoolOfSingels"]));
+            }
+            set {
+                this["N2IndividualsFromExistingPoolOfSingels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IgnoreProbabilities {
+            get {
+                return ((bool)(this["IgnoreProbabilities"]));
+            }
+            set {
+                this["IgnoreProbabilities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GeneticUniversumAtRandom {
+            get {
+                return ((bool)(this["GeneticUniversumAtRandom"]));
+            }
+            set {
+                this["GeneticUniversumAtRandom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        public float DiscreteRecombinationProbability {
+            get {
+                return ((float)(this["DiscreteRecombinationProbability"]));
+            }
+            set {
+                this["DiscreteRecombinationProbability"] = value;
             }
         }
     }

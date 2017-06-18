@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace IFS_Thesis
+namespace IFS_Thesis.Utils
 {
     public class LockBitmap : IDisposable
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.GeneticOperatorsTests
@@ -14,7 +15,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
         {
             var vd = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
             var random = new Random();
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, 100, vd, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromRandomPoolOfSingels(500, 100, vd, random);
             var testPopulation = new Population();
             testPopulation.AddIndividuals(initialIndividuals);
 
@@ -45,7 +46,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
         {
             var vd = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
             var random = new Random();
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, 100, vd, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromRandomPoolOfSingels(500, 100, vd, random);
             var testPopulation = new Population();
             testPopulation.AddIndividuals(initialIndividuals);
 
@@ -78,7 +79,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
         {
             var vd = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
             var random = new Random();
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, 100, vd, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromRandomPoolOfSingels(500, 100, vd, random);
             var testPopulation = new Population();
             testPopulation.AddIndividuals(initialIndividuals);
 
@@ -99,7 +100,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
         {
             var vd = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
             var random = new Random();
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, 100, vd, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromRandomPoolOfSingels(500, 100, vd, random);
             var testPopulation = new Population();
             testPopulation.AddIndividuals(initialIndividuals);
 
@@ -137,7 +138,7 @@ namespace IFS_Thesis_Tests.GeneticOperatorsTests
             var vd = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
             var random = new Random();
             var populationSize = 100;
-            var initialIndividuals = new GeneticOperators().CreateIndividuals(500, populationSize, vd, random);
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromRandomPoolOfSingels(500, populationSize, vd, random);
             var testPopulation = new Population();
             testPopulation.AddIndividuals(initialIndividuals);
 

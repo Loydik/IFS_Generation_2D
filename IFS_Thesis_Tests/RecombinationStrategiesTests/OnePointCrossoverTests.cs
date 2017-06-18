@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.Utils;
 using Moq;
@@ -147,7 +148,7 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
                 1
             };
 
-           //crossover at point 3
+            //crossover at point 3
             yield return new object[]
             {
                 new Individual(new List<IfsFunction>

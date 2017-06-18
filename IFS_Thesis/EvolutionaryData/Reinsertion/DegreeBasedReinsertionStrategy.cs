@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
 
@@ -21,27 +23,35 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <summary>
         /// Reinserts individuals to a population
         /// </summary>
-        public Population ReinsertIndividuals(Population oldPopulation, Population newPopulation, Random randomGen)
+        public Population ReinsertIndividuals(Population previousGeneration, Population newGeneration, Random randomGen)
         {
             IndividualSelectionStrategy strategy = new TruncationIndividualSelectionStrategy();
 
             var finalPopulation = new Population();
 
-            var degreesOfIndividuals = EaUtils.GetDegreesOfIndividuals(newPopulation.Individuals);
+            var degreesOfIndividuals = EaUtils.GetDegreesOfIndividuals(newGeneration.Individuals);
+
+            Log.Debug("Started Reinsertion process");
 
             //Each subpopulation
             foreach (var degree in degreesOfIndividuals)
             {
-                var individualsCount = newPopulation.Individuals.Count(x => x.Degree == degree);
+                var individualsCount = newGeneration.Individuals.Count(x => x.Degree == degree);
 
-                var oldSubpopulation = oldPopulation.Individuals.Where(x => x.Degree == degree).ToList();
-                var newSubpopulation = newPopulation.Individuals.Where(x => x.Degree == degree).ToList();
+                var oldSubpopulation = previousGeneration.Individuals.Where(x => x.Degree == degree).ToList();
+                var newSubpopulation = newGeneration.Individuals.Where(x => x.Degree == degree).ToList();
 
                 var bestOffspring = strategy.SelectIndividuals(newSubpopulation, individualsCount / 2, randomGen);
                 var bestParents = strategy.SelectIndividuals(oldSubpopulation, individualsCount / 2, randomGen);
 
                 finalPopulation.AddIndividuals(bestParents);
                 finalPopulation.AddIndividuals(bestOffspring);
+
+                if (Settings.Default.ExtremeDebugging)
+                {
+                    Log.Debug($"Best parents for degree {degree} are: \n {string.Join("\n", bestParents)} ");
+                    Log.Debug($"Best offspring for degree {degree} are: \n {string.Join("\n", bestOffspring)} ");
+                }
 
                 Log.Debug($"Reinserted {individualsCount} individuals of degree {degree} to population");
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.Utils;
 using MoreLinq;

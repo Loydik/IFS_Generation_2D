@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
 
@@ -23,7 +25,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
         /// <remarks>(-1, 1) for a,b,c,d and (-10,10) for e,f</remarks>
         private Tuple<int, int> GetRangeForIndex(int index)
         {
-            if (index >= 0 && index <= 3 )
+            if (index >= 0 && index <= 3)
             {
                 return new Tuple<int, int>(-1, 1);
             }
@@ -32,7 +34,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                 return new Tuple<int, int>(-10, 10);
             }
 
-            return new Tuple<int, int>(0,0);
+            return new Tuple<int, int>(0, 0);
         }
 
         /// <summary>
@@ -102,7 +104,12 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                     {
                         var range = GetRangeForIndex(index);
                         tempCoefficient = strategy.Mutate(tempCoefficient, randomGen, range);
-                        Log.Debug($"Mutated coefficient {GetCoefficientNameByIndex(index)} from {coefficient} to {tempCoefficient} using {strategy.GetType().Name}");
+
+                        if (Settings.Default.ExtremeDebugging)
+                        {
+                            Log.Debug(
+                                $"Mutated coefficient {GetCoefficientNameByIndex(index)} from {coefficient} to {tempCoefficient} using {strategy.GetType().Name}");
+                        }
                     }
 
                     tempCoefficients.Add(tempCoefficient);
