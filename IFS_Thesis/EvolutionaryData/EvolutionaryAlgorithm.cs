@@ -192,8 +192,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
 
-            initialIndividuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(initialIndividuals,
-                Settings.Default.SelectionPressure);
 
             _population.AddIndividuals(initialIndividuals);
 
@@ -227,15 +225,11 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info("Generated new population");
 
                 newPopulation.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
-                newPopulation.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(newPopulation.Individuals,
-                Settings.Default.SelectionPressure);
 
                 if (Settings.Default.UseReinsertion)
                 {
                     //Reinserting individuals to population
                     _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
-                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
-                       Settings.Default.SelectionPressure);
                 }
 
                 else
@@ -248,8 +242,6 @@ namespace IFS_Thesis.EvolutionaryData
                     //recalculating fitness for whole population
                     _population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
                         sourceImagePixels, Settings.Default.ImageX, Settings.Default.ImageY);
-                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
-                       Settings.Default.SelectionPressure);
                 }
 
                 //var totalPopulationCount = _population.Count;

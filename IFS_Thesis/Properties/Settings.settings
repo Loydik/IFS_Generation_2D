@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">360</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>

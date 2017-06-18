@@ -66,3 +66,10 @@ C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\MoreLinq.xml
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.csprojResolveAssemblyReference.cache
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.exe
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.pdb
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\Cyotek.Drawing.BitmapFont.dll
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.dll
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.Wpf.dll
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.pdb
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.xml
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.Wpf.pdb
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\HelixToolkit.Wpf.xml

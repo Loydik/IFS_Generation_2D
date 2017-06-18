@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
@@ -43,11 +45,14 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
         /// <summary>
         /// Private selection using Roulette Select
         /// </summary>
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, int numberOfIndividualsToSelect, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int numberOfIndividualsToSelect, Random randomGen)
         {
             List<Individual> selectedIndividuals = new List<Individual>();
 
             var selectionPool = individualsForSelection.Clone().ToList();
+
+            selectionPool = rankingFitnessFunction.AssignRankingFitnessToIndividuals(selectionPool,
+               Settings.Default.SelectionPressure);
 
             selectionPool = selectionPool.OrderByDescending(i => i.RankFitness).ToList();
 
