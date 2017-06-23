@@ -193,6 +193,25 @@ namespace IFS_Thesis.EvolutionaryData
         }
 
         /// <summary>
+        /// Creates individuals based on probability vector
+        /// </summary>
+        public List<Individual> CreateIndividualsFromRandomPoolOfSingels(int singelsPoolSize, int populationSize, List<float> probablityVectors, Random randomGen)
+        {
+            var generatedIndividuals = new List<Individual>();
+
+            var initialPoolOfSingels = GeneratePoolOfSingels(singelsPoolSize, randomGen);
+
+            for (int i = 0; i < populationSize; i++)
+            {
+                var individual = new GeneticOperators().CreateIndividual(probablityVectors, initialPoolOfSingels, randomGen);
+
+                generatedIndividuals.Add(individual);
+            }
+
+            return generatedIndividuals;
+        }
+
+        /// <summary>
         /// Creates individuals from existing pool of singels
         /// </summary>
         public List<Individual> CreateIndividualsFromExistingPoolOfSingels(List<Singel> poolOfSingels, int populationSize, List<float> probablityVectors, Random randomGen)
@@ -308,8 +327,22 @@ namespace IFS_Thesis.EvolutionaryData
             //Step 8
             var n2Count = (int)(Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
 
-            var n2Individuals = Settings.Default.N2IndividualsFromExistingPoolOfSingels ? CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count, probabilityVectors, randomGen) : CreateIndividualsFromExistingPoolOfSingels(geneticUniversum, n2Count, probabilityVectors, randomGen);
-            
+            List<Individual> n2Individuals;
+
+            if (Settings.Default.N2IndividualsFromExistingPoolOfSingels)
+            {
+                n2Individuals = CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count,
+                    probabilityVectors, randomGen);
+            }
+
+            else if (Settings.Default.GeneticUniversumAtRandom)
+            {
+                n2Individuals = CreateIndividualsFromRandomPoolOfSingels(1000, n2Count, probabilityVectors, randomGen);
+            }
+            else
+                n2Individuals = CreateIndividualsFromExistingPoolOfSingels(geneticUniversum, n2Count, probabilityVectors,
+                    randomGen);
+
             newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
 

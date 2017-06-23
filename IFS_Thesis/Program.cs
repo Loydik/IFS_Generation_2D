@@ -59,9 +59,14 @@ namespace IFS_Thesis
             var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
 
+            var previousMultiplier = Settings.Default.IfsGenerationMultiplier;
+            Settings.Default.IfsGenerationMultiplier = 16;
+
             var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             //ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Stl);
+
+            Settings.Default.IfsGenerationMultiplier = previousMultiplier;
 
             Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
 
