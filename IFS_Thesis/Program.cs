@@ -60,7 +60,7 @@ namespace IFS_Thesis
             var ifsDrawer = new IfsDrawer3D();
 
             var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
-            ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Obj);
+            //ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
             Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
@@ -71,7 +71,7 @@ namespace IFS_Thesis
 
             voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);
-            ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Stl);
+           // ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Stl);
         }
     }
 }

@@ -5,8 +5,16 @@ using IFS_Thesis.Ifs;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
+    /// <summary>
+    /// Discrete Recombination strategy
+    /// </summary>
     public class DiscreteRecombinationStrategy : RecombinationStrategy
     {
+        #region Private Methods
+
+        /// <summary>
+        /// Recombine two given singels using Discrete Recombination strategy
+        /// </summary>
         private Tuple<Singel, Singel> RecombineSingels(IfsFunction firstSignel, IfsFunction secondSingel, Random randomGen)
         {
             var firstSingelClone = (IfsFunction)firstSignel.Clone();
@@ -34,6 +42,10 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             return new Tuple<Singel, Singel>(new Singel(offspringSingel1), new Singel(offspringSingel2));
         }
 
+        #endregion
+
+        #region Overriden Members
+
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
             if (firstParent == null || secondParent == null || firstParent.Degree != secondParent.Degree)
@@ -42,24 +54,22 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             }
 
             //cloning to prevent unexpected behavior
-            var firstParentClone = (Individual)firstParent.Clone();
-            var secondParentClone = (Individual)secondParent.Clone();
+            var firstChild = (Individual)firstParent.Clone();
+            var secondChild = (Individual)secondParent.Clone();
 
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
 
-            for (int i = 0; i < firstParent.Degree; i++)
-            {
-                var childSingels = RecombineSingels(firstParentClone.Singels[i], secondParentClone.Singels[i],
-                    randomGen);
-                firstSingels.Add(childSingels.Item1);
-                secondSingels.Add(childSingels.Item2);
-            }
+            var singelToExchange = randomGen.Next(firstParent.Degree);
 
-            var individual1 = new Individual(firstSingels);
-            var individual2 = new Individual(secondSingels);
+            var childSingels = RecombineSingels(firstChild.Singels[singelToExchange],
+                secondChild.Singels[singelToExchange],
+                randomGen);
 
-            return new List<Individual> { individual1, individual2 };
+            firstChild.Singels[singelToExchange] = childSingels.Item1;
+            secondChild.Singels[singelToExchange] = childSingels.Item2;
+
+            return new List<Individual> { firstChild, secondChild };
         }
+
+        #endregion
     }
 }

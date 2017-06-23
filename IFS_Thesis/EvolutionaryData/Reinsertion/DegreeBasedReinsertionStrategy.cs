@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
@@ -26,6 +27,7 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         public Population ReinsertIndividuals(Population previousGeneration, Population newGeneration, Random randomGen)
         {
             IndividualSelectionStrategy strategy = new TruncationIndividualSelectionStrategy();
+            IRankingFitnessFunction rankingFitnessFunction = new LinearRankingFitnessFunction();
 
             var finalPopulation = new Population();
 
@@ -41,8 +43,8 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
                 var oldSubpopulation = previousGeneration.Individuals.Where(x => x.Degree == degree).ToList();
                 var newSubpopulation = newGeneration.Individuals.Where(x => x.Degree == degree).ToList();
 
-                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, individualsCount / 2, randomGen);
-                var bestParents = strategy.SelectIndividuals(oldSubpopulation, individualsCount / 2, randomGen);
+                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, rankingFitnessFunction, individualsCount / 2, randomGen);
+                var bestParents = strategy.SelectIndividuals(oldSubpopulation, rankingFitnessFunction, individualsCount / 2, randomGen);
 
                 finalPopulation.AddIndividuals(bestParents);
                 finalPopulation.AddIndividuals(bestOffspring);

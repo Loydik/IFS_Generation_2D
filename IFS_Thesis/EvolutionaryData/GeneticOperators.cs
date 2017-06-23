@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
@@ -212,6 +213,7 @@ namespace IFS_Thesis.EvolutionaryData
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
             RecombinationStrategy recombinationStrategy;
             IndividualMutationStrategy individualMutationStrategy = new StandardMutationRateStrategy();
+            IRankingFitnessFunction rankingFitnessFunction = new LinearRankingFitnessFunction();
 
             var newPopulation = new Population();
 
@@ -259,7 +261,7 @@ namespace IFS_Thesis.EvolutionaryData
                     individualSelectionStrategy.SelectIndividuals(
                         population.Individuals
                             .Where(x => x.Degree.Equals(degree))
-                            .ToList(), individualsForDegree, randomGen);
+                            .ToList(), rankingFitnessFunction, individualsForDegree, randomGen);
 
                 selectedIndividuals.Shuffle(randomGen);
 
@@ -332,9 +334,9 @@ namespace IFS_Thesis.EvolutionaryData
                     if (secondSpecies != null)
                     {
                         var firstIndividual =
-                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
                         var secondIndividual =
-                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
 
                         if (Settings.Default.ExtremeDebugging)
                         {
@@ -375,7 +377,7 @@ namespace IFS_Thesis.EvolutionaryData
             var n4Individuals = new List<Individual>();
 
             recombinationStrategy = new ReasortmentStrategy();
-            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, n4Count, randomGen);
+            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, randomGen);
             individualsForRecombination.Shuffle(randomGen);
 
             for (int i = 0; i < individualsForRecombination.Count; i++)

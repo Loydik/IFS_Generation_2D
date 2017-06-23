@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.EvolutionaryData.FitnessFunctions;
+using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
@@ -31,11 +33,14 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
             return null;
         }
 
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, int count, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, Random randomGen)
         {
             var selectedIndividuals = new List<Individual>();
 
             var selectionPool = individualsForSelection.Clone().ToList();
+
+            selectionPool = rankingFitnessFunction.AssignRankingFitnessToIndividuals(selectionPool,
+                Settings.Default.SelectionPressure);
 
             selectionPool = selectionPool.OrderByDescending(i => i.RankFitness).ToList();
 

@@ -55,11 +55,6 @@ namespace IFS_Thesis.EvolutionaryData
         private IObjectiveFitnessFunction _objectiveFitnessFunction;
 
         /// <summary>
-        /// Rank-based fitness function
-        /// </summary>
-        private IRankingFitnessFunction _rankBasedFitnessFunction;
-
-        /// <summary>
         /// Reinsertion strategy
         /// </summary>
         private IReinsertionStrategy _reinsertionStrategy;
@@ -150,9 +145,6 @@ namespace IFS_Thesis.EvolutionaryData
             _objectiveFitnessFunction = new WeightedPointsCoverageObjectiveFitnessFunction();
             Log.Info($"Objective fitness function is {_objectiveFitnessFunction.GetType()}");
 
-            _rankBasedFitnessFunction = new LinearRankingFitnessFunction();
-            Log.Info($"Rank based fitness function is {_rankBasedFitnessFunction.GetType()}");
-
             _reinsertionStrategy = new DegreeBasedReinsertionStrategy();
             Log.Info($"Reinsertion strategy is {_reinsertionStrategy.GetType()}");
 
@@ -199,9 +191,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
 
-            initialIndividuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(initialIndividuals,
-                Settings.Default.SelectionPressure);
-
             _population.AddIndividuals(initialIndividuals);
 
             Log.Info("Added generated individuals to the population.");
@@ -234,15 +223,12 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info("Generated new population");
 
                 newPopulation.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-                newPopulation.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(newPopulation.Individuals,
-                Settings.Default.SelectionPressure);
+                
 
                 if (Settings.Default.UseReinsertion)
                 {
                     //Reinserting individuals to population
                     _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
-                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
-                       Settings.Default.SelectionPressure);
                 }
 
                 else
@@ -255,8 +241,6 @@ namespace IFS_Thesis.EvolutionaryData
                     //recalculating fitness for whole population
                     _population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(_population.Individuals,
                         sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-                    _population.Individuals = _rankBasedFitnessFunction.AssignRankingFitnessToIndividuals(_population.Individuals,
-                       Settings.Default.SelectionPressure);
                 }
 
                 //var totalPopulationCount = _population.Count;
