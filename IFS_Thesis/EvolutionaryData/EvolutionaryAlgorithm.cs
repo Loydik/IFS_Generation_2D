@@ -88,7 +88,15 @@ namespace IFS_Thesis.EvolutionaryData
         private void ChangeConfiguration(int currentGeneration)
         {
             //Every 100th generation we turn on extreme debugging
-            Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
+            Settings.Default.ExtremeDebugging = currentGeneration % 100 == 0;
+
+            if (currentGeneration == 2000)
+            {
+                Settings.Default.N3IndividualsPercentage = Settings.Default.N3IndividualsPercentage - 0.2f;
+                Settings.Default.N1IndividualsPercentage = Settings.Default.N1IndividualsPercentage + 0.1f;
+                Settings.Default.N4IndividualsPercentage = Settings.Default.N4IndividualsPercentage + 0.1f;
+                Log.Info($"Changed the proportions of N individuals. Now they are N1:{Settings.Default.N1IndividualsPercentage} N2:{Settings.Default.N2IndividualsPercentage} N3:{Settings.Default.N3IndividualsPercentage} N4:{Settings.Default.N4IndividualsPercentage}");
+            }
 
             //if (currentGeneration == 2000)
             //{
