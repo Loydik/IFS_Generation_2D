@@ -98,8 +98,11 @@
     <Setting Name="DiscreteRecombinationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.4</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ParentsReinserted" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.1</Value>
+    </Setting>
+    <Setting Name="OffspringReinserted" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
     </Setting>
   </Settings>
 </SettingsFile>

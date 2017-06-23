@@ -409,13 +409,25 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float ParentsReinserted {
             get {
-                return ((string)(this["Setting"]));
+                return ((float)(this["ParentsReinserted"]));
             }
             set {
-                this["Setting"] = value;
+                this["ParentsReinserted"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
+        public float OffspringReinserted {
+            get {
+                return ((float)(this["OffspringReinserted"]));
+            }
+            set {
+                this["OffspringReinserted"] = value;
             }
         }
     }
