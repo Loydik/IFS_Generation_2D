@@ -125,8 +125,8 @@ namespace IFS_Thesis.EvolutionaryData
                     var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, Settings.Default.ImageX,
                         Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
 
-                    ifsDrawer.SaveVoxelImage(path +
-                        $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Obj);
+                    //ifsDrawer.SaveVoxelImage(path +
+                       // $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Obj);
                     ifsDrawer.SaveVoxelImage(path +
                         $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Stl);
                 }
@@ -294,8 +294,19 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
+                if (currentGenerationNumber % 1000 == 0)
+                {
+                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                    System.IO.Directory.CreateDirectory(folderPath);
+
+                    foreach (var individual in _population.Individuals)
+                    {
+                        GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
+                    }
+                }
+
                 //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber %1000 !=0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);

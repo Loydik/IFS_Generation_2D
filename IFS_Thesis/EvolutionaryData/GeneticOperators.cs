@@ -45,16 +45,16 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Gets Recombination strategy (either one-point crossover or arithmetic crossover) based on probabilities
         /// </summary>
-        private RecombinationStrategy GetRecombinationStrategy(float onePointCrossoverProbability, Random randomGen)
+        private RecombinationStrategy GetRecombinationStrategy(float arithmeticCrossoverProbability, Random randomGen)
         {
             var result = randomGen.NextDouble();
 
-            if (result <= onePointCrossoverProbability)
+            if (result <= arithmeticCrossoverProbability)
             {
-                return new OnePointCrossoverStrategy();
+                return new ArithmeticCrossoverStrategy();
             }
 
-            return new ArithmeticCrossoverStrategy();
+            return new DiscreteRecombinationStrategy();
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace IFS_Thesis.EvolutionaryData
                 for (int i = 0; i < selectedIndividuals.Count; i++)
                 {
                     //selecting recombination strategy
-                    recombinationStrategy = GetRecombinationStrategy(Settings.Default.OnePointCrossoverProbability,
+                    recombinationStrategy = GetRecombinationStrategy(Settings.Default.ArithmeticCrossoverProbability,
                         randomGen);
 
                     var firstParent = selectedIndividuals[i];
