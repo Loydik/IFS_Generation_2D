@@ -294,7 +294,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                if (currentGenerationNumber % 1000 == 0)
+                if (currentGenerationNumber % 200 == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
