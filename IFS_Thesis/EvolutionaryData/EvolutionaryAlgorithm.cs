@@ -264,7 +264,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                if (currentGenerationNumber % 200 == 0)
+                if (currentGenerationNumber % 1000 == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
@@ -276,7 +276,7 @@ namespace IFS_Thesis.EvolutionaryData
                 }
 
                 //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 200 != 0)
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 1000 != 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
