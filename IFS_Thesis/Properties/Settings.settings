@@ -30,19 +30,19 @@
       <Value Profile="(Default)">0.25</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.05</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="PrcFitness" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
-    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
+    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.3</Value>

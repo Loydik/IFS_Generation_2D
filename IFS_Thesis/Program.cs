@@ -50,6 +50,35 @@ namespace IFS_Thesis
                 new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
             };
 
+            var barnsleyFern = new List<IfsFunction>
+            {
+                new IfsFunction(0f, 0f, 0f, 0f, 0.18f, 0f, 0f, 0f, 0f, 0f, 0f, 0f),
+                new IfsFunction(0.85f, 0f, 0f, 0f, 0.85f, 0.1f, 0f, -0.1f, 0.85f, 0f, 1.6f, 0f),
+                new IfsFunction(0.2f, -0.2f, 0f, 0.2f, 0.2f, 0f, 0f, 0f, 0.3f, 0f, 0.8f, 0f),
+                new IfsFunction(-0.2f, 0.2f, 0f, 0.2f, 0.2f, 0f, 0f, 0f, 0.3f, 0f, 0.8f, 0f)
+            };
+
+            var bridge = new List<IfsFunction>
+            {
+                new IfsFunction(0.5f, 0f, 0f, 0.25f, 0.25f, 0f, 0f, 0f, 0.5f, -0.1f, 0.1f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, -0.25f, 0.25f, 0f, 0f, 0f, 0.5f, 0.1f, 0.1f, 0f),
+                new IfsFunction(0.5f, 0f, 0f, 0.25f, 0.25f, 0f, 0f, 0f, 0.5f, -0.1f, 0.1f, -1f),
+                new IfsFunction(0.5f, 0f, 0f, -0.25f, 0.25f, 0f, 0f, 0f, 0.5f, 0.1f, 0.1f, -1f),
+            };
+
+            //NOT WORKING
+            var cantorSet = new List<IfsFunction>
+            {
+                new IfsFunction(0.3333f, 0f, 0f, 0f, 0f, 0f, 0.3333f, 0f, 0f, 0f, 0.3333f, 0f),
+                new IfsFunction(0.3333f, 0f, 0f, 0.6666f, 0f, 0.3333f, 0f, 0f, 0f, 0f, 0.3333f, 0f),
+                new IfsFunction(0.3333f, 0f, 0f, 0.6666f, 0f, 0.3333f, 0f, 0.6666f, 0f, 0f, 0.3333f, 0f),
+                new IfsFunction(0.3333f, 0f, 0f, 0f, 0f, 0f, 0.3333f, 0f, 0.6666f, 0f, 0.3333f, 0f),
+                new IfsFunction(0.3333f, 0f, 0f, 0f, 0f, 0f, 0.3333f, 0f, 0f, 0f, 0.3333f, 0.6666f),
+                new IfsFunction(0.3333f, 0f, 0f, 0.6666f, 0f, 0.3333f, 0f, 0f, 0f, 0f, 0.3333f, 0.6666f),
+                new IfsFunction(0.3333f, 0f, 0f, 0.6666f, 0f, 0.3333f, 0f, 0.6666f, 0f, 0f, 0.3333f, 0.6666f),
+                new IfsFunction(0.3333f, 0f, 0f, 0f, 0f, 0f, 0.3333f, 0f, 0.6666f, 0f, 0.3333f, 0.6666f),
+            };
+
             #endregion
 
             //Creating the directory if it does not exist

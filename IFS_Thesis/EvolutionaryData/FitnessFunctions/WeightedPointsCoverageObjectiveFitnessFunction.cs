@@ -62,17 +62,17 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
                 pDiff = Math.Abs(pDiff);
 
-                if (pDiff <= 0.3)
+                if (pDiff <= 1.5)
                 {
                     percentToSubtract = 0;
                 }
 
-                else if (pDiff > 0.3 && pDiff < 1)
+                else if (pDiff > 1.5 && pDiff < 1.9)
                 {
-                    percentToSubtract = pDiff/2 - 0.3f;
+                    percentToSubtract = pDiff/2 - 1.5f;
                 }
 
-                else if (pDiff > 1)
+                else if (pDiff > 1.9f)
                 {
                     percentToSubtract = pDiff / 2;
                 }
