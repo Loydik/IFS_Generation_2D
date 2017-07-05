@@ -54,7 +54,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
                 }
             }
 
-            if (generatedVoxelsCount > sourceImageVoxelsCount)
+            if (generatedVoxelsCount > sourceImageVoxelsCount && Settings.Default.UseUpperLimitFitnessAdjustment)
             {
                 //calculating percentage difference
                 var pDiff = (generatedVoxelsCount - sourceImageVoxelsCount) /
@@ -131,23 +131,13 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         {
             var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, imageX, imageY, imageZ, multiplier);
 
-            //var redundantPixels = result.Item1;
-            //var generatedPixels = result.Item2;
-
             if (generatedVoxels.Count == 0)
             {
                 return 0;
             }
 
-            // new IfsDrawer().CreateImageFromPixels(generatedPixels).Save($"{Settings.Default.WorkingDirectory}/generatedPixels.png");
-
             var matchingVoxelsCount = generatedVoxels.Intersect(sourceImageVoxels).Count();
 
-            //new IfsDrawer().CreateImageFromPixels(matchingPixels).Save($"{Settings.Default.WorkingDirectory}/matchingPixels.png");
-
-            //var pixelsDrawnOutside = generatedPixels.Except(matchingPixels).ToList();
-
-            //new IfsDrawer().CreateImageFromPixels(pixelsDrawnOutside).Save($"{Settings.Default.WorkingDirectory}/pixelsDrawnOutsidePixels.png");
 
             var fitness = CalculateFitness(generatedVoxels.Count, sourceImageVoxels.Count, matchingVoxelsCount,
                 Settings.Default.PrcFitness, Settings.Default.ProFitness);

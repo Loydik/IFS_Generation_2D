@@ -7,6 +7,9 @@ using log4net;
 
 namespace IFS_Thesis.Utils
 {
+    /// <summary>
+    /// Utility methods for evolutionary algorithm
+    /// </summary>
     public class EaUtils
     {
         #region Logger

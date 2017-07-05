@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
@@ -87,9 +86,8 @@ namespace IFS_Thesis.EvolutionaryData
         /// </summary>
         private void ChangeConfiguration(int currentGeneration)
         {
-            //Every 100th generation we turn on extreme debugging
-            Settings.Default.ExtremeDebugging = currentGeneration % 100 == 0;
-
+            //Every 200th generation we turn on extreme debugging
+            Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
         }
 
         /// <summary>
@@ -200,27 +198,17 @@ namespace IFS_Thesis.EvolutionaryData
                             ProbabilityVector);
                 }
 
-                //Generating New Population (Steps 7 - 11)
-
                 var oldPopulation = _population;
 
+                //Generating New Population (Steps 7 - 11)
                 var newPopulation = _geneticOperators.GenerateNewPopulation(_population, _geneticUniversum, ProbabilityVector, randomGen);
 
                 Log.Info("Generated new population");
 
                 newPopulation.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(newPopulation.Individuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
                 
-
-                if (Settings.Default.UseReinsertion)
-                {
-                    //Reinserting individuals to population
-                    _population = _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen);
-                }
-
-                else
-                {
-                    _population = newPopulation;
-                }
+                //Reinsertion
+                _population = Settings.Default.UseReinsertion ? _reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen) : newPopulation;
 
                 if (Settings.Default.RecalculateFitnessAfterReinsertion && Settings.Default.UseReinsertion)
                 {
@@ -264,19 +252,20 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                if (currentGenerationNumber % 1000 == 0)
-                {
-                    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
-                    System.IO.Directory.CreateDirectory(folderPath);
+                //Outputting whole population - removed due to disc space constraints
+                //if (currentGenerationNumber % 1000 == 0)
+                //{
+                //    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                //    System.IO.Directory.CreateDirectory(folderPath);
 
-                    foreach (var individual in _population.Individuals)
-                    {
-                        GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
-                    }
-                }
+                //    foreach (var individual in _population.Individuals)
+                //    {
+                //        GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
+                //    }
+                //}
 
                 //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 1000 != 0)
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);

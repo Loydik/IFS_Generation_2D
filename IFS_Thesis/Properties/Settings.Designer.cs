@@ -442,5 +442,17 @@ namespace IFS_Thesis.Properties {
                 this["GeneticUniversumAtRandom"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseUpperLimitFitnessAdjustment {
+            get {
+                return ((bool)(this["UseUpperLimitFitnessAdjustment"]));
+            }
+            set {
+                this["UseUpperLimitFitnessAdjustment"] = value;
+            }
+        }
     }
 }
