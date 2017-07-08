@@ -55,13 +55,14 @@ namespace IFS_Thesis_Tests.FitnessFunctionTests
                veryLowFitness
             };
 
-           yield return new object[]
-           {
-               1000,//generated voxels count
-               10,//source image voxels count
-               10,//matching voxels count
-               veryLowFitness
-           };
+           //Ignored for now - unrealistic scenario
+           //yield return new object[]
+           //{
+           //    1000,//generated voxels count
+           //    10,//source image voxels count
+           //    10,//matching voxels count
+           //    veryLowFitness
+           //};
 
             yield return new object[]
            {

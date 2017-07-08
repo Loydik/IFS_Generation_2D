@@ -92,7 +92,6 @@ namespace IFS_Thesis
             //ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Obj);
             ifsDrawer.SaveVoxelImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
-
             Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
 
             var ea = new EvolutionaryAlgorithm();
