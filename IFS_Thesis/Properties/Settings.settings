@@ -6,22 +6,22 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">400</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.75</Value>
+      <Value Profile="(Default)">0.85</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
+      <Value Profile="(Default)">0.01</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
+      <Value Profile="(Default)">0.01</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -63,10 +63,10 @@
       <Value Profile="(Default)">256</Value>
     </Setting>
     <Setting Name="DrawImageEveryNthGeneration" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="ExtremeDebugging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -75,7 +75,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UseReinsertion" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -87,7 +87,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.5</Value>
+      <Value Profile="(Default)">1.75</Value>
     </Setting>
     <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

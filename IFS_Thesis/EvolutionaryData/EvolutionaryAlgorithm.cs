@@ -92,13 +92,6 @@ namespace IFS_Thesis.EvolutionaryData
         {
             //Every 100th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
-
-            //if (currentGeneration == 2000)
-            //{
-            //    Settings.Default.ControlledMutationProbability = 0.8f;
-            //    Settings.Default.RandomMutationProbability = 0.2f;
-            //    Log.Info($"Changed the value of ControlledMutationProbability to {Settings.Default.ControlledMutationProbability}");
-            //}
         }
 
         /// <summary>
@@ -271,7 +264,8 @@ namespace IFS_Thesis.EvolutionaryData
 
                 ChangeConfiguration(currentGenerationNumber);
 
-                if (currentGenerationNumber % 200 == 0)
+                //Outputting the whole population
+                if (currentGenerationNumber % 1000 == 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
@@ -283,7 +277,7 @@ namespace IFS_Thesis.EvolutionaryData
                 }
 
                 //every Nth generation, save the highest fit individual as image
-                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 200 != 0)
+                if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0 && currentGenerationNumber % 1000 != 0)
                 {
                     var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                     System.IO.Directory.CreateDirectory(folderPath);
