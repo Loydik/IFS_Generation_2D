@@ -231,7 +231,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates new population
         /// </summary>
-        public Population GenerateNewPopulation(Population population, List<Singel> geneticUniversum, List<float> probabilityVectors, Random randomGen)
+        public Population GenerateNewPopulation(Population population, int currentGenerationNumber, List<Singel> geneticUniversum, List<float> probabilityVectors, Random randomGen)
         {
             IndividualSelectionStrategy individualSelectionStrategy = new StochasticUniversalSamplingIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
@@ -353,97 +353,107 @@ namespace IFS_Thesis.EvolutionaryData
 
             #endregion
 
-            #region N3 Individuals
-
-            //Step 9
-            var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
-
-            var n3Individuals = new List<Individual>();
-
-            for (int i = 0; i <= n3Count / 2; i++)
+            if (currentGenerationNumber % Settings.Default.MigrationRate == 0)
             {
-                var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
-                if (firstSpecies != null)
+                #region N3 Individuals
+
+                //Step 9
+                var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
+
+                var n3Individuals = new List<Individual>();
+
+                for (int i = 0; i <= n3Count / 2; i++)
                 {
-                    var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1, randomGen);
+                    var firstSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
 
-                    if (secondSpecies != null)
+                    if (firstSpecies != null)
                     {
-                        var firstIndividual =
-                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
-                        var secondIndividual =
-                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
-
-                        if (Settings.Default.ExtremeDebugging)
-                        {
-                            Log.Debug($"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
-                        }
-
-                        recombinationStrategy = new InterSpeciesCrossoverStrategy();
-
-                        var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
+                        var secondSpecies = speciesSelectionStrategy.SelectSecondSpecies(population, firstSpecies, 1,
                             randomGen);
-                        n3Individuals.AddRange(children);
 
-                        if (Settings.Default.ExtremeDebugging)
+                        if (secondSpecies != null)
                         {
-                            Log.Debug($"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", children)}");
-                        }
+                            var firstIndividual =
+                                individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals,
+                                    rankingFitnessFunction, 1, randomGen).First();
+                            var secondIndividual =
+                                individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals,
+                                    rankingFitnessFunction, 1, randomGen).First();
 
+                            if (Settings.Default.ExtremeDebugging)
+                            {
+                                Log.Debug(
+                                    $"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
+                            }
+
+                            recombinationStrategy = new InterSpeciesCrossoverStrategy();
+
+                            var children = recombinationStrategy.ProduceOffsprings(firstIndividual, secondIndividual,
+                                randomGen);
+                            n3Individuals.AddRange(children);
+
+                            if (Settings.Default.ExtremeDebugging)
+                            {
+                                Log.Debug(
+                                    $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", children)}");
+                            }
+
+                        }
                     }
                 }
-            }
 
-            newPopulation.AddIndividuals(n3Individuals);
-            Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
+                newPopulation.AddIndividuals(n3Individuals);
+                Log.Debug($"Added {n3Individuals.Count} N3 individuals to new population");
 
-            #endregion
+                #endregion
 
-            #region N4 Individuals
+                #region N4 Individuals
 
-            //Step 10
-            var n4Count = (int) (Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize);
+                //Step 10
+                var n4Count = (int) (Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize);
 
-            //in case if n4 count is not divisible by 2
-            if (n4Count % 2 != 0)
-            {
-                n4Count = n4Count - 1;
-            }
-
-            var n4Individuals = new List<Individual>();
-
-            recombinationStrategy = new ReasortmentStrategy();
-            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, randomGen);
-            individualsForRecombination.Shuffle(randomGen);
-
-            for (int i = 0; i < individualsForRecombination.Count; i++)
-            {
-                var firstParent = individualsForRecombination[i];
-                var secondParent = individualsForRecombination[i + 1];
-
-                if (Settings.Default.ExtremeDebugging)
+                //in case if n4 count is not divisible by 2
+                if (n4Count % 2 != 0)
                 {
-                    Log.Debug($"Selected N4 individuals for reasortment: \n {firstParent} \n {secondParent}  \n");
-                }     
-
-                var offspring = recombinationStrategy.ProduceOffsprings(firstParent,
-                secondParent,
-                randomGen);
-                n4Individuals.AddRange(offspring);
-                i++;
-
-                if (Settings.Default.ExtremeDebugging)
-                {
-                    Log.Debug(
-                        $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", offspring)}");
+                    n4Count = n4Count - 1;
                 }
+
+                var n4Individuals = new List<Individual>();
+
+                recombinationStrategy = new ReasortmentStrategy();
+                var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals,
+                    rankingFitnessFunction, n4Count, randomGen);
+                individualsForRecombination.Shuffle(randomGen);
+
+                for (int i = 0; i < individualsForRecombination.Count; i++)
+                {
+                    var firstParent = individualsForRecombination[i];
+                    var secondParent = individualsForRecombination[i + 1];
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug($"Selected N4 individuals for reasortment: \n {firstParent} \n {secondParent}  \n");
+                    }
+
+                    var offspring = recombinationStrategy.ProduceOffsprings(firstParent,
+                        secondParent,
+                        randomGen);
+                    n4Individuals.AddRange(offspring);
+                    i++;
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        Log.Debug(
+                            $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", offspring)}");
+                    }
+                }
+
+                newPopulation.AddIndividuals(n4Individuals);
+                Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
+
+                #endregion
             }
-
-            newPopulation.AddIndividuals(n4Individuals);
-            Log.Debug($"Added {n4Individuals.Count} N4 individuals to new population");
-
-            #endregion
 
             #region Mutation
 

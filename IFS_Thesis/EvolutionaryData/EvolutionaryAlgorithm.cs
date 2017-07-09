@@ -195,7 +195,7 @@ namespace IFS_Thesis.EvolutionaryData
             var oldPopulation = population;
 
             //Generating New Population (Steps 7 - 11)
-            var newPopulation = _geneticOperators.GenerateNewPopulation(population, geneticUniversum, probabilityVector,
+            var newPopulation = _geneticOperators.GenerateNewPopulation(population, currentGenerationNumber, geneticUniversum, probabilityVector,
                 randomGen);
 
             Log.Info("Generated new population");
@@ -264,16 +264,19 @@ namespace IFS_Thesis.EvolutionaryData
         private void GenerateReportImages(int currentGenerationNumber, Population population, IfsDrawer3D drawer, IfsGenerator ifsGenerator)
         {
             //Outputting whole population - removed due to disc space constraints
-            //if (currentGenerationNumber % 1000 == 0)
-            //{
-            //    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
-            //    System.IO.Directory.CreateDirectory(folderPath);
+            if (currentGenerationNumber % 1000 == 0)
+            {
+                var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                Directory.CreateDirectory(folderPath);
 
-            //    foreach (var individual in population.Individuals)
-            //    {
-            //        GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
-            //    }
-            //}
+                //take top 100 individuals
+                var topIndividuals = population.Individuals.OrderByDescending(x => x.ObjectiveFitness).Take(100);
+
+                foreach (var individual in topIndividuals)
+                {
+                    GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
+                }
+            }
 
             //every Nth generation, save the highest fit individual as image
             if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)

@@ -121,7 +121,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.15")]
         public float MutationRange {
             get {
                 return ((float)(this["MutationRange"]));
@@ -241,7 +241,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageX {
             get {
                 return ((int)(this["ImageX"]));
@@ -253,7 +253,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageY {
             get {
                 return ((int)(this["ImageY"]));
@@ -265,7 +265,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageZ {
             get {
                 return ((int)(this["ImageZ"]));
@@ -289,7 +289,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int EliteIndividualsPerDegree {
             get {
                 return ((int)(this["EliteIndividualsPerDegree"]));
@@ -373,7 +373,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.75")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.8")]
         public float SelectionPressure {
             get {
                 return ((float)(this["SelectionPressure"]));
@@ -452,6 +452,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["UseUpperLimitFitnessAdjustment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public int MigrationRate {
+            get {
+                return ((int)(this["MigrationRate"]));
+            }
+            set {
+                this["MigrationRate"] = value;
             }
         }
     }
