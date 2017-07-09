@@ -7,7 +7,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
     /// </summary>
     public class RandomMutationStrategy : RealValueMutationStrategy
     {
-        public override float Mutate(float variable, Random randomGen, Tuple<int, int> range)
+        public override float Mutate(float variable, Random randomGen, Tuple<int, int> range, float mutationPrecision)
         {
             var newValue = (float) randomGen.NextDouble() * (range.Item2 - range.Item1) + range.Item1;
 

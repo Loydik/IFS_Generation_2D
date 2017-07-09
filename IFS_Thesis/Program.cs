@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Ifs.IFSDrawers;
@@ -81,6 +82,8 @@ namespace IFS_Thesis
 
             #endregion
 
+            #region Initializing Default Image
+
             //Creating the directory if it does not exist
             Directory.CreateDirectory(Settings.Default.WorkingDirectory);
 
@@ -94,9 +97,57 @@ namespace IFS_Thesis
 
             Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
 
+            #endregion
+
             var ea = new EvolutionaryAlgorithm();
 
-            var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+            #region Initializing Different Configurations
+
+            var configuration1 = EaConfigurator.GetDefaultConfiguration();
+
+            configuration1.PopulationSize = Settings.Default.PopulationSize / 4;
+            configuration1.MutationRange = 0.2f;
+            configuration1.SelectionPressure = 1.5f;
+
+            var configuration2 = EaConfigurator.GetDefaultConfiguration();
+
+            configuration2.PopulationSize = Settings.Default.PopulationSize / 4;
+            configuration2.MutationRange = 0.1f;
+            configuration2.ArithmeticCrossoverProbability = 0.5f;
+            configuration2.OnePointCrossoverProbability = 0.5f;
+            configuration2.DiscreteRecombinationProbability = 0f;
+            configuration2.N1IndividualsPercentage = 0.2f;
+            configuration2.N2IndividualsPercentage = 0.05f;
+            configuration2.N3IndividualsPercentage = 0.1f;
+            configuration2.N4IndividualsPercentage = 0.65f;
+
+
+            var configuration3 = EaConfigurator.GetDefaultConfiguration();
+
+            configuration3.PopulationSize = Settings.Default.PopulationSize / 4;
+            configuration3.MutationRange = 0.03f;
+            configuration3.ArithmeticCrossoverProbability = 0.6f;
+            configuration3.OnePointCrossoverProbability = 0.2f;
+            configuration3.DiscreteRecombinationProbability = 0.2f;
+
+            var configuration4 = EaConfigurator.GetDefaultConfiguration();
+
+            configuration4.PopulationSize = Settings.Default.PopulationSize / 4;
+            configuration4.MutationRange = 0.001f;
+            configuration4.ArithmeticCrossoverProbability = 0.2f;
+            configuration4.OnePointCrossoverProbability = 0.2f;
+            configuration4.DiscreteRecombinationProbability = 0.6f;
+            configuration4.SelectionPressure = 2;
+
+            var configurations = new List<EaConfiguration> {configuration1, configuration2, configuration3, configuration4};
+
+            #endregion
+
+            //Multiple Populations
+            var highest = ea.StartEvolutionWithMultiplePopulations(configurations, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+
+            //Single population
+            //var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
 
             voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);

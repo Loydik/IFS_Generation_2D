@@ -49,7 +49,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("300000")]
         public int InitialSingelPoolSize {
             get {
                 return ((int)(this["InitialSingelPoolSize"]));
@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.88")]
         public float N1IndividualsPercentage {
             get {
                 return ((float)(this["N1IndividualsPercentage"]));
@@ -73,7 +73,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
         public float N2IndividualsPercentage {
             get {
                 return ((float)(this["N2IndividualsPercentage"]));
@@ -121,7 +121,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
         public float MutationRange {
             get {
                 return ((float)(this["MutationRange"]));
@@ -217,7 +217,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public float RandomMutationProbability {
             get {
                 return ((float)(this["RandomMutationProbability"]));
@@ -229,7 +229,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public float ControlledMutationProbability {
             get {
                 return ((float)(this["ControlledMutationProbability"]));
@@ -241,7 +241,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageX {
             get {
                 return ((int)(this["ImageX"]));
@@ -253,7 +253,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageY {
             get {
                 return ((int)(this["ImageY"]));
@@ -265,7 +265,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageZ {
             get {
                 return ((int)(this["ImageZ"]));
@@ -289,7 +289,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int EliteIndividualsPerDegree {
             get {
                 return ((int)(this["EliteIndividualsPerDegree"]));
@@ -452,6 +452,42 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["UseUpperLimitFitnessAdjustment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int SupbopulationMinimum {
+            get {
+                return ((int)(this["SupbopulationMinimum"]));
+            }
+            set {
+                this["SupbopulationMinimum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int MigrationFrequency {
+            get {
+                return ((int)(this["MigrationFrequency"]));
+            }
+            set {
+                this["MigrationFrequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        public float MigrationRate {
+            get {
+                return ((float)(this["MigrationRate"]));
+            }
+            set {
+                this["MigrationRate"] = value;
             }
         }
     }

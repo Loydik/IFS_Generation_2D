@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Mutation.Individuals;
@@ -46,16 +47,16 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Gets Recombination strategy (either one-point crossover, arithmetic crossover or discrete recombination) based on probabilities
         /// </summary>
-        private RecombinationStrategy GetRecombinationStrategy(Random randomGen)
+        private RecombinationStrategy GetRecombinationStrategy(EaConfiguration configuration, Random randomGen)
         {
             var result = randomGen.NextDouble();
 
-            if (result <= Settings.Default.ArithmeticCrossoverProbability)
+            if (result <= configuration.ArithmeticCrossoverProbability)
             {
                 return new ArithmeticCrossoverStrategy();
             }
 
-            if (result <= Settings.Default.ArithmeticCrossoverProbability + Settings.Default.OnePointCrossoverProbability)
+            if (result <= configuration.ArithmeticCrossoverProbability + configuration.OnePointCrossoverProbability)
             {
                 return new OnePointCrossoverStrategy();
             }
@@ -231,7 +232,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates new population
         /// </summary>
-        public Population GenerateNewPopulation(Population population, List<Singel> geneticUniversum, List<float> probabilityVectors, Random randomGen)
+        public Population GenerateNewPopulation(EaConfiguration configuration, Population population, List<Singel> geneticUniversum, List<float> probabilityVectors, Random randomGen)
         {
             IndividualSelectionStrategy individualSelectionStrategy = new StochasticUniversalSamplingIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
@@ -241,16 +242,16 @@ namespace IFS_Thesis.EvolutionaryData
 
             var newPopulation = new Population();
 
-            if (Settings.Default.UseReinsertion == false)
+            if (configuration.UseReinsertion == false)
             {
                 // (Step 6.) Adding best individuals of each new degree 
-                var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, Settings.Default.EliteIndividualsPerDegree);
+                var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, configuration.EliteIndividualsPerDegree);
               
                 //bestIndividuals.ForEach(i => i.Elite = true);
 
                 foreach (var individual in bestIndividuals)
                 {
-                    if (individual.ObjectiveFitness >= Settings.Default.AverageFitnessThreshold)
+                    if (individual.ObjectiveFitness >= configuration.AverageFitnessThreshold)
                     {
                         //we set best individual as elite
                         individual.Elite = true;
@@ -264,7 +265,7 @@ namespace IFS_Thesis.EvolutionaryData
             #region N1 Individuals
 
             //Step 7
-            var n1Count = Settings.Default.N1IndividualsPercentage * Settings.Default.PopulationSize;
+            var n1Count = configuration.N1IndividualsPercentage * configuration.PopulationSize;
 
             var n1Individuals = new List<Individual>();
 
@@ -285,14 +286,14 @@ namespace IFS_Thesis.EvolutionaryData
                     individualSelectionStrategy.SelectIndividuals(
                         population.Individuals
                             .Where(x => x.Degree.Equals(degree))
-                            .ToList(), rankingFitnessFunction, individualsForDegree, randomGen);
+                            .ToList(), rankingFitnessFunction, individualsForDegree, configuration.SelectionPressure, randomGen);
 
                 selectedIndividuals.Shuffle(randomGen);
 
                 for (int i = 0; i < selectedIndividuals.Count; i++)
                 {
                     //selecting recombination strategy
-                    recombinationStrategy = GetRecombinationStrategy(randomGen);
+                    recombinationStrategy = GetRecombinationStrategy(configuration, randomGen);
 
                     var firstParent = selectedIndividuals[i];
                     var secondParent = selectedIndividuals[i+1];
@@ -325,17 +326,17 @@ namespace IFS_Thesis.EvolutionaryData
             #region N2 Individuals
 
             //Step 8
-            var n2Count = (int)(Settings.Default.N2IndividualsPercentage * Settings.Default.PopulationSize);
+            var n2Count = (int)(configuration.N2IndividualsPercentage * configuration.PopulationSize);
 
             List<Individual> n2Individuals;
 
-            if (Settings.Default.N2IndividualsFromExistingPoolOfSingels)
+            if (configuration.N2IndividualsFromExistingPoolOfSingels)
             {
                 n2Individuals = CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count,
                     probabilityVectors, randomGen);
             }
 
-            else if (Settings.Default.GeneticUniversumAtRandom)
+            else if (configuration.GeneticUniversumAtRandom)
             {
                 n2Individuals = CreateIndividualsFromRandomPoolOfSingels(1000, n2Count, probabilityVectors, randomGen);
             }
@@ -356,7 +357,7 @@ namespace IFS_Thesis.EvolutionaryData
             #region N3 Individuals
 
             //Step 9
-            var n3Count = Settings.Default.N3IndividualsPercentage * Settings.Default.PopulationSize;
+            var n3Count = configuration.N3IndividualsPercentage * configuration.PopulationSize;
 
             var n3Individuals = new List<Individual>();
 
@@ -371,9 +372,9 @@ namespace IFS_Thesis.EvolutionaryData
                     if (secondSpecies != null)
                     {
                         var firstIndividual =
-                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(firstSpecies.Individuals, rankingFitnessFunction, 1, configuration.SelectionPressure, randomGen).First();
                         var secondIndividual =
-                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, rankingFitnessFunction, 1, randomGen).First();
+                            individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals, rankingFitnessFunction, 1, configuration.SelectionPressure, randomGen).First();
 
                         if (Settings.Default.ExtremeDebugging)
                         {
@@ -403,7 +404,7 @@ namespace IFS_Thesis.EvolutionaryData
             #region N4 Individuals
 
             //Step 10
-            var n4Count = (int) (Settings.Default.N4IndividualsPercentage * Settings.Default.PopulationSize);
+            var n4Count = (int) (configuration.N4IndividualsPercentage * configuration.PopulationSize);
 
             //in case if n4 count is not divisible by 2
             if (n4Count % 2 != 0)
@@ -414,7 +415,7 @@ namespace IFS_Thesis.EvolutionaryData
             var n4Individuals = new List<Individual>();
 
             recombinationStrategy = new ReasortmentStrategy();
-            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, randomGen);
+            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, configuration.SelectionPressure, randomGen);
             individualsForRecombination.Shuffle(randomGen);
 
             for (int i = 0; i < individualsForRecombination.Count; i++)
@@ -452,9 +453,9 @@ namespace IFS_Thesis.EvolutionaryData
             foreach (Individual individual in newPopulation.Individuals.Where(i => i.Elite == false))
             {
                 //Mutates individual with frequency of defined probability
-                if (EaUtils.DeterminePercentProbability(randomGen, Settings.Default.MutationProbability))
+                if (EaUtils.DeterminePercentProbability(randomGen, configuration.MutationProbability))
                 {
-                    var mutationStrategy = GetMutationStrategy(Settings.Default.RandomMutationProbability, randomGen);
+                    var mutationStrategy = GetMutationStrategy(configuration.RandomMutationProbability, randomGen);
 
                     if (Settings.Default.ExtremeDebugging)
                     {
@@ -463,7 +464,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                     var currentIndividual = individual;
 
-                    individualMutationStrategy.Mutate(ref currentIndividual, mutationStrategy, randomGen);
+                    individualMutationStrategy.Mutate(configuration, ref currentIndividual, mutationStrategy, randomGen);
 
                     if (Settings.Default.ExtremeDebugging)
                     {
@@ -475,6 +476,36 @@ namespace IFS_Thesis.EvolutionaryData
             #endregion
 
             return newPopulation;
+        }
+
+        /// <summary>
+        /// Migrates individuals between populations
+        /// </summary>
+        public List<Population> MigrateIndividualsBetweenPopulations(List<Population> populations, float migrationRate, Random randomGen)
+        {
+            for (var i = 0; i < populations.Count; i++)
+            {
+                var population = populations[i];
+
+                var otherPopulations = populations.Where((c, index) => index != i).ToList();
+
+                var individualsToMigrate = (int)(population.Count * migrationRate);
+
+                var migrationPool = new List<Individual>();
+
+                foreach (var pop in otherPopulations)
+                {
+                    migrationPool.AddRange(pop.Individuals.Clone().OrderByDescending(x => x.ObjectiveFitness).Take(individualsToMigrate));
+                }
+
+                migrationPool.Shuffle(randomGen);
+
+                population.ReplaceWorstIndividuals(migrationPool.Take(individualsToMigrate).ToList());
+            }
+
+            Log.Info("Finished Migration process");
+
+            return populations;
         }
 
         /// <summary>

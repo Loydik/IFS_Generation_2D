@@ -99,6 +99,18 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         }
 
         /// <summary>
+        /// Replaces worst individuals in population
+        /// </summary>
+        public void ReplaceWorstIndividuals(List<Individual> newIndividuals)
+        {
+            var allIndividuals = GetAllIndividuals();
+            var worst = allIndividuals.OrderBy(x => x.ObjectiveFitness).Take(newIndividuals.Count).ToList();
+            allIndividuals.RemoveAll(x => worst.Contains(x));
+            allIndividuals.AddRange(newIndividuals);
+            SetAllIndividuals(allIndividuals);
+        }
+
+        /// <summary>
         /// Get all individuals which belong to the population
         /// </summary>
         public List<Individual> GetAllIndividuals()

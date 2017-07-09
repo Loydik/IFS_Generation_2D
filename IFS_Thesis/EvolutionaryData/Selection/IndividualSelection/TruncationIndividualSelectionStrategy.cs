@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
-using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
 {
     public class TruncationIndividualSelectionStrategy : IndividualSelectionStrategy
     {
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, float selectionPressure, Random randomGen)
         {
             var individualsToSelect = individualsForSelection.Clone().ToList();
 
             individualsToSelect = rankingFitnessFunction.AssignRankingFitnessToIndividuals(individualsToSelect,
-                Settings.Default.SelectionPressure);
+                selectionPressure);
 
             individualsToSelect = individualsToSelect.OrderByDescending(i => i.RankFitness).ToList();
             

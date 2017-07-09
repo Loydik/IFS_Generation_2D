@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.Ifs;
@@ -96,7 +97,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
         /// <summary>
         /// Mutates an Individual using real-valued mutation
         /// </summary>
-        public override void Mutate(ref Individual individual, RealValueMutationStrategy strategy, Random randomGen, float? mutationRate = null)
+        public override void Mutate(EaConfiguration configuration, ref Individual individual, RealValueMutationStrategy strategy, Random randomGen, float? mutationRate = null)
         {
             if(mutationRate == null)
             { 
@@ -121,7 +122,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
                     if (mutate)
                     {
                         var range = GetRangeForIndex(index);
-                        tempCoefficient = strategy.Mutate(tempCoefficient, randomGen, range);
+                        tempCoefficient = strategy.Mutate(tempCoefficient, randomGen, range, configuration.MutationRange);
 
                         if (Settings.Default.ExtremeDebugging)
                         {

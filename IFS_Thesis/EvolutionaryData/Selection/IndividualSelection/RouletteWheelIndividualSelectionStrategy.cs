@@ -45,14 +45,14 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
         /// <summary>
         /// Private selection using Roulette Select
         /// </summary>
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int numberOfIndividualsToSelect, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int numberOfIndividualsToSelect, float selectionPressure, Random randomGen)
         {
             List<Individual> selectedIndividuals = new List<Individual>();
 
             var selectionPool = individualsForSelection.Clone().ToList();
 
             selectionPool = rankingFitnessFunction.AssignRankingFitnessToIndividuals(selectionPool,
-              Settings.Default.SelectionPressure);
+             selectionPressure);
 
             selectionPool = selectionPool.OrderByDescending(i => i.RankFitness).ToList();
 

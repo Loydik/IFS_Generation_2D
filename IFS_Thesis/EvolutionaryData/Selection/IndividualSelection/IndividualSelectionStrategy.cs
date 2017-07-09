@@ -7,6 +7,6 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
 {
     public abstract class IndividualSelectionStrategy
     {
-        public abstract List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, Random randomGen);
+        public abstract List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, float selectionPressure, Random randomGen);
     }
 }

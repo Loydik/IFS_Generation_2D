@@ -96,6 +96,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\EaConfiguration.cs" />
+    <Compile Include="Configuration\EaConfigurator.cs" />
     <Compile Include="EvolutionaryData\EvolutionaryAlgorithm.cs" />
     <Compile Include="EvolutionaryData\FitnessFunctions\LinearRankingFitnessFunction.cs" />
     <Compile Include="EvolutionaryData\FitnessFunctions\IRankingFitnessFunction.cs" />

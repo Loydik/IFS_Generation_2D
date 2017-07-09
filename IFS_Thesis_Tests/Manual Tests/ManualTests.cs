@@ -51,10 +51,10 @@ namespace IFS_Thesis_Tests.Manual_Tests
             var imageFolder = Settings.Default.WorkingDirectory;
             var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
-            var multiplier = 2;
-            var dimensionX = 256;
-            var dimensionY = 256;
-            var dimensionZ = 256;
+            var multiplier = 1;
+            var dimensionX = 128;
+            var dimensionY = 128;
+            var dimensionZ = 128;
 
             var sourceIndividual = CreateIndividualFromSingelsString("[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0.5,0];[0.5,0,0,0,0.5,0,0,0,0.5,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.5,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0,0,0]");
 
@@ -62,11 +62,11 @@ namespace IFS_Thesis_Tests.Manual_Tests
 
             var fitnesses  = new List<float>();
             //var evolvedIndividual = CreateIndividualFromSingelsString("[0.6,0,0,0,0.7,0,0,0.1,0.5,0,0,0,0];[0.6,0,0,0,0.54,0,0,0,0.3,0.5,0,0,0];[0.5,0,0,0,0.5,0,0,0,0.5,0,0.7,0,0];[0.5,0,0,0,0.5,0,0,0.1,0.5,0,0.2,0.5,0]");
-            var evolvedIndividual = CreateIndividualFromSingelsString("[-0.3052,0.6719,-0.003,0.5676,0.1729,-0.1191,0.0027,0.0004,0.0614,-0.1141,-1.0068,-1.8193,0];[-0.265,0.6346,0.0003,0.5845,0.1322,-0.1204,0.0001,0.0033,0.0661,-0.1228,-1.0072,-1.8182,0];[-0.2283,0.6682,-0.0033,0.6554,0.0748,-0.1449,0.0005,0.0029,0.0642,-0.0898,-0.7278,-1.8261,0];[-0.3169,0.6328,-0.0008,0.676,0.1079,-0.138,-0.0001,0.003,0.0644,-0.0877,-0.7084,-1.8215,0];[-0.0045,0.1097,0.0725,-0.0139,-0.0531,-0.1323,0.1089,0.3358,0.5414,-0.3705,1.6194,1.4771,0];[-0.3317,0.7033,-0.0026,0.6557,0.0666,-0.1473,-0.0004,0.0035,0.0643,-0.0881,-0.7115,-1.824,0];[-0.3031,0.681662,-0.0027,0.5705,0.1585,-0.1219,0.0021,0.0026,0.0651,-0.1112,-1.0141,-1.8225,0]");
+            var evolvedIndividual = CreateIndividualFromSingelsString("[-0.4533,-0.4198,0.305,0.455,-0.3035,0.1239381,0.014,0.0164,0.1865,0.3584,-0.8335,-1.679,0];[-0.4233,-0.3922,0.2854,0.3797,-0.2204912,0.1137,0.01,0.0099,0.252,0.5989,-1.0679,-1.5509,0];[-0.4263,-0.3924,0.2844,0.4442,-0.3775,0.1321,0.0105,0.0099,0.2523,0.6474,-1.0695,-1.5505,0];[-0.4818,-0.448,0.2269,0.416,-0.3398574,0.1243,0.0568,-0.0362,0.774,1.0365,-1.756,1.0966,0];[-0.4684,-0.6015,0.2266,0.2629,-0.0928,0.1733,-0.0016,0.0031,0.3408,1.1614,-1.3509,-1.367,0];[-0.4498,-0.4707,0.2823,0.365,-0.2432,0.2157,-0.0023,-0.0013,0.3448,1.2054,-1.3267,-1.3547,0];[-0.4522,-0.4785,0.2855,0.2416335,-0.3055,0.1314,0.0156,0.0039,0.3141,0.8586,-1.1824,-1.2568,0];[-0.4674,-0.4377,0.3049,0.4221,-0.1944,0.1417,0.0089,0.0025,0.3288,1.0727,-1.2829,-1.3903,0]");
 
             for (int i = 0; i < 10; i++)
             {
-                var fitness = new WeightedPointsCoverageObjectiveFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, evolvedIndividual, ifsGenerator, 256, 256, 256, multiplier);
+                var fitness = new WeightedPointsCoverageObjectiveFitnessFunction().CalculateFitnessForIndividual(sourceVoxels, evolvedIndividual, ifsGenerator, dimensionX, dimensionY, dimensionZ, multiplier);
                 fitnesses.Add(fitness);
             }
             

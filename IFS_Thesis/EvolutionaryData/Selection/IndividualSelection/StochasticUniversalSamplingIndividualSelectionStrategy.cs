@@ -33,14 +33,14 @@ namespace IFS_Thesis.EvolutionaryData.Selection.IndividualSelection
             return null;
         }
 
-        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, Random randomGen)
+        public override List<Individual> SelectIndividuals(List<Individual> individualsForSelection, IRankingFitnessFunction rankingFitnessFunction, int count, float selectionPressure, Random randomGen)
         {
             var selectedIndividuals = new List<Individual>();
 
             var selectionPool = individualsForSelection.Clone().ToList();
 
             selectionPool = rankingFitnessFunction.AssignRankingFitnessToIndividuals(selectionPool,
-                Settings.Default.SelectionPressure);
+                selectionPressure);
 
             selectionPool = selectionPool.OrderByDescending(i => i.RankFitness).ToList();
 

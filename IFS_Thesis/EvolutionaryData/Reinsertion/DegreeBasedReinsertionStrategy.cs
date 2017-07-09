@@ -24,7 +24,7 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
         /// <summary>
         /// Reinserts individuals to a population
         /// </summary>
-        public Population ReinsertIndividuals(Population previousGeneration, Population newGeneration, Random randomGen)
+        public Population ReinsertIndividuals(Population previousGeneration, Population newGeneration, float parentsReinserted, float offspringReinserted, Random randomGen)
         {
             IndividualSelectionStrategy strategy = new TruncationIndividualSelectionStrategy();
             IRankingFitnessFunction rankingFitnessFunction = new LinearRankingFitnessFunction();
@@ -43,11 +43,11 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
                 var oldSubpopulation = previousGeneration.Individuals.Where(x => x.Degree == degree).ToList();
                 var newSubpopulation = newGeneration.Individuals.Where(x => x.Degree == degree).ToList();
 
-                var parentsToReinsertCount = (int)(individualsCount * Settings.Default.ParentsReinserted);
-                var offspringToReinsertCount = (int)(individualsCount * Settings.Default.OffspringReinserted);
+                var parentsToReinsertCount = (int)(individualsCount * parentsReinserted);
+                var offspringToReinsertCount = (int)(individualsCount * offspringReinserted);
 
-                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, rankingFitnessFunction, offspringToReinsertCount, randomGen);
-                var bestParents = strategy.SelectIndividuals(oldSubpopulation, rankingFitnessFunction, parentsToReinsertCount, randomGen);
+                var bestOffspring = strategy.SelectIndividuals(newSubpopulation, rankingFitnessFunction, offspringToReinsertCount, 2, randomGen);
+                var bestParents = strategy.SelectIndividuals(oldSubpopulation, rankingFitnessFunction, parentsToReinsertCount, 2, randomGen);
 
                 finalPopulation.AddIndividuals(bestParents);
                 finalPopulation.AddIndividuals(bestOffspring);

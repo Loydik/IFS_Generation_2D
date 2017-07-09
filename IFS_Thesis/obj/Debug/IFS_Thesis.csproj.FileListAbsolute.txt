@@ -79,3 +79,4 @@ C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\log4net.xml
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\bin\Debug\MoreLinq.xml
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.exe
 C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.pdb
+C:\Users\Loydik\Source\Repos\IFS_Generation_2D\IFS_Thesis\obj\Debug\IFS_Thesis.csprojResolveAssemblyReference.cache

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Reinsertion;
@@ -88,6 +89,23 @@ namespace IFS_Thesis.EvolutionaryData
         }
 
         /// <summary>
+        /// Gets individual with the highest fitness from several populations
+        /// </summary>
+        private Individual GetHighestFitIndividual(List<Population> populations)
+        {
+            var highestFitInPopulations = new List<Individual>();
+
+            foreach (var population in populations)
+            {
+                var highestFitIndividual =
+                    population.Individuals.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+                highestFitInPopulations.Add(highestFitIndividual);
+            }
+
+            return highestFitInPopulations.OrderByDescending(x => x.ObjectiveFitness).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Generates a report image based on current generation
         /// </summary>
         private void GenerateReportImage(IfsDrawer3D ifsDrawer, IfsGenerator ifsGenerator, Individual individual, int currentGenerationNumber,
@@ -116,12 +134,13 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates initial population to seed evolutionary algorithm
         /// </summary>
+        /// <param name="configuration">Configuration of Evolutionary algorithm</param>
         /// <param name="sourceImageVoxels">Voxels of the 3D image to evolve towards</param>
+        /// <param name="probabilityVector">Vector of probabilities</param>
         /// <param name="ifsGenerator">IFS generator for 3D</param>
         /// <param name="geneticUniversum">Genetic universum (singels)</param>
         /// <param name="randomGen">Random number generator</param>
-        /// <returns></returns>
-        private Population GenerateInitialPopulation(HashSet<Voxel> sourceImageVoxels, List<float> probabilityVector, IfsGenerator ifsGenerator, List<Singel> geneticUniversum, Random randomGen)
+        private Population GenerateInitialPopulation(EaConfiguration configuration, HashSet<Voxel> sourceImageVoxels, List<float> probabilityVector, IfsGenerator ifsGenerator, List<Singel> geneticUniversum, Random randomGen)
         {
             var population = new Population();
 
@@ -129,12 +148,12 @@ namespace IFS_Thesis.EvolutionaryData
 
             #region Generating 10x random individuals and taking the best
 
-            if (Settings.Default.Generate10xIndividuals)
+            if (configuration.Generate10XIndividualsInBeginning)
             {
                 Log.Info("Started generation of 10x initial individuals");
 
                 initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    geneticUniversum, Settings.Default.PopulationSize * 10, probabilityVector, randomGen);
+                    geneticUniversum, configuration.PopulationSize * 10, probabilityVector, randomGen);
 
                 Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
 
@@ -144,13 +163,13 @@ namespace IFS_Thesis.EvolutionaryData
 
                 initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
 
-                initialIndividuals = initialIndividuals.Take(Settings.Default.PopulationSize).ToList();
+                initialIndividuals = initialIndividuals.Take(configuration.PopulationSize).ToList();
             }
 
             else
             {
                 initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    geneticUniversum, Settings.Default.PopulationSize, probabilityVector, randomGen);
+                    geneticUniversum, configuration.PopulationSize, probabilityVector, randomGen);
                 initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             }
 
@@ -172,6 +191,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Evolves one generation
         /// </summary>
+        /// <param name="configuration">Configuration of Evolutionary Algorithm</param>
         /// <param name="population">Current population to evolve</param>
         /// <param name="geneticUniversum">Genetic universum</param>
         /// <param name="currentGenerationNumber">Current generation number</param>
@@ -179,13 +199,13 @@ namespace IFS_Thesis.EvolutionaryData
         /// <param name="sourceImageVoxels">Voxels of the 3D image to evolve towards</param>
         /// <param name="ifsGenerator">Ifs generator (generates voxels in 3d space)</param>
         /// <param name="randomGen">Random number generator</param>
-        private Population EvolveGeneration(Population population, List<Singel> geneticUniversum,
+        private Population EvolveGeneration(EaConfiguration configuration, Population population, List<Singel> geneticUniversum,
             int currentGenerationNumber, ref List<float> probabilityVector, HashSet<Voxel> sourceImageVoxels,
              IfsGenerator ifsGenerator, Random randomGen)
         {
             Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-            if (currentGenerationNumber > Settings.Default.UpdateProbabilityVectorAfterNGenerations)
+            if (currentGenerationNumber > configuration.UpdateProbabilityVectorAfterNGenerations)
             {
                 probabilityVector =
                     EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(GetBestIndividualsPerDegree(population),
@@ -195,7 +215,7 @@ namespace IFS_Thesis.EvolutionaryData
             var oldPopulation = population;
 
             //Generating New Population (Steps 7 - 11)
-            var newPopulation = _geneticOperators.GenerateNewPopulation(population, geneticUniversum, probabilityVector,
+            var newPopulation = _geneticOperators.GenerateNewPopulation(configuration, population, geneticUniversum, probabilityVector,
                 randomGen);
 
             Log.Info("Generated new population");
@@ -208,11 +228,11 @@ namespace IFS_Thesis.EvolutionaryData
             var reinsertionStrategy = new DegreeBasedReinsertionStrategy();
 
             //Reinsertion
-            population = Settings.Default.UseReinsertion
-                ? reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, randomGen)
+            population = configuration.UseReinsertion
+                ? reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, configuration.ParentsReinserted, configuration.ParentsReinserted, randomGen)
                 : newPopulation;
 
-            if (Settings.Default.RecalculateFitnessAfterReinsertion && Settings.Default.UseReinsertion)
+            if (configuration.RecalculateFitnessAfterReinsertion && configuration.UseReinsertion)
             {
                 //recalculating fitness for whole population
                 population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(
@@ -228,7 +248,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             ////Step 13
             //_population = new GeneticOperators().RemoveWeakestSpecies(_population,
-            //    Settings.Default.AverageFitnessThreshold);
+            //    configuration.AverageFitnessThreshold);
 
             ////Step 14
             //_population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
@@ -296,6 +316,45 @@ namespace IFS_Thesis.EvolutionaryData
             }
         }
 
+        /// <summary>
+        /// Generates Report images from multiple populations to track progress
+        /// </summary>
+        /// <param name="currentGenerationNumber">Current generation number</param>
+        /// <param name="populations">Current populations</param>
+        /// <param name="drawer">Ifs Drawer (creates an image)</param>
+        /// <param name="ifsGenerator">Ifs generator (creates voxels in 3D space)</param>
+        private void GenerateReportImages(int currentGenerationNumber, List<Population> populations, IfsDrawer3D drawer, IfsGenerator ifsGenerator)
+        {
+            //every Nth generation, save the highest fit individual as image
+            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            {
+                var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
+                Directory.CreateDirectory(folderPath);
+
+                for (var i = 0; i < populations.Count; i++)
+                {
+                    var population = populations[i];
+
+                    var populationFolderPath = folderPath + $"/population_{i+1}";
+                    Directory.CreateDirectory(populationFolderPath);
+
+                    if (Settings.Default.ExtremeDebugging)
+                    {
+                        foreach (var individual in GetBestIndividualsPerDegree(population))
+                        {
+                            GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, populationFolderPath);
+                        }
+                    }
+
+                    else
+                    {
+                        GenerateReportImage(drawer, ifsGenerator, GetHighestFitIndividual(population),
+                            currentGenerationNumber, populationFolderPath);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #endregion
@@ -323,6 +382,8 @@ namespace IFS_Thesis.EvolutionaryData
         {
             OutputEvolutinaryAlgorithmParameters();
 
+            var configuration = EaConfigurator.GetDefaultConfiguration();
+
             //Initial Probability vector, 8 max
             var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
 
@@ -331,14 +392,14 @@ namespace IFS_Thesis.EvolutionaryData
             var geneticUniversum = _geneticOperators.GeneratePoolOfSingels(Settings.Default.InitialSingelPoolSize,
                 randomGen);
 
-            var population = GenerateInitialPopulation(sourceImageVoxels, probabilityVector, ifsGenerator, geneticUniversum,
+            var population = GenerateInitialPopulation(configuration, sourceImageVoxels, probabilityVector, ifsGenerator, geneticUniversum,
                 randomGen);
 
             for (int i = 0; i < maxGenerations; i++)
             {
                 var currentGenerationNumber = i + 1;
 
-                population = EvolveGeneration(population, geneticUniversum, currentGenerationNumber,
+                population = EvolveGeneration(configuration, population, geneticUniversum, currentGenerationNumber,
                     ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
 
                 ChangeConfiguration(currentGenerationNumber);
@@ -356,6 +417,8 @@ namespace IFS_Thesis.EvolutionaryData
         {
             OutputEvolutinaryAlgorithmParameters();
 
+            var configuration = EaConfigurator.GetDefaultConfiguration();
+
             //Initial Probability vector, 8 max
             var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
 
@@ -368,7 +431,7 @@ namespace IFS_Thesis.EvolutionaryData
             {
                 var currentGenerationNumber = i + 1;
 
-                population = EvolveGeneration(population, geneticUniversum, currentGenerationNumber,
+                population = EvolveGeneration(configuration, population, geneticUniversum, currentGenerationNumber,
                     ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
 
                 GenerateReportImages(currentGenerationNumber, population, drawer, ifsGenerator);
@@ -377,6 +440,60 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             return GetHighestFitIndividual(population);
+        }
+
+        /// <summary>
+        /// Starts evolutionary process with multiple parallel populations
+        /// </summary>
+        public Individual StartEvolutionWithMultiplePopulations(List<EaConfiguration> populationConfigurations, int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
+        {
+            OutputEvolutinaryAlgorithmParameters();
+
+            foreach (var configuration in populationConfigurations)
+            {
+                Log.Info($"Custom configuration is as follows: \n {configuration}");
+            }
+
+            //Initial Probability vector, 8 max
+            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
+
+            Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
+
+            var geneticUniversum = _geneticOperators.GeneratePoolOfSingels(Settings.Default.InitialSingelPoolSize,
+                randomGen);
+
+            var populations = new List<Population>();
+
+            foreach (var configuration in populationConfigurations)
+            {
+                var population = GenerateInitialPopulation(configuration, sourceImageVoxels, probabilityVector, ifsGenerator, geneticUniversum,
+            randomGen);
+                populations.Add(population);
+            }
+
+            for (int i = 0; i < maxGenerations; i++)
+            {
+                var currentGenerationNumber = i + 1;
+
+                for (var index = 0; index < populationConfigurations.Count; index++)
+                {
+                    var configuration = populationConfigurations[index];
+                    populations[index] = EvolveGeneration(configuration, populations[index], geneticUniversum, currentGenerationNumber,
+                        ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
+                }
+
+                if (currentGenerationNumber % Settings.Default.MigrationFrequency == 0)
+                {
+                    populations = _geneticOperators.MigrateIndividualsBetweenPopulations(populations, Settings.Default.MigrationRate,
+                        randomGen);
+                }
+
+                ChangeConfiguration(currentGenerationNumber);
+                GenerateReportImages(currentGenerationNumber, populations, drawer, ifsGenerator);
+                
+            }
+
+            return GetHighestFitIndividual(populations);
         }
 
         #endregion
