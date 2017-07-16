@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
@@ -40,11 +42,36 @@ namespace IFS_Thesis_Tests.Manual_Tests
             return new Individual(individualSingels);
         }
 
+        /// <summary>
+        /// Creates a list of individuals from text representation of population
+        /// </summary>
+        private List<Individual> CreateIndividualsFromPopulationString(string populationString)
+        {
+            var allIndividuals = new List<Individual>();
+
+            var individualsSingels = Regex.Matches(populationString, @"(?<=Singles:.*)\[.*\]");
+
+            var individualFitnesses = Regex.Matches(populationString, @"(?<=ObjectiveFitness - )[0-9]+(\.[0-9]{1,10})?");
+
+            var list = individualsSingels.Cast<Match>().Select(match => match.Value).ToList();
+            var fitnessesList = individualFitnesses.Cast<Match>().Select(match => match.Value).ToList();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                var singels = list[i];
+                var individual = CreateIndividualFromSingelsString(singels);
+                individual.ObjectiveFitness = float.Parse(fitnessesList[i]);
+                allIndividuals.Add(individual);
+            }
+
+            return allIndividuals;
+        }
+
         #endregion
 
         #region Tests
 
-        [Test, Category("Manual")/*, Ignore("Manual Test")*/]
+        [Test, Category("Manual"), Ignore("Manual Test")]
         [Apartment(ApartmentState.STA)]
         public void TestFitnessForIndividual()
         {
@@ -86,6 +113,39 @@ namespace IFS_Thesis_Tests.Manual_Tests
             }
         }
 
+        [Test, Category("Manual"), Ignore("Manual")]
+        [Apartment(ApartmentState.STA)]
+        public void GenerateImagesFromPopulationLogs()
+        {
+            var ifsGenerator = new RandomIterationIfsGenerator();
+            var ifsDrawer = new IfsDrawer3D();
+            var multiplier = 32;
+            var dimensionX = 128;
+            var dimensionY = 128;
+            var dimensionZ = 128;
+
+            var txtFilepath = Settings.Default.WorkingDirectory + "/population.txt";
+            var imagesFolderPath = Settings.Default.WorkingDirectory +
+                                   "/testPopulation";
+            Directory.CreateDirectory(imagesFolderPath);
+
+            var populationString = File.ReadAllText(txtFilepath);
+
+            var allIndividuals = CreateIndividualsFromPopulationString(populationString);
+
+            allIndividuals = allIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
+
+            for (var index = 0; index < allIndividuals.Count; index++)
+            {
+                var individual = allIndividuals[index];
+                var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, dimensionX, dimensionY,
+                    dimensionZ, multiplier);
+                ifsDrawer.SaveVoxelImage(
+                    imagesFolderPath +
+                    $"/individual{index + 1}_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}",
+                    generatedVoxels, ImageFormat3D.Stl);
+            }
+        }
 
         [Test, Category("Manual"), Ignore("Manual Test")]
         public void TestCloningOfIndividual()

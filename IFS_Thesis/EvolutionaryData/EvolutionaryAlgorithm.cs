@@ -385,7 +385,7 @@ namespace IFS_Thesis.EvolutionaryData
             var configuration = EaConfigurator.GetDefaultConfiguration();
 
             //Initial Probability vector, 8 max
-            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
+            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
 
@@ -420,7 +420,7 @@ namespace IFS_Thesis.EvolutionaryData
             var configuration = EaConfigurator.GetDefaultConfiguration();
 
             //Initial Probability vector, 8 max
-            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
+            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
 
@@ -455,7 +455,7 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             //Initial Probability vector, 8 max
-            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.07f, 0.03f };
+            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
 
@@ -484,7 +484,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 if (currentGenerationNumber % Settings.Default.MigrationFrequency == 0)
                 {
-                    populations = _geneticOperators.MigrateIndividualsBetweenPopulations(populations, Settings.Default.MigrationRate,
+                    populations = _geneticOperators.MigrateIndividualsBetweenPopulations(populations, Settings.Default.MigrationRatePerDegree,
                         randomGen);
                 }
 

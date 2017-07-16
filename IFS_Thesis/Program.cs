@@ -107,39 +107,30 @@ namespace IFS_Thesis
 
             configuration1.PopulationSize = Settings.Default.PopulationSize / 4;
             configuration1.MutationRange = 0.2f;
-            configuration1.SelectionPressure = 1.5f;
+            configuration1.RandomMutationProbability = 0.2f;
+            configuration1.ControlledMutationProbability = 0.8f;
 
             var configuration2 = EaConfigurator.GetDefaultConfiguration();
 
             configuration2.PopulationSize = Settings.Default.PopulationSize / 4;
             configuration2.MutationRange = 0.1f;
-            configuration2.ArithmeticCrossoverProbability = 0.5f;
-            configuration2.OnePointCrossoverProbability = 0.5f;
-            configuration2.DiscreteRecombinationProbability = 0f;
-            configuration2.N1IndividualsPercentage = 0.2f;
-            configuration2.N2IndividualsPercentage = 0.05f;
-            configuration2.N3IndividualsPercentage = 0.1f;
-            configuration2.N4IndividualsPercentage = 0.65f;
-
 
             var configuration3 = EaConfigurator.GetDefaultConfiguration();
 
             configuration3.PopulationSize = Settings.Default.PopulationSize / 4;
-            configuration3.MutationRange = 0.03f;
-            configuration3.ArithmeticCrossoverProbability = 0.6f;
-            configuration3.OnePointCrossoverProbability = 0.2f;
-            configuration3.DiscreteRecombinationProbability = 0.2f;
+            configuration3.MutationRange = 0.05f;
+            configuration3.RandomMutationProbability = 0;
+            configuration3.ControlledMutationProbability = 1;
 
             var configuration4 = EaConfigurator.GetDefaultConfiguration();
 
             configuration4.PopulationSize = Settings.Default.PopulationSize / 4;
-            configuration4.MutationRange = 0.001f;
-            configuration4.ArithmeticCrossoverProbability = 0.2f;
-            configuration4.OnePointCrossoverProbability = 0.2f;
-            configuration4.DiscreteRecombinationProbability = 0.6f;
-            configuration4.SelectionPressure = 2;
+            configuration4.MutationRange = 0.2f;
+            configuration4.N3IndividualsPercentage = 0.2f;
+            configuration4.N4IndividualsPercentage = 0.2f;
+            configuration4.N1IndividualsPercentage = 0.6f;
 
-            var configurations = new List<EaConfiguration> {configuration1, configuration2, configuration3, configuration4};
+            var configurations = new List<EaConfiguration> { configuration1, configuration2, configuration3, configuration4 };
 
             #endregion
 

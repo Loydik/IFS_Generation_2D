@@ -481,7 +481,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Migrates individuals between populations
         /// </summary>
-        public List<Population> MigrateIndividualsBetweenPopulations(List<Population> populations, float migrationRate, Random randomGen)
+        public List<Population> MigrateIndividualsBetweenPopulations(List<Population> populations, int migrationRatePerDegree, Random randomGen)
         {
             for (var i = 0; i < populations.Count; i++)
             {
@@ -489,18 +489,26 @@ namespace IFS_Thesis.EvolutionaryData
 
                 var otherPopulations = populations.Where((c, index) => index != i).ToList();
 
-                var individualsToMigrate = (int)(population.Count * migrationRate);
-
                 var migrationPool = new List<Individual>();
 
                 foreach (var pop in otherPopulations)
                 {
-                    migrationPool.AddRange(pop.Individuals.Clone().OrderByDescending(x => x.ObjectiveFitness).Take(individualsToMigrate));
+                    var bestIndividualsPerDegree = EaUtils.GetBestIndividualsOfEachDegree(pop, migrationRatePerDegree).Clone();
+
+                    migrationPool.AddRange(bestIndividualsPerDegree);
                 }
 
                 migrationPool.Shuffle(randomGen);
 
-                population.ReplaceWorstIndividuals(migrationPool.Take(individualsToMigrate).ToList());
+                var degreesOfIndividualsInPopulation = EaUtils.GetDegreesOfIndividuals(population.Individuals);
+
+                foreach (var degree in degreesOfIndividualsInPopulation)
+                {
+                    if (population.Individuals.Count(x => x.Degree == degree) >= migrationRatePerDegree && migrationPool.Count(x => x.Degree == degree) >= migrationRatePerDegree)
+                    {
+                        population.ReplaceWorstIndividualsOfDegree(degree, migrationPool.Where(x => x.Degree == degree).Take(migrationRatePerDegree).ToList());
+                    }
+                }
             }
 
             Log.Info("Finished Migration process");
