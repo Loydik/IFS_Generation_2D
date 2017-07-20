@@ -31,7 +31,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
             }
             if (index >= 4 && index <= 5)
             {
-                return new Tuple<int, int>(-10, 10);
+                return new Tuple<int, int>(-2, 2);
             }
 
             return new Tuple<int, int>(0, 0);

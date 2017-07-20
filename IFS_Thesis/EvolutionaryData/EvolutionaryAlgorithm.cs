@@ -92,6 +92,16 @@ namespace IFS_Thesis.EvolutionaryData
         {
             //Every 100th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
+
+            if (currentGeneration == 1500)
+            {
+                Settings.Default.MutationRange = 0.5f;
+            }
+
+            if (currentGeneration == 3000)
+            {
+                Settings.Default.MutationRange = 0.2f;
+            }
         }
 
         /// <summary>
@@ -152,7 +162,7 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info("Started generation of 10x initial individuals");
 
                 initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    _geneticUniversum, Settings.Default.PopulationSize*10, ProbabilityVector, randomGen);
+                    _geneticUniversum, Settings.Default.PopulationSize*5, ProbabilityVector, randomGen);
 
                 Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
 

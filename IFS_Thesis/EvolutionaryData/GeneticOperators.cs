@@ -91,7 +91,7 @@ namespace IFS_Thesis.EvolutionaryData
             var range1 = new Tuple<int, int>(-1, 1);
 
             //range for e,f coefficients
-            var range2 = new Tuple<int, int>(-10, 10);
+            var range2 = new Tuple<int, int>(-2, 2);
 
             var a = GetRandomCoefficient(random, range1);
             var b = GetRandomCoefficient(random, range1);
@@ -311,7 +311,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             else if (Settings.Default.GeneticUniversumAtRandom)
             {
-                n2Individuals = CreateIndividualsFromRandomPoolOfSingels(1000, n2Count, probabilityVectors, randomGen);
+                n2Individuals = CreateIndividualsFromRandomPoolOfSingels(n2Count*10, n2Count, probabilityVectors, randomGen);
             }
             else
                 n2Individuals = CreateIndividualsFromExistingPoolOfSingels(geneticUniversum, n2Count, probabilityVectors,

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
@@ -18,16 +18,16 @@
       <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>
@@ -45,28 +45,28 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
+      <Value Profile="(Default)">0.33</Value>
     </Setting>
     <Setting Name="OnePointCrossoverProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
+      <Value Profile="(Default)">0.33</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="ControlledMutationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.9</Value>
+      <Value Profile="(Default)">0.95</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">256</Value>
+      <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="ImageY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">256</Value>
+      <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="DrawImageEveryNthGeneration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ExtremeDebugging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -78,7 +78,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -99,7 +99,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DiscreteRecombinationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.34</Value>
     </Setting>
     <Setting Name="ParentsReinserted" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.1</Value>

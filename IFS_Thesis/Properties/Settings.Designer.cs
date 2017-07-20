@@ -37,7 +37,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int PopulationSize {
             get {
                 return ((int)(this["PopulationSize"]));
@@ -85,7 +85,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float N3IndividualsPercentage {
             get {
                 return ((float)(this["N3IndividualsPercentage"]));
@@ -97,7 +97,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float N4IndividualsPercentage {
             get {
                 return ((float)(this["N4IndividualsPercentage"]));
@@ -121,7 +121,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public float MutationRange {
             get {
                 return ((float)(this["MutationRange"]));
@@ -193,7 +193,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.33")]
         public float ArithmeticCrossoverProbability {
             get {
                 return ((float)(this["ArithmeticCrossoverProbability"]));
@@ -205,7 +205,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.33")]
         public float OnePointCrossoverProbability {
             get {
                 return ((float)(this["OnePointCrossoverProbability"]));
@@ -217,7 +217,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float RandomMutationProbability {
             get {
                 return ((float)(this["RandomMutationProbability"]));
@@ -229,7 +229,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.95")]
         public float ControlledMutationProbability {
             get {
                 return ((float)(this["ControlledMutationProbability"]));
@@ -241,7 +241,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageX {
             get {
                 return ((int)(this["ImageX"]));
@@ -253,7 +253,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
         public int ImageY {
             get {
                 return ((int)(this["ImageY"]));
@@ -277,7 +277,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int EliteIndividualsPerDegree {
             get {
                 return ((int)(this["EliteIndividualsPerDegree"]));
@@ -325,7 +325,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public int UpdateProbabilityVectorAfterNGenerations {
             get {
                 return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
@@ -409,7 +409,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.34")]
         public float DiscreteRecombinationProbability {
             get {
                 return ((float)(this["DiscreteRecombinationProbability"]));
