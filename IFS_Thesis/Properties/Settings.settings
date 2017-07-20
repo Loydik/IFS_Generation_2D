@@ -9,13 +9,13 @@
       <Value Profile="(Default)">400</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">300000</Value>
+      <Value Profile="(Default)">16000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.88</Value>
+      <Value Profile="(Default)">0.9</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.02</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
@@ -27,10 +27,10 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">0.01</Value>
     </Setting>
     <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.33</Value>
@@ -81,7 +81,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -90,7 +90,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.75</Value>
+      <Value Profile="(Default)">1.5</Value>
     </Setting>
     <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -111,10 +111,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MigrationFrequency" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="MigrationRatePerDegree" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

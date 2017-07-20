@@ -24,7 +24,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
             var u =  randomGen.NextDouble();
 
             //mutation precision, k ∈ {4,5,...20}
-            var k = 10;
+            var k = 8;
 
             //a = 2^(-u*k)
             var a = (float)Math.Pow(2, (-1) * u * k);
