@@ -104,26 +104,23 @@ namespace IFS_Thesis
             #region Initializing Different Configurations
 
             var configuration1 = EaConfigurator.GetDefaultConfiguration();
-
             configuration1.PopulationSize = Settings.Default.PopulationSize / 4;
             configuration1.RandomMutationProbability = 0.25f;
             configuration1.ControlledMutationProbability = 0.75f;
             configuration1.MutationRange = 1f;
 
             var configuration2 = EaConfigurator.GetDefaultConfiguration();
-
             configuration2.PopulationSize = Settings.Default.PopulationSize / 4;
-
-            var configuration3 = EaConfigurator.GetDefaultConfiguration();
             configuration2.MutationRange = 0.5f;
 
+            var configuration3 = EaConfigurator.GetDefaultConfiguration();
             configuration3.PopulationSize = Settings.Default.PopulationSize / 4;
             configuration3.MutationRange = 0.25f;
-            configuration3.N1IndividualsPercentage = 0.75f;
+            configuration3.N1IndividualsPercentage = 0.3f;
             configuration3.N3IndividualsPercentage = 0.2f;
+            configuration3.N4IndividualsPercentage = 0.5f;
 
             var configuration4 = EaConfigurator.GetDefaultConfiguration();
-
             configuration4.PopulationSize = Settings.Default.PopulationSize / 4;
             configuration4.MutationRange = 0.05f;
             configuration4.RandomMutationProbability = 0;
