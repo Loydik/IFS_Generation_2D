@@ -45,15 +45,17 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             var firstChild = (Individual)firstParent.Clone();
             var secondChild = (Individual)secondParent.Clone();
 
-    
-            var singelToExchange = randomGen.Next(firstParent.Degree);
+            var crossoverPoint = randomGen.Next(firstParent.Degree);
 
-            var childSingels = RecombineSingels(firstChild.Singels[singelToExchange],
-                secondChild.Singels[singelToExchange],
-                randomGen);
+            for (int i = crossoverPoint; i < firstParent.Degree; i++)
+            {
+                var childSingels = RecombineSingels(firstChild.Singels[i],
+                    secondChild.Singels[i],
+                    randomGen);
 
-            firstChild.Singels[singelToExchange] = childSingels.Item1;
-            secondChild.Singels[singelToExchange] = childSingels.Item2;
+                firstChild.Singels[i] = childSingels.Item1;
+                secondChild.Singels[i] = childSingels.Item2;
+            }       
 
             return new List<Individual> { firstChild, secondChild };
         }
