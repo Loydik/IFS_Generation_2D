@@ -337,7 +337,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int UpdateProbabilityVectorAfterNGenerations {
             get {
                 return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
@@ -362,18 +362,18 @@ namespace IFS_Thesis.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool Generate10xIndividuals {
+        public bool Generate5xIndividuals {
             get {
-                return ((bool)(this["Generate10xIndividuals"]));
+                return ((bool)(this["Generate5xIndividuals"]));
             }
             set {
-                this["Generate10xIndividuals"] = value;
+                this["Generate5xIndividuals"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.75")]
         public float SelectionPressure {
             get {
                 return ((float)(this["SelectionPressure"]));
@@ -476,6 +476,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["MigrationRatePerDegree"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        public float ProbabilityVectorMinimum {
+            get {
+                return ((float)(this["ProbabilityVectorMinimum"]));
+            }
+            set {
+                this["ProbabilityVectorMinimum"] = value;
             }
         }
     }

@@ -146,14 +146,14 @@ namespace IFS_Thesis.EvolutionaryData
 
             List<Individual> initialIndividuals;
 
-            #region Generating 10x random individuals and taking the best
+            #region Generating 5x random individuals and taking the best
 
-            if (configuration.Generate10XIndividualsInBeginning)
+            if (configuration.Generate5XIndividualsInBeginning)
             {
                 Log.Info("Started generation of 10x initial individuals");
 
                 initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    geneticUniversum, configuration.PopulationSize * 10, probabilityVector, randomGen);
+                    geneticUniversum, configuration.PopulationSize * 5, probabilityVector, randomGen);
 
                 Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
 
@@ -455,7 +455,7 @@ namespace IFS_Thesis.EvolutionaryData
             }
 
             //Initial Probability vector, 8 max
-            var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };
+            var probabilityVector = new List<float> { 0, 0, 0.2f, 0.2f, 0.2f, 0.15f, 0.15f, 0.1f };
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
 

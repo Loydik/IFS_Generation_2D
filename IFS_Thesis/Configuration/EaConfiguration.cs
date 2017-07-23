@@ -44,7 +44,7 @@ namespace IFS_Thesis.Configuration
 
         public int UpdateProbabilityVectorAfterNGenerations { get; set; }
 
-        public bool Generate10XIndividualsInBeginning { get; set; }
+        public bool Generate5XIndividualsInBeginning { get; set; }
 
         public float SelectionPressure { get; set; }
 

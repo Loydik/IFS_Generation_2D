@@ -81,16 +81,16 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Generate10xIndividuals" Type="System.Boolean" Scope="User">
+    <Setting Name="Generate5xIndividuals" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.5</Value>
+      <Value Profile="(Default)">1.75</Value>
     </Setting>
     <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -115,6 +115,9 @@
     </Setting>
     <Setting Name="MigrationRatePerDegree" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ProbabilityVectorMinimum" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
   </Settings>
 </SettingsFile>

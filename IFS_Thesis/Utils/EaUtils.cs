@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.Properties;
 using log4net;
 
 namespace IFS_Thesis.Utils
@@ -32,22 +33,6 @@ namespace IFS_Thesis.Utils
             var average = individuals.Where(x => x.Degree == degree).Select(x => x.ObjectiveFitness).Average();
 
             return average;
-        }
-
-        /// <summary>
-        /// Normalizes a vector
-        /// </summary>
-        private static List<float> NormalizeVector(List<float> vector)
-        {
-            //sum of all elements in the vector
-            var length = vector.Aggregate(0f, (current, element) => current + element);
-
-            for (int i = 0; i < vector.Count; i++)
-            {
-                vector[i] = vector[i] / length;
-            }
-
-            return vector;
         }
 
         #endregion
@@ -118,7 +103,7 @@ namespace IFS_Thesis.Utils
                 vector[degree - 1] = vector[degree - 1] + averageFitnessForDegree;
             }
 
-            vector = NormalizeVector(vector);
+            vector = NormalizeVectorWithMinimumValue(vector, Settings.Default.ProbabilityVectorMinimum);
 
             Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
 
@@ -145,7 +130,7 @@ namespace IFS_Thesis.Utils
                 bestFitnessesPerDegree.Add(degree, bestFitnessForDegree);
             }
 
-            vector = NormalizeVector(vector);
+            vector = NormalizeVectorWithMinimumValue(vector, Settings.Default.ProbabilityVectorMinimum);
 
             for (var index = 0; index < vector.Count; index++)
             {
@@ -162,6 +147,39 @@ namespace IFS_Thesis.Utils
             Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");
 
             return vector;
+        }
+
+        /// <summary>
+        /// Normalizes a vector
+        /// </summary>
+        public static List<float> NormalizeVector(List<float> vector)
+        {
+            //sum of all elements in the vector
+            var length = vector.Aggregate(0f, (current, element) => current + element);
+
+            for (int i = 0; i < vector.Count; i++)
+            {
+                vector[i] = vector[i] / length;
+            }
+
+            return vector;
+        }
+
+        /// <summary>
+        /// Normalizes a vector with minimum value allowed
+        /// </summary>
+        public static List<float> NormalizeVectorWithMinimumValue(List<float> vector, float minValue)
+        {
+            var normalized = NormalizeVector(vector);
+
+            while (normalized.Skip(2).Any(x => x < minValue))
+            {
+                int minIndex = Array.IndexOf(normalized.Skip(2).ToArray(), normalized.Skip(2).Min()) + 2;
+                normalized[minIndex] = normalized[minIndex] + 0.001f;
+                normalized = NormalizeVector(normalized);
+            }
+
+            return normalized;
         }
 
         #endregion

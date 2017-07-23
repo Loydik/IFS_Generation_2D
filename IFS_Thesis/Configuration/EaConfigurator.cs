@@ -26,7 +26,7 @@ namespace IFS_Thesis.Configuration
                 ControlledMutationProbability = Settings.Default.ControlledMutationProbability,
                 RandomMutationProbability = Settings.Default.RandomMutationProbability,
                 EliteIndividualsPerDegree = Settings.Default.EliteIndividualsPerDegree,
-                Generate10XIndividualsInBeginning = Settings.Default.Generate10xIndividuals,
+                Generate5XIndividualsInBeginning = Settings.Default.Generate5xIndividuals,
                 GeneticUniversumAtRandom = Settings.Default.GeneticUniversumAtRandom,
                 SelectionPressure = Settings.Default.SelectionPressure,
                 UseReinsertion = Settings.Default.UseReinsertion,
