@@ -68,6 +68,55 @@ namespace IFS_Thesis.EvolutionaryData
         {
             //Every 200th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
+
+            if (currentGeneration == 500)
+            {
+                Settings.Default.MutationRange = 0.7f;
+                Settings.Default.RandomMutationProbability = 0.3f;
+                Settings.Default.ControlledMutationProbability = 0.7f;
+
+                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
+                {
+                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
+                }
+            }
+
+            if (currentGeneration == 1000)
+            {
+                Settings.Default.MutationRange = 0.5f;
+                Settings.Default.RandomMutationProbability = 0.2f;
+                Settings.Default.ControlledMutationProbability = 0.8f;
+
+                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
+                {
+                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
+                }
+            }
+
+            if (currentGeneration == 2000)
+            {
+                Settings.Default.UseReinsertion = true;
+                Settings.Default.MutationRange = 0.25f;
+                Settings.Default.RandomMutationProbability = 0.1f;
+                Settings.Default.ControlledMutationProbability = 0.9f;
+
+                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
+                {
+                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
+                }
+            }
+
+            if (currentGeneration == 4000)
+            {
+                Settings.Default.MutationRange = 0.15f;
+                Settings.Default.RandomMutationProbability = 0.05f;
+                Settings.Default.ControlledMutationProbability = 0.95f;
+
+                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
+                {
+                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
+                }
+            }
         }
 
         /// <summary>
