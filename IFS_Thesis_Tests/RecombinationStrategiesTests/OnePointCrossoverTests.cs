@@ -107,6 +107,35 @@ namespace IFS_Thesis_Tests.RecombinationStrategiesTests
 
             Assert.That(producedIndividuals, Is.Empty);
         }
+
+        [Test, Category("DiscreteRecombination")]
+        public void DiscreteSingelRecombinationTest()
+        {
+            var parent1 = new Individual(new List<IfsFunction>
+            {
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.0f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.618f, 0.0f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.809f, 0.588f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.382f, 0.0f, 0.0f, 0.382f, 0.309f, 0.951f, 0.2f, -0.5f, 0.4f, 1f, -1f, 0f)
+            });
+
+            var parent2 = new Individual(new List<IfsFunction>
+            {
+                new IfsFunction(0.1f, 0.0f, 0.0f, 0.16f, 0.0f, 0.0f, 0.01f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.85f, 0.04f, -0.04f, 0.85f, 0.0f, 1.6f, 0.85f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(0.2f, -0.26f, 0.23f, 0.22f, 0.0f, 1.6f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f),
+                new IfsFunction(-0.15f, 0.29f, 0.25f, 0.24f, 0.0f, 0.41f, 0.07f, -0.5f, 0.4f, 1f, -1f, 0f)
+            });
+
+            var strategy = new DiscreteSingelRecombinationStrategy();
+
+            var producedIndividuals = strategy.ProduceOffsprings(parent1, parent2, new Random());
+
+            Assert.That(producedIndividuals[0].Degree, Is.EqualTo(parent1.Degree));
+            Assert.That(producedIndividuals[1].Degree, Is.EqualTo(parent1.Degree));
+        }
     }
 
     #region Test Cases

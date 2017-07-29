@@ -21,7 +21,7 @@ namespace IFS_Thesis.Configuration
                 N4IndividualsPercentage = Settings.Default.N4IndividualsPercentage,
                 ArithmeticCrossoverProbability = Settings.Default.ArithmeticCrossoverProbability,
                 OnePointCrossoverProbability = Settings.Default.OnePointCrossoverProbability,
-                DiscreteRecombinationProbability = Settings.Default.DiscreteRecombinationProbability,
+                DiscreteSingelRecombinationProbability = Settings.Default.DiscreteSingelRecombinationProbability,
                 AverageFitnessThreshold = Settings.Default.AverageFitnessThreshold,
                 ControlledMutationProbability = Settings.Default.ControlledMutationProbability,
                 RandomMutationProbability = Settings.Default.RandomMutationProbability,

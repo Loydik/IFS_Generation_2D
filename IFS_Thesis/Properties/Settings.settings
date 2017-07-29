@@ -12,16 +12,16 @@
       <Value Profile="(Default)">32000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.65</Value>
+      <Value Profile="(Default)">0.8</Value>
     </Setting>
     <Setting Name="N2IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N3IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
+      <Value Profile="(Default)">0.05</Value>
     </Setting>
     <Setting Name="N4IndividualsPercentage" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.1</Value>
     </Setting>
     <Setting Name="MutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -36,19 +36,19 @@
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="PrcFitness" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
-    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
+    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.35</Value>
     </Setting>
     <Setting Name="OnePointCrossoverProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.2</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
@@ -81,7 +81,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateProbabilityVectorAfterNGenerations" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="UseFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -90,13 +90,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.5</Value>
+      <Value Profile="(Default)">1.99</Value>
     </Setting>
     <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="DiscreteRecombinationProbability" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="ParentsReinserted" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.3</Value>
@@ -118,6 +115,9 @@
     </Setting>
     <Setting Name="ProbabilityVectorMinimum" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.05</Value>
+    </Setting>
+    <Setting Name="DiscreteSingelRecombinationProbability" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.35</Value>
     </Setting>
   </Settings>
 </SettingsFile>

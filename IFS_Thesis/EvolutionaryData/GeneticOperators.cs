@@ -61,7 +61,7 @@ namespace IFS_Thesis.EvolutionaryData
                 return new OnePointCrossoverStrategy();
             }
 
-            return new DiscreteRecombinationStrategy();
+            return new DiscreteSingelRecombinationStrategy();
         }
 
         /// <summary>

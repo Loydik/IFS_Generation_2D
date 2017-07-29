@@ -28,7 +28,7 @@ namespace IFS_Thesis.Configuration
 
         public float OnePointCrossoverProbability { get; set; }
 
-        public float DiscreteRecombinationProbability { get; set; }
+        public float DiscreteSingelRecombinationProbability { get; set; }
 
         public float RandomMutationProbability { get; set; }
 

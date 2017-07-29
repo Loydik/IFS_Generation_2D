@@ -95,7 +95,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             if (currentGeneration == 2000)
             {
-                Settings.Default.UseReinsertion = true;
                 Settings.Default.MutationRange = 0.25f;
                 Settings.Default.RandomMutationProbability = 0.1f;
                 Settings.Default.ControlledMutationProbability = 0.9f;

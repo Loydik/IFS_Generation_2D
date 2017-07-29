@@ -61,7 +61,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.65")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.8")]
         public float N1IndividualsPercentage {
             get {
                 return ((float)(this["N1IndividualsPercentage"]));
@@ -85,7 +85,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float N3IndividualsPercentage {
             get {
                 return ((float)(this["N3IndividualsPercentage"]));
@@ -97,7 +97,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
         public float N4IndividualsPercentage {
             get {
                 return ((float)(this["N4IndividualsPercentage"]));
@@ -157,7 +157,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int PrcFitness {
             get {
                 return ((int)(this["PrcFitness"]));
@@ -169,7 +169,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int ProFitness {
             get {
                 return ((int)(this["ProFitness"]));
@@ -181,7 +181,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("32")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int IfsGenerationMultiplier {
             get {
                 return ((int)(this["IfsGenerationMultiplier"]));
@@ -193,7 +193,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.35")]
         public float ArithmeticCrossoverProbability {
             get {
                 return ((float)(this["ArithmeticCrossoverProbability"]));
@@ -205,7 +205,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
         public float OnePointCrossoverProbability {
             get {
                 return ((float)(this["OnePointCrossoverProbability"]));
@@ -337,7 +337,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int UpdateProbabilityVectorAfterNGenerations {
             get {
                 return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
@@ -373,7 +373,7 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.99")]
         public float SelectionPressure {
             get {
                 return ((float)(this["SelectionPressure"]));
@@ -392,18 +392,6 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["N2IndividualsFromExistingPoolOfSingels"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
-        public float DiscreteRecombinationProbability {
-            get {
-                return ((float)(this["DiscreteRecombinationProbability"]));
-            }
-            set {
-                this["DiscreteRecombinationProbability"] = value;
             }
         }
         
@@ -488,6 +476,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["ProbabilityVectorMinimum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.35")]
+        public float DiscreteSingelRecombinationProbability {
+            get {
+                return ((float)(this["DiscreteSingelRecombinationProbability"]));
+            }
+            set {
+                this["DiscreteSingelRecombinationProbability"] = value;
             }
         }
     }

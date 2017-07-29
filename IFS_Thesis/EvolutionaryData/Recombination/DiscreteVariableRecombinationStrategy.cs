@@ -8,7 +8,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     /// <summary>
     /// Discrete Recombination strategy
     /// </summary>
-    public class DiscreteRecombinationStrategy : RecombinationStrategy
+    public class DiscreteVariableRecombinationStrategy : RecombinationStrategy
     {
         #region Private Methods
 
