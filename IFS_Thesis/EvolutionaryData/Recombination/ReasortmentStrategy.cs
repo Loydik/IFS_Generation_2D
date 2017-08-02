@@ -12,6 +12,11 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     {
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
+            if (firstParent == null || secondParent == null)
+            {
+                return new List<Individual>();
+            }
+
             List<IfsFunction> allSignels = new List<IfsFunction>();
 
             //cloning to prevent unexpected behavior
