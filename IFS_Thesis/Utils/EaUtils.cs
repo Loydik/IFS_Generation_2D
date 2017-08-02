@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
+using IFS_Thesis.Ifs;
 using IFS_Thesis.Properties;
 using log4net;
 
@@ -180,6 +182,53 @@ namespace IFS_Thesis.Utils
             }
 
             return normalized;
+        }
+
+        /// <summary>
+        /// Creates individual from signels string in logs
+        /// </summary>
+        /// <remarks>string in format [0.2611,0.2358,-0.7685,0.163,-1.5512,-9.0696,0];[-0.9634,0.2324,-0.4512,0.7583,1.7809,-0.0628,0];[-0.6634,0.3488,0.0202,0.3246,4.8702,-2.9171,0];[0.0018,0.5933,-0.9078,0.5663,7.1813,-4.2975,0]</remarks>
+        public static Individual CreateIndividualFromSingelsString(string singelsString)
+        {
+            var individualSingels = new List<IfsFunction>();
+            var singels = singelsString.Trim().Split(';');
+
+            foreach (var singel in singels)
+            {
+                char[] charsToTrim = { '[', ']' };
+                var coefficientts = singel.Trim(charsToTrim).Split(',');
+
+                individualSingels.Add(new IfsFunction(float.Parse(coefficientts[0]), float.Parse(coefficientts[1]), float.Parse(coefficientts[2]), float.Parse(coefficientts[3]), float.Parse(coefficientts[4]), float.Parse(coefficientts[5]), float.Parse(coefficientts[6]), float.Parse(coefficientts[7]), float.Parse(coefficientts[8]), float.Parse(coefficientts[9]), float.Parse(coefficientts[10]), float.Parse(coefficientts[11]), float.Parse(coefficientts[12])));
+            }
+
+            return new Individual(individualSingels);
+        }
+
+        /// <summary>
+        /// Creates a list of individuals from text representation of population
+        /// </summary>
+        public static List<Individual> CreateIndividualsFromPopulationString(string populationString)
+        {
+            var allIndividuals = new List<Individual>();
+
+            var individualsSingels = Regex.Matches(populationString, @"(?<=Singles:.*)\[.*\]");
+
+            var individualFitnesses = Regex.Matches(populationString, @"(?<=ObjectiveFitness - )[0-9]+(\.[0-9]{1,10})?E?");
+
+            var list = individualsSingels.Cast<Match>().Select(match => match.Value).ToList();
+            var fitnessesList = individualFitnesses.Cast<Match>().Select(match => match.Value).ToList();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                var singels = list[i];
+                var individual = CreateIndividualFromSingelsString(singels);
+
+                individual.ObjectiveFitness = fitnessesList[i].Contains("E") ? 0 : float.Parse(fitnessesList[i]);
+                
+                allIndividuals.Add(individual);
+            }
+
+            return allIndividuals;
         }
 
         #endregion

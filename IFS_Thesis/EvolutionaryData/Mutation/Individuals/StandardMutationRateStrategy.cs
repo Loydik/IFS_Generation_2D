@@ -99,45 +99,21 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
         /// </summary>
         public override void Mutate(EaConfiguration configuration, ref Individual individual, RealValueMutationStrategy strategy, Random randomGen, float? mutationRate = null)
         {
-            if(mutationRate == null)
-            { 
-                //by default, mutation rate is 1/n (n -> number of variables/coefficients)
-                mutationRate = 1f / (individual.Singels.Count*12f);
-            }
+            var singelToMutate = randomGen.Next(0, individual.Singels.Count);
+            var variableToMutate = randomGen.Next(0, 12);
 
-            var newSingels = new List<IfsFunction>();
+            var range = GetRangeForIndex(variableToMutate);
 
-            //can be optimized
-            foreach (var singel in individual.Singels)
+            var oldCoefficient = individual.Singels[singelToMutate].Coefficients[variableToMutate];
+            var newCoefficient = strategy.Mutate(oldCoefficient, randomGen, range, configuration.MutationRange);
+
+            individual.Singels[singelToMutate][variableToMutate] = newCoefficient;
+
+            if (Settings.Default.ExtremeDebugging)
             {
-                var tempCoefficients = new List<float>();
-
-                for (var index = 0; index < singel.Coefficients.Length; index++)
-                {
-                    var coefficient = singel.Coefficients[index];
-                    var tempCoefficient = coefficient;
-
-                    var mutate = mutationRate >= randomGen.NextDouble();
-
-                    if (mutate)
-                    {
-                        var range = GetRangeForIndex(index);
-                        tempCoefficient = strategy.Mutate(tempCoefficient, randomGen, range, configuration.MutationRange);
-
-                        if (Settings.Default.ExtremeDebugging)
-                        {
-                            Log.Debug(
-                                $"Mutated coefficient {GetCoefficientNameByIndex(index)} from {coefficient} to {tempCoefficient} using {strategy.GetType().Name}");
-                        }
-                    }
-
-                    tempCoefficients.Add(tempCoefficient);
-                }
-
-                newSingels.Add(new IfsFunction(tempCoefficients.ToArray()));
+                Log.Debug(
+                    $"Mutated coefficient {GetCoefficientNameByIndex(variableToMutate)} from {oldCoefficient} to {newCoefficient} using {strategy.GetType().Name}");
             }
-
-            individual.Singels = newSingels;
         }
     }
 

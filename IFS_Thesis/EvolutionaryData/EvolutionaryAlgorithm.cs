@@ -64,57 +64,63 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Changes configuration of parameters based on the current generation
         /// </summary>
-        private void ChangeConfiguration(int currentGeneration)
+        private void ChangeConfiguration(int currentGeneration, EaConfiguration configuration)
         {
             //Every 200th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
 
+            if (currentGeneration == 200)
+            {
+                configuration.MutationRange = 1f;
+                configuration.RandomMutationProbability = 0.45f;
+                configuration.ControlledMutationProbability = 0.55f;
+
+                Log.Info($"Changed configuration:\n {configuration}");
+            }
+
             if (currentGeneration == 500)
             {
-                Settings.Default.MutationRange = 0.7f;
-                Settings.Default.RandomMutationProbability = 0.3f;
-                Settings.Default.ControlledMutationProbability = 0.7f;
+                configuration.MutationRange = 0.7f;
+                configuration.RandomMutationProbability = 0.4f;
+                configuration.ControlledMutationProbability = 0.6f;
 
-                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
-                {
-                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
-                }
+                Log.Info($"Changed configuration:\n {configuration}");
             }
 
             if (currentGeneration == 1000)
             {
-                Settings.Default.MutationRange = 0.5f;
-                Settings.Default.RandomMutationProbability = 0.2f;
-                Settings.Default.ControlledMutationProbability = 0.8f;
+                configuration.MutationRange = 0.5f;
+                configuration.RandomMutationProbability = 0.3f;
+                configuration.ControlledMutationProbability = 0.7f;
 
-                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
-                {
-                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
-                }
+                Log.Info($"Changed configuration:\n {configuration}");
             }
 
             if (currentGeneration == 2000)
             {
-                Settings.Default.MutationRange = 0.25f;
-                Settings.Default.RandomMutationProbability = 0.1f;
-                Settings.Default.ControlledMutationProbability = 0.9f;
+                configuration.MutationRange = 0.4f;
+                configuration.RandomMutationProbability = 0.2f;
+                configuration.ControlledMutationProbability = 0.8f;
 
-                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
-                {
-                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
-                }
+                Log.Info($"Changed configuration:\n {configuration}");
             }
 
             if (currentGeneration == 4000)
             {
-                Settings.Default.MutationRange = 0.15f;
-                Settings.Default.RandomMutationProbability = 0.05f;
-                Settings.Default.ControlledMutationProbability = 0.95f;
+                configuration.MutationRange = 0.2f;
+                configuration.RandomMutationProbability = 0.1f;
+                configuration.ControlledMutationProbability = 0.9f;
 
-                foreach (SettingsProperty currentProperty in Settings.Default.Properties)
-                {
-                    Log.Info($"{currentProperty.Name} : {currentProperty.DefaultValue}");
-                }
+                Log.Info($"Changed configuration:\n {configuration}");
+            }
+
+            if (currentGeneration == 8000)
+            {
+                configuration.MutationRange = 0.15f;
+                configuration.RandomMutationProbability = 0.05f;
+                configuration.ControlledMutationProbability = 0.95f;
+
+                Log.Info($"Changed configuration:\n {configuration}");
             }
         }
 
@@ -450,7 +456,7 @@ namespace IFS_Thesis.EvolutionaryData
                 population = EvolveGeneration(configuration, population, geneticUniversum, currentGenerationNumber,
                     ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
 
-                ChangeConfiguration(currentGenerationNumber);
+                ChangeConfiguration(currentGenerationNumber, configuration);
 
                 GenerateReportImages(currentGenerationNumber, population, drawer, ifsGenerator);              
             }
@@ -464,7 +470,7 @@ namespace IFS_Thesis.EvolutionaryData
         public Individual StartEvolution(Population population, int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
-
+            
             var configuration = EaConfigurator.GetDefaultConfiguration();
 
             //Initial Probability vector, 8 max
@@ -472,8 +478,15 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"The Probability Vector values are: [{string.Join(",", probabilityVector)}]");
 
+            Log.Info($"Evolutionary run with defined initial population \n {string.Join("\n", population.Individuals)}");
+
             var geneticUniversum = _geneticOperators.GeneratePoolOfSingels(Settings.Default.InitialSingelPoolSize,
                 randomGen);
+
+            population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(population.Individuals,
+                sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
+                Settings.Default.ImageZ,
+                Settings.Default.IfsGenerationMultiplier);
 
             for (int i = 0; i < maxGenerations; i++)
             {
@@ -484,7 +497,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 GenerateReportImages(currentGenerationNumber, population, drawer, ifsGenerator);
 
-                ChangeConfiguration(currentGenerationNumber);
+                ChangeConfiguration(currentGenerationNumber, configuration);
             }
 
             return GetHighestFitIndividual(population);
@@ -528,6 +541,7 @@ namespace IFS_Thesis.EvolutionaryData
                     var configuration = populationConfigurations[index];
                     populations[index] = EvolveGeneration(configuration, populations[index], geneticUniversum, currentGenerationNumber,
                         ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
+                    ChangeConfiguration(currentGenerationNumber, configuration);
                 }
 
                 if (currentGenerationNumber % Settings.Default.MigrationFrequency == 0)
@@ -535,8 +549,7 @@ namespace IFS_Thesis.EvolutionaryData
                     populations = _geneticOperators.MigrateIndividualsBetweenPopulations(populations, Settings.Default.MigrationRatePerDegree,
                         randomGen);
                 }
-
-                ChangeConfiguration(currentGenerationNumber);
+                
                 GenerateReportImages(currentGenerationNumber, populations, drawer, ifsGenerator);
                 
             }

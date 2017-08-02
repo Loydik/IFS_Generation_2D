@@ -8,6 +8,8 @@ namespace IFS_Thesis.Configuration
     /// </summary>
     public class EaConfiguration
     {
+        #region Properties
+
         public int PopulationSize { get; set; }
 
         public float N1IndividualsPercentage { get; set; }
@@ -54,10 +56,11 @@ namespace IFS_Thesis.Configuration
 
         public bool RecalculateFitnessAfterReinsertion { get; set; }
 
+        #endregion
+
         /// <summary>
         /// Gets a string representation of EaConfiguration class
         /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             var outputString = new StringBuilder();
@@ -66,7 +69,7 @@ namespace IFS_Thesis.Configuration
             {
                 var name = descriptor.Name;
                 var value = descriptor.GetValue(this);
-                outputString.Append($"{name} - {value}\n");
+                outputString.Append($"{name} - {value}; \n");
             }
 
             return outputString.ToString();

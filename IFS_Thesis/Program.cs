@@ -4,10 +4,12 @@ using System.IO;
 using System.Reflection;
 using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData;
+using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.Ifs;
 using IFS_Thesis.Ifs.IFSDrawers;
 using IFS_Thesis.Ifs.IFSGenerators;
 using IFS_Thesis.Properties;
+using IFS_Thesis.Utils;
 using log4net;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -24,7 +26,7 @@ namespace IFS_Thesis
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-         #endregion
+        #endregion
 
         [STAThread]
         static void Main(string[] args)
@@ -101,6 +103,8 @@ namespace IFS_Thesis
 
             var ea = new EvolutionaryAlgorithm();
 
+            Population initialPopulation = null;
+
             #region Initializing Different Configurations
 
             var configuration1 = EaConfigurator.GetDefaultConfiguration();
@@ -130,12 +134,28 @@ namespace IFS_Thesis
 
             #endregion
 
+            #region Population from text file
+
+            if (Settings.Default.InitialPopulationFromTextFile)
+            {
+                //Population from text file
+                var txtFilepath = Settings.Default.WorkingDirectory + "/population.txt";
+
+                var populationString = File.ReadAllText(txtFilepath);
+
+                var allIndividuals = EaUtils.CreateIndividualsFromPopulationString(populationString);
+
+                initialPopulation = new Population();
+                initialPopulation.SetAllIndividuals(allIndividuals);
+            }
+
+            #endregion
+
             //Multiple Populations
             //var highest = ea.StartEvolutionWithMultiplePopulations(configurations, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
 
-            //Single population
-            var highest = ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
-
+            var highest = Settings.Default.InitialPopulationFromTextFile ? ea.StartEvolution(initialPopulation, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen) : ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+                    
             voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, imageSizeX, imageSizeY, imageSizeZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);
            // ifsDrawer.SaveVoxelImage(finalEvolvedImagePath, voxels, ImageFormat3D.Stl);

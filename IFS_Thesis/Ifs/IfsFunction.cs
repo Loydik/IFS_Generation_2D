@@ -48,6 +48,90 @@ namespace IFS_Thesis.Ifs
             }
         }
 
+        /// <summary>
+        /// Get or set coefficient by index
+        /// </summary>
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return A11;
+                    case 1:
+                        return A12;
+                    case 2:
+                        return A13;
+                    case 3:
+                        return A21;
+                    case 4:
+                        return A22;
+                    case 5:
+                        return A23;
+                    case 6:
+                        return A31;
+                    case 7:
+                        return A32;
+                    case 8:
+                        return A33;
+                    case 9:
+                        return B1;
+                    case 10:
+                        return B2;
+                    case 11:
+                        return B3;
+                }
+
+                return 0;
+            }
+            set
+            {
+                if (index >= 0 && index <= 11)
+                {
+                    switch (index)
+                    {
+                        case 0:
+                             A11 = value;
+                            break;
+                        case 1:
+                            A12 = value;
+                            break;
+                        case 2:
+                            A13 = value;
+                            break;
+                        case 3:
+                            A21 = value;
+                            break;
+                        case 4:
+                            A22 = value;
+                            break;
+                        case 5:
+                            A23 = value;
+                            break;
+                        case 6:
+                            A31 = value;
+                            break;
+                        case 7:
+                            A32 = value;
+                            break;
+                        case 8:
+                            A33 = value;
+                            break;
+                        case 9:
+                            B1 = value;
+                            break;
+                        case 10:
+                            B2 = value;
+                            break;
+                        case 11:
+                            B3 = value;
+                            break;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Construction

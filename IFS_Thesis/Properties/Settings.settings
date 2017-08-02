@@ -9,7 +9,7 @@
       <Value Profile="(Default)">360</Value>
     </Setting>
     <Setting Name="InitialSingelPoolSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32000</Value>
+      <Value Profile="(Default)">64000</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.8</Value>
@@ -27,7 +27,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1.5</Value>
     </Setting>
     <Setting Name="AverageFitnessThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.01</Value>
@@ -36,13 +36,13 @@
       <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="PrcFitness" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
-    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
+    <Setting Name="ProFitness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="ArithmeticCrossoverProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.35</Value>
@@ -57,13 +57,13 @@
       <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32</Value>
+      <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="ImageY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32</Value>
+      <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="ImageZ" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">32</Value>
+      <Value Profile="(Default)">128</Value>
     </Setting>
     <Setting Name="DrawImageEveryNthGeneration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25</Value>
@@ -90,7 +90,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.99</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -105,7 +105,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UseUpperLimitFitnessAdjustment" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MigrationFrequency" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
@@ -118,6 +118,9 @@
     </Setting>
     <Setting Name="DiscreteSingelRecombinationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.35</Value>
+    </Setting>
+    <Setting Name="InitialPopulationFromTextFile" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
