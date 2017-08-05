@@ -32,7 +32,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         {
             float percentToSubtract = 0;
 
-            if (generatedVoxelsCount < sourceImageVoxelsCount)
+            if (generatedVoxelsCount < sourceImageVoxelsCount && Settings.Default.UseLowerLimitFitnessAdjustment)
             {
                 //calculating percentage error
                 var pError = (float)(sourceImageVoxelsCount - generatedVoxelsCount) / sourceImageVoxelsCount;
@@ -104,7 +104,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 
             var fitness = prcFitness * (1 - rc) + proFitness * (1 - ro);
 
-            if (Settings.Default.UseFitnessAdjustment)
+            if (Settings.Default.UseLowerLimitFitnessAdjustment || Settings.Default.UseUpperLimitFitnessAdjustment)
             {
                 var fitnessAdjustment = GetFitnessAdjustment(generatedVoxelsCount, sourceImageVoxelsCount, fitness);
 

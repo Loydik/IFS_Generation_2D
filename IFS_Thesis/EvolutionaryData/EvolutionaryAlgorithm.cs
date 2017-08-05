@@ -105,7 +105,7 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Changed configuration:\n {configuration}");
             }
 
-            if (currentGeneration == 4000)
+            if (currentGeneration == 3000)
             {
                 configuration.MutationRange = 0.2f;
                 configuration.RandomMutationProbability = 0.1f;
@@ -114,9 +114,8 @@ namespace IFS_Thesis.EvolutionaryData
                 Log.Info($"Changed configuration:\n {configuration}");
             }
 
-            if (currentGeneration == 8000)
+            if (currentGeneration == 4000)
             {
-                configuration.MutationRange = 0.15f;
                 configuration.RandomMutationProbability = 0.05f;
                 configuration.ControlledMutationProbability = 0.95f;
 
