@@ -494,9 +494,9 @@ namespace IFS_Thesis.EvolutionaryData
                 population = EvolveGeneration(configuration, population, geneticUniversum, currentGenerationNumber,
                     ref probabilityVector, sourceImageVoxels, ifsGenerator, randomGen);
 
-                GenerateReportImages(currentGenerationNumber, population, drawer, ifsGenerator);
-
                 ChangeConfiguration(currentGenerationNumber, configuration);
+
+                GenerateReportImages(currentGenerationNumber, population, drawer, ifsGenerator);
             }
 
             return GetHighestFitIndividual(population);
