@@ -17,7 +17,7 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         public List<Species> Species { get; set; }
 
         /// <summary>
-        /// List of individuals in current population
+        /// List of all individuals in current population
         /// </summary>
         public List<Individual> Individuals
         {
@@ -61,7 +61,17 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         #region Public Methods
 
         /// <summary>
-        /// Add individual to population
+        /// Get all individuals which belong to the population
+        /// </summary>
+        public List<Individual> GetAllIndividuals()
+        {
+            var allIndividuals = Species.SelectMany(x => x.Individuals).ToList();
+
+            return allIndividuals;
+        }
+
+        /// <summary>
+        /// Add given individual to population
         /// </summary>
         public void AddIndividual(Individual individual)
         {
@@ -83,7 +93,7 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         }
 
         /// <summary>
-        /// Add a list of individuals to population
+        /// Add a list of given individuals to population
         /// </summary>
         public void AddIndividuals(List<Individual> individuals)
         {
@@ -93,6 +103,9 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
             }
         }
 
+        /// <summary>
+        /// Remove given individual from population
+        /// </summary>
         public void RemoveIndividual(Individual individual)
         {
             Species.Single(x => x.DegreeOfIndividualsInSpecies == individual.Degree).Individuals.Remove(individual);
@@ -111,7 +124,7 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         }
 
         /// <summary>
-        /// Replaces worst individuals in population of a given degree
+        /// Replaces worst individuals of a given degree in population 
         /// </summary>
         public void ReplaceWorstIndividualsOfDegree(int degree, List<Individual> newIndividuals)
         {
@@ -123,15 +136,8 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         }
 
         /// <summary>
-        /// Get all individuals which belong to the population
+        /// Sets (or replaces) the whole population to given individuals
         /// </summary>
-        public List<Individual> GetAllIndividuals()
-        {
-            var allIndividuals = Species.SelectMany(x => x.Individuals).ToList();
-
-            return allIndividuals;
-        }
-
         public void SetAllIndividuals(List<Individual> newIndividuals)
         {
             Species.Clear();
@@ -149,13 +155,8 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
             }
         }
 
-        public void RemoveSpecies(Species species)
-        {
-            Species.Remove(species);
-        }
-
         /// <summary>
-        /// Gets all singles in population (gene pool)
+        /// Gets all singles in population (singels pool)
         /// </summary>
         public List<Singel> GetAllSingels()
         {

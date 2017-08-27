@@ -5,28 +5,18 @@ using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 
 namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
 {
+    /// <summary>
+    /// Species selection strategy based on vector of probabilities
+    /// </summary>
     public class ProbabilityVectorSpeciesSelectionStrategy : SpeciesSelectionStrategy
     {
-        #region Private Methods
-
-        private Species SelectNearestSpecies(Population population, int degree)
-        {
-            var closestSpecies = population.Species.Aggregate((x, y) => Math.Abs(x.DegreeOfIndividualsInSpecies - degree) < Math.Abs(y.DegreeOfIndividualsInSpecies - degree) ? x : y);
-
-            return closestSpecies;
-        }
-
-        #endregion
-
-        #region Overriden Methods
-
         /// <summary>
         /// Selects species based on probability vector
         /// </summary>
-        /// <returns></returns>
         public override Species SelectSpecies(Population population, List<float> probabilityVector, Random randomGen)
         {
-            double randomValue = randomGen.NextDouble();
+            //Generating a random value between 0.001 and 0.999
+            var randomValue = randomGen.NextDouble() * (0.999 - 0.001) + 0.001;
 
             double partialSum = 0;
 
@@ -38,19 +28,9 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
                 {
                     var degree = i + 1;
 
-                    Species selectedSpecies;
-
-                    //If the population with a given degree is empty, select the nearest one
-                    if (population.Species.All(x => x.DegreeOfIndividualsInSpecies != degree))
-                    {
-                        selectedSpecies = SelectNearestSpecies(population, degree);
-                    }
-                    else
-                    {
-                        selectedSpecies =
+                        var selectedSpecies =
                             population.Species.Single(x => x.DegreeOfIndividualsInSpecies.Equals(degree));
-                    }
-
+                    
                     return selectedSpecies;
                 }
             }
@@ -65,6 +45,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
         {
             var firstSpeciesDegree = firstSpecies.DegreeOfIndividualsInSpecies;
 
+            //Get possible matches for selection (select all available species within a given distance )
             var possibleMatches =
                 population.Species.Where(
                     x =>
@@ -75,6 +56,7 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
 
             if (possibleMatches.Count != 0)
             {
+                //select species randomly out of possible matches
                 var randomIndex = randomGen.Next(0, possibleMatches.Count - 1);
                 var secondSpecies = possibleMatches[randomIndex];
 
@@ -83,7 +65,5 @@ namespace IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection
 
             return null;
         }
-
-        #endregion
     }
 }

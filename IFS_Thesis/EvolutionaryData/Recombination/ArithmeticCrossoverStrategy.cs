@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Properties;
+using IFS_Thesis.IFS;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
@@ -24,7 +23,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
         #endregion
 
         /// <summary>
-        /// Produces offsprings using arithmetic crossover operator
+        /// Produces offspring using arithmetic crossover operator
         /// </summary>
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
@@ -40,15 +39,10 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             // a ∈ (0,1)
             var a = randomGen.NextDouble();
 
-            if (Settings.Default.ExtremeDebugging)
-            {
-                Log.Debug($"Value of a in arithmetic crossover is: {a}");
-            }
+            var firstChildSingels = new List<IfsFunction>();
+            var secondChildSingels = new List<IfsFunction>();
 
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
-
-            //For each IFS function
+            //For each IFS function in parents
             for (int i = 0; i < firstParentClone.Degree; i++)
             {
                 var firstParentCoefficients = firstParentClone.Singels[i];
@@ -57,7 +51,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 var firstChildCoefficients = new float[12];
                 var secondChildCoefficients = new float[12];
 
-                //For each coefficient
+                //For each coefficient we perform arithmetic crossover
                 for (int j = 0; j < 12; j++)
                 {
                    var x1 =
@@ -72,14 +66,11 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                     secondChildCoefficients[j] = (float) Math.Round(x2, 4, MidpointRounding.AwayFromZero);
                 }
 
-                firstSingels.Add(new IfsFunction(firstChildCoefficients));
-                secondSingels.Add(new IfsFunction(secondChildCoefficients));
+                firstChildSingels.Add(new IfsFunction(firstChildCoefficients));
+                secondChildSingels.Add(new IfsFunction(secondChildCoefficients));
             }
 
-            var individual1 = new Individual(firstSingels);
-            var individual2 = new Individual(secondSingels);
-
-            return new List<Individual> { individual1, individual2 };
+            return new List<Individual> { new Individual(firstChildSingels), new Individual(secondChildSingels) };
         }
     }
 }

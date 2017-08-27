@@ -6,12 +6,16 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {
     public class LinearRankingFitnessFunction : IRankingFitnessFunction
     {
+        /// <summary>
+        /// Assign Rank fitness to individuals
+        /// </summary>
         public List<Individual> AssignRankingFitnessToIndividuals(List<Individual> individuals, float selectivePressure)
         {
+            //we first order individuals according to their objective fitness
             individuals = individuals.OrderBy(i => i.ObjectiveFitness).ToList();
 
-            int nind = individuals.Count;
-            int pos = 1;
+            var nind = individuals.Count;
+            var pos = 1;
 
             foreach (var individual in individuals)
             {

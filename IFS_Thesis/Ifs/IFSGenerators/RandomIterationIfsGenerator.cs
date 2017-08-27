@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using IFS_Thesis.Properties;
 
-namespace IFS_Thesis.Ifs.IFSGenerators
+namespace IFS_Thesis.IFS.IFSGenerators
 {
     /// <summary>
     /// Generates IFS 3D using Random Iteration Algorithm
@@ -10,7 +9,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
     public class RandomIterationIfsGenerator : IfsGenerator
     {
         /// <summary>
-        /// Generates voxels for a given Ifs function
+        /// Generates voxels for given Ifs mappings
         /// </summary>
         public override HashSet<Voxel> GenerateVoxelsForIfs(List<IfsFunction> ifsMappings, int imageX, int imageY, int imageZ, int multiplier)
         {
@@ -19,7 +18,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
 
             var length = ifsMappings.Count;
 
-            //we start at B1, B2, B3
+            //we start at B1, B2, B3 point
             var currentPoint = new Point3Df(ifsMappings[0].B1, ifsMappings[0].B2, ifsMappings[0].B3);
 
             //we ignore first 100 iterations
@@ -30,7 +29,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
             {
                 var i = randomGen.Next(0, length);
 
-                currentPoint = Apply3DIfsTransformation(ifsMappings[i], currentPoint);
+                currentPoint = ApplyIfsTransformationTo3DPoint(ifsMappings[i], currentPoint);
 
                 if (k > minIterations)
                 {

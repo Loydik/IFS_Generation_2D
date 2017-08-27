@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Mutation.Variables;
-using IFS_Thesis.Ifs;
 using IFS_Thesis.Properties;
 using log4net;
 
@@ -97,13 +95,18 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
         /// <summary>
         /// Mutates an Individual using real-valued mutation
         /// </summary>
-        public override void Mutate(EaConfiguration configuration, ref Individual individual, RealValueMutationStrategy strategy, Random randomGen, float? mutationRate = null)
+        public override void Mutate(EaConfiguration configuration, ref Individual individual, RealValueMutationStrategy strategy, Random randomGen)
         {
+            //selecting one singel for mutation
             var singelToMutate = randomGen.Next(0, individual.Singels.Count);
+
+            //selecting one variable for mutation from that singel
             var variableToMutate = randomGen.Next(0, 12);
 
+            //getting the allowable range of values for selected variable
             var range = GetRangeForIndex(variableToMutate);
 
+            //performing mutation using specified mutation strategy
             var oldCoefficient = individual.Singels[singelToMutate].Coefficients[variableToMutate];
             var newCoefficient = strategy.Mutate(oldCoefficient, randomGen, range, configuration.MutationRange);
 

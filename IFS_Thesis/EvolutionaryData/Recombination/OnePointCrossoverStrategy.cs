@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Properties;
+using IFS_Thesis.IFS;
 using log4net;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
@@ -20,8 +19,12 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
 
         #endregion
 
+        /// <summary>
+        /// Produces offsprings using one-point crossover operator
+        /// </summary>
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
+            //individuals must be of the same degree
             if (firstParent == null || secondParent == null || firstParent.Degree != secondParent.Degree)
             {
                 return new List<Individual>();
@@ -34,32 +37,24 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             //we get the crossover point at random
             var crossoverPoint = randomGen.Next(1, firstParentClone.Degree - 1);
 
-            if (Settings.Default.ExtremeDebugging)
-            {
-                Log.Debug($"Crossover point in one-point crossover is: {crossoverPoint}");
-            }
-
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
+            var firstChildSingels = new List<IfsFunction>();
+            var secondChildSingels = new List<IfsFunction>();
 
             for (int i = 0; i < firstParentClone.Degree; i++)
             {
                 if (i >= crossoverPoint)
                 {
-                    firstSingels.Add(secondParentClone.Singels[i]);
-                    secondSingels.Add(firstParentClone.Singels[i]);
+                    firstChildSingels.Add(secondParentClone.Singels[i]);
+                    secondChildSingels.Add(firstParentClone.Singels[i]);
                 }
                 else
                 {
-                    firstSingels.Add(firstParentClone.Singels[i]);
-                    secondSingels.Add(secondParentClone.Singels[i]);
+                    firstChildSingels.Add(firstParentClone.Singels[i]);
+                    secondChildSingels.Add(secondParentClone.Singels[i]);
                 }
             }
 
-            var individual1 = new Individual(firstSingels);
-            var individual2 = new Individual(secondSingels);
-
-            return new List<Individual> { individual1, individual2 };
+            return new List<Individual> { new Individual(firstChildSingels), new Individual(secondChildSingels) };
         }
     }
 }

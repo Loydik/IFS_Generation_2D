@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Ifs.IFSGenerators;
+using IFS_Thesis.IFS;
+using IFS_Thesis.IFS.IFSGenerators;
 using IFS_Thesis.Properties;
 using log4net;
 
@@ -83,7 +83,7 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         #region Public Methods
 
         /// <summary>
-        /// Calculates fitness based on parameters
+        /// Calculates fitness based on supplied parameters
         /// </summary>
         public float CalculateFitness(int generatedVoxelsCount, int sourceImageVoxelsCount, int matchingVoxelsCount, int prcFitness, int proFitness)
         {
@@ -147,18 +147,12 @@ namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
         {
             Log.Debug("Started calculating fitness for all individuals");
 
-            //For each individual which is not elite we calculate fitness
+            //For each individual we calculate fitness in a parallel manner
             Parallel.ForEach(individuals, individual =>
             {
                 individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ, multiplier);
 
             });
-
-            ////For debugging
-            //foreach (var individual in individuals)
-            //{
-            //    individual.ObjectiveFitness = CalculateFitnessForIndividual(sourceImageVoxels, individual, ifsGenerator, imageX, imageY, imageZ);
-            //}
 
             Log.Debug("Ended calculating fitness for all individuals");
 

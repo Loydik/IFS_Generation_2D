@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 
 namespace IFS_Thesis.EvolutionaryData.Recombination
 {
@@ -12,6 +12,9 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
     {
         #region Overriden Members
 
+        /// <summary>
+        /// Produces offspring using discrete singel recombination operator
+        /// </summary>
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
             if (firstParent == null || secondParent == null || firstParent.Degree != secondParent.Degree)
@@ -23,24 +26,22 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             var firstParentClone = (Individual)firstParent.Clone();
             var secondParentClone = (Individual)secondParent.Clone();
 
-            var firstSingels = new List<IfsFunction>();
-            var secondSingels = new List<IfsFunction>();
+            var firstChildSingels = new List<IfsFunction>();
+            var secondChildSingels = new List<IfsFunction>();
 
             for (int i = 0; i < firstParentClone.Degree; i++)
             {
-                firstSingels.Add(randomGen.NextDouble() >= 0.5
+                //determining which of the parents will contribute a singel to a child
+                firstChildSingels.Add(randomGen.NextDouble() >= 0.5
                     ? firstParentClone.Singels[i]
                     : secondParentClone.Singels[i]);
 
-                secondSingels.Add(randomGen.NextDouble() >= 0.5
+                secondChildSingels.Add(randomGen.NextDouble() >= 0.5
                     ? firstParentClone.Singels[i]
                     : secondParentClone.Singels[i]);
             }
 
-            var individual1 = new Individual(firstSingels);
-            var individual2 = new Individual(secondSingels);
-
-            return new List<Individual> { individual1, individual2 };
+            return new List<Individual> { new Individual(firstChildSingels), new Individual(secondChildSingels) };
         }
 
         #endregion

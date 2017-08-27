@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.Recombination;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 using Moq;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.RecombinationStrategiesTests
 {
     [TestFixture]
-    public class OnePointCrossoverTests
+    public class CrossoverTests
     {
         [Test, Category("OnePointCrossover")]
         [TestCaseSource(typeof(OnePointCrossoverCases))]

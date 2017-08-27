@@ -1,7 +1,7 @@
-﻿namespace IFS_Thesis.Ifs.IFSDrawers
+﻿namespace IFS_Thesis.IFS.IFSDrawers
 {
     /// <summary>
-    /// Format of 3D image
+    /// Supported formats of generated 3D images
     /// </summary>
     public enum ImageFormat3D
     {

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:/tmp/IFS Images</Value>
     </Setting>
     <Setting Name="PopulationSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="NumberOfGenerations" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000000</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">0.01</Value>
     </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -51,7 +51,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="MutationRange" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.5</Value>
+      <Value Profile="(Default)">0.6</Value>
     </Setting>
     <Setting Name="RandomMutationProbability" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
@@ -69,7 +69,7 @@
       <Value Profile="(Default)">0.35</Value>
     </Setting>
     <Setting Name="EliteIndividualsPerDegree" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="UseLowerLimitFitnessAdjustment" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

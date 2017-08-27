@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 using NUnit.Framework;
 
 namespace IFS_Thesis_Tests.IfsTests

@@ -8,10 +8,10 @@ using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using log4net;
 
-namespace IFS_Thesis.Ifs.IFSDrawers
+namespace IFS_Thesis.IFS.IFSDrawers
 {
     /// <summary>
-    /// Abstract class representing classes which will convert a list of voxels to an image of a given format
+    /// Class which will convert a list of voxels to an image of a given format
     /// </summary>
     public class IfsDrawer3D
     {
@@ -38,7 +38,7 @@ namespace IFS_Thesis.Ifs.IFSDrawers
         #region Private Methods
 
         /// <summary>
-        /// Converts voxels to WPF 3D Point Cloud
+        /// Converts voxels to HelixToolkitWPF PointsVisual3D point cloud
         /// </summary>
         private PointsVisual3D ConvertVoxelsTo3DPointCloud(HashSet<Voxel> voxels)
         {
@@ -65,7 +65,7 @@ namespace IFS_Thesis.Ifs.IFSDrawers
         /// <summary>
         /// Saves 3D Ifs image generated from voxels to a given path
         /// </summary>
-        public void SaveVoxelImage(string path, HashSet<Voxel> voxels, ImageFormat3D imageFormat)
+        public void SaveVoxelsTo3DImage(string path, HashSet<Voxel> voxels, ImageFormat3D imageFormat)
         {
             switch (imageFormat)
             {

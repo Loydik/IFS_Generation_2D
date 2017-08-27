@@ -1,4 +1,4 @@
-﻿using IFS_Thesis.Ifs;
+﻿using IFS_Thesis.IFS;
 
 namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
 {

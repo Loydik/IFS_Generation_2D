@@ -8,9 +8,9 @@ using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
 using IFS_Thesis.EvolutionaryData.Reinsertion;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Ifs.IFSDrawers;
-using IFS_Thesis.Ifs.IFSGenerators;
+using IFS_Thesis.IFS;
+using IFS_Thesis.IFS.IFSDrawers;
+using IFS_Thesis.IFS.IFSGenerators;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -69,18 +69,8 @@ namespace IFS_Thesis.EvolutionaryData
             //Every 200th generation we turn on extreme debugging
             Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
 
-            if (currentGeneration == 200)
-            {
-                configuration.MutationRange = 1f;
-                configuration.RandomMutationProbability = 0.45f;
-                configuration.ControlledMutationProbability = 0.55f;
-
-                Log.Info($"Changed configuration:\n {configuration}");
-            }
-
             if (currentGeneration == 500)
             {
-                configuration.MutationRange = 0.7f;
                 configuration.RandomMutationProbability = 0.4f;
                 configuration.ControlledMutationProbability = 0.6f;
 
@@ -89,7 +79,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             if (currentGeneration == 1000)
             {
-                configuration.MutationRange = 0.5f;
                 configuration.RandomMutationProbability = 0.3f;
                 configuration.ControlledMutationProbability = 0.7f;
 
@@ -98,7 +87,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             if (currentGeneration == 2000)
             {
-                configuration.MutationRange = 0.4f;
                 configuration.RandomMutationProbability = 0.2f;
                 configuration.ControlledMutationProbability = 0.8f;
 
@@ -107,7 +95,6 @@ namespace IFS_Thesis.EvolutionaryData
 
             if (currentGeneration == 3000)
             {
-                configuration.MutationRange = 0.2f;
                 configuration.RandomMutationProbability = 0.1f;
                 configuration.ControlledMutationProbability = 0.9f;
 
@@ -172,9 +159,7 @@ namespace IFS_Thesis.EvolutionaryData
                     var voxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, Settings.Default.ImageX,
                         Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
 
-                    //ifsDrawer.SaveVoxelImage(path +
-                    // $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Obj);
-                    ifsDrawer.SaveVoxelImage(path +
+                    ifsDrawer.SaveVoxelsTo3DImage(path +
                                              $"/best_{currentGenerationNumber}th_gen_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}", voxels, ImageFormat3D.Stl);
                 }
             }
@@ -294,24 +279,6 @@ namespace IFS_Thesis.EvolutionaryData
                     Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             }
 
-            //var totalPopulationCount = _population.Count;
-
-            ////Removing and adding species
-            //int speciesCountBefore = _population.Species.Count;
-
-            ////Step 13
-            //_population = new GeneticOperators().RemoveWeakestSpecies(_population,
-            //    configuration.AverageFitnessThreshold);
-
-            ////Step 14
-            //_population = new GeneticOperators().RemoveSpeciesWithPopulationBelowTotal(_population, totalPopulationCount, 0.04f);
-
-            ////Step 15
-            //if (speciesCountBefore < _population.Species.Count)
-            //{
-            //    //TODO - Implement creation of new species
-            //}
-
             Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
             if (Settings.Default.ExtremeDebugging)
@@ -336,18 +303,6 @@ namespace IFS_Thesis.EvolutionaryData
         /// <param name="ifsGenerator">Ifs generator (creates voxels in 3D space)</param>
         private void GenerateReportImages(int currentGenerationNumber, Population population, IfsDrawer3D drawer, IfsGenerator ifsGenerator)
         {
-            //Outputting whole population - removed due to disc space constraints
-            //if (currentGenerationNumber % 1000 == 0)
-            //{
-            //    var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
-            //    System.IO.Directory.CreateDirectory(folderPath);
-
-            //    foreach (var individual in population.Individuals)
-            //    {
-            //        GenerateReportImage(drawer, ifsGenerator, individual, currentGenerationNumber, folderPath);
-            //    }
-            //}
-
             //every Nth generation, save the highest fit individual as image
             if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
             {

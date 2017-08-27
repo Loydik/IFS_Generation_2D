@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 using IFS_Thesis.Utils;
 
 namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
@@ -13,7 +13,7 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         #region Properties
 
         /// <summary>
-        /// The degree of an individual
+        /// The degree of given individual (number of IFS mappings)
         /// </summary>
         public int Degree { get; set; }
 
@@ -28,12 +28,12 @@ namespace IFS_Thesis.EvolutionaryData.EvolutionarySubjects
         public float ObjectiveFitness { get; set; }
 
         /// <summary>
-        /// The rank fitness of an individual
+        /// The ranking fitness of an individual
         /// </summary>
         public float RankFitness { get; set; }
 
         /// <summary>
-        /// Whether an endividual is elitist (highest fitness and untouched)
+        /// Whether an individual is elite (will not be mutated)
         /// </summary>
         public bool Elite { get; set; }
 

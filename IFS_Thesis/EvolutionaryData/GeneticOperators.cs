@@ -10,7 +10,7 @@ using IFS_Thesis.EvolutionaryData.Mutation.Variables;
 using IFS_Thesis.EvolutionaryData.Recombination;
 using IFS_Thesis.EvolutionaryData.Selection.IndividualSelection;
 using IFS_Thesis.EvolutionaryData.Selection.SpeciesSelection;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 using IFS_Thesis.Properties;
 using IFS_Thesis.Utils;
 using log4net;
@@ -275,7 +275,10 @@ namespace IFS_Thesis.EvolutionaryData
             for (int i = 0; i < n1Count / 2; i++)
             {
                 var selectedSpecies = speciesSelectionStrategy.SelectSpecies(population, probabilityVectors, randomGen);
-                selectedDegrees.Add(selectedSpecies.DegreeOfIndividualsInSpecies);
+                if (selectedSpecies != null)
+                {
+                    selectedDegrees.Add(selectedSpecies.DegreeOfIndividualsInSpecies);
+                }
             }
 
             foreach (var degree in selectedDegrees.Distinct().ToList())
@@ -522,42 +525,6 @@ namespace IFS_Thesis.EvolutionaryData
             Log.Info("Finished Migration process");
 
             return populations;
-        }
-
-        /// <summary>
-        /// Removes weakest species from a population if average fitness is below threshold, and no element has higher fitness
-        /// </summary>
-        public Population RemoveWeakestSpecies(Population population, float averageFitnessThreshold)
-        {
-            var weakestSpecies =
-                population.Species.Where(x => x.Individuals.Average(individual => individual.ObjectiveFitness) < averageFitnessThreshold && !x.Individuals.Any(f => f.ObjectiveFitness >= averageFitnessThreshold)).ToList();
-
-            foreach (var species in weakestSpecies)
-            {
-                population.RemoveSpecies(species);
-                Log.Info($"Removed species with degree {species.DegreeOfIndividualsInSpecies} because average fitness was below threshold. Average Fitness: {species.Individuals.Average(individual => individual.ObjectiveFitness)}");
-            }
-
-            return population;
-        }
-
-        /// <summary>
-        /// Removes weakest species from a population if its population is below %of total
-        /// </summary>
-        public Population RemoveSpeciesWithPopulationBelowTotal(Population population, int totalPopulationCount, float percentThreshold)
-        {
-            var threshold = (int)(totalPopulationCount * percentThreshold);
-
-            var smallSpecies =
-                population.Species.Where(x => x.Individuals.Count < threshold).ToList();
-
-            foreach (var species in smallSpecies)
-            {
-                population.RemoveSpecies(species);
-                Log.Info($"Removed species with degree: {species.DegreeOfIndividualsInSpecies} due to their population count below 5% total");
-            }
-
-            return population;
         }
 
         #endregion

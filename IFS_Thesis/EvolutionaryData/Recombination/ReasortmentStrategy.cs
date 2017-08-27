@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
+using IFS_Thesis.IFS;
 using IFS_Thesis.Utils;
 using MoreLinq;
 
@@ -10,6 +10,9 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
 {
     public class ReasortmentStrategy : RecombinationStrategy
     {
+        /// <summary>
+        /// Produces offspring using reasortment operator
+        /// </summary>
         public override List<Individual> ProduceOffsprings(Individual firstParent, Individual secondParent, Random randomGen)
         {
             if (firstParent == null || secondParent == null)
@@ -17,7 +20,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
                 return new List<Individual>();
             }
 
-            List<IfsFunction> allSignels = new List<IfsFunction>();
+            var allSignels = new List<IfsFunction>();
 
             //cloning to prevent unexpected behavior
             var firstParentClone = (Individual)firstParent.Clone();
@@ -31,10 +34,7 @@ namespace IFS_Thesis.EvolutionaryData.Recombination
             var firstChildSingels = allSignels.Take(firstParentClone.Degree).ToList();
             var secondChildSingels = allSignels.TakeLast(secondParentClone.Degree).ToList();
 
-            var firstChild = new Individual(firstChildSingels);
-            var secondChild = new Individual(secondChildSingels);
-
-            return new List<Individual> {firstChild, secondChild};
+            return new List<Individual> { new Individual(firstChildSingels), new Individual(secondChildSingels) };
         }
     }
 }

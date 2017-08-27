@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Ifs.IFSGenerators;
+using IFS_Thesis.IFS;
+using IFS_Thesis.IFS.IFSGenerators;
 
 namespace IFS_Thesis.EvolutionaryData.FitnessFunctions
 {

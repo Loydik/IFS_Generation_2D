@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace IFS_Thesis.Ifs
+namespace IFS_Thesis.IFS
 {
     /// <summary>
-    /// IFS function 3d representation
+    /// IFS function in 3D
     /// </summary>
     public class IfsFunction : IEquatable<IfsFunction>, ICloneable
     {

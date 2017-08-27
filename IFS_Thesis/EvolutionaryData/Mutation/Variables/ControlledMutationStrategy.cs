@@ -1,5 +1,4 @@
 ﻿using System;
-using IFS_Thesis.Properties;
 
 namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
 {
@@ -23,20 +22,20 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
             //u ∈ [0,1] uniform at random
             var u =  randomGen.NextDouble();
 
-            //mutation precision, k ∈ {4,5,...20}
+            //mutation precision, which defines minimum step size, k ∈ {4,5,...20}
             var k = 8;
 
             //a = 2^(-u*k)
             var a = (float)Math.Pow(2, (-1) * u * k);
 
-            var tempVariable =  variable + (float)(s * r * a);
+            var tempVariable =  variable + s * r * a;
 
-            //Clipping overflows
-            if (tempVariable > range.Item2 /*|| Math.Abs(variable - 1) < 0.001*/)
+            //Clipping allowed range overflows
+            if (tempVariable > range.Item2)
             {
                 tempVariable = range.Item2;
             }
-            else if (tempVariable < range.Item1 /*|| Math.Abs(variable) < 0.001*/)
+            else if (tempVariable < range.Item1)
             {
                 tempVariable = range.Item1;
             }

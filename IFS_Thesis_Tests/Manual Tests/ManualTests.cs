@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
-using IFS_Thesis.Ifs;
-using IFS_Thesis.Ifs.IFSDrawers;
-using IFS_Thesis.Ifs.IFSGenerators;
+using IFS_Thesis.IFS.IFSDrawers;
+using IFS_Thesis.IFS.IFSGenerators;
 using IFS_Thesis.Utils;
 using IFS_Thesis_Tests.Properties;
 using MoreLinq;
@@ -58,10 +56,10 @@ namespace IFS_Thesis_Tests.Manual_Tests
                 var matchingVoxels = generatedVoxels.Intersect(sourceVoxels).ToHashSet();
                 var voxelsDrawnOutside = generatedVoxels.Except(matchingVoxels).ToHashSet();
 
-                ifsDrawer.SaveVoxelImage(imageFolder + "/source_voxels", sourceVoxels, ImageFormat3D.Obj);
-                ifsDrawer.SaveVoxelImage(imageFolder + "/generated_voxels", generatedVoxels, ImageFormat3D.Obj);
-                ifsDrawer.SaveVoxelImage(imageFolder + "/matching_voxels", matchingVoxels, ImageFormat3D.Obj);
-                ifsDrawer.SaveVoxelImage(imageFolder + "/voxels_drawn_outside", voxelsDrawnOutside, ImageFormat3D.Obj);
+                ifsDrawer.SaveVoxelsTo3DImage(imageFolder + "/source_voxels", sourceVoxels, ImageFormat3D.Obj);
+                ifsDrawer.SaveVoxelsTo3DImage(imageFolder + "/generated_voxels", generatedVoxels, ImageFormat3D.Obj);
+                ifsDrawer.SaveVoxelsTo3DImage(imageFolder + "/matching_voxels", matchingVoxels, ImageFormat3D.Obj);
+                ifsDrawer.SaveVoxelsTo3DImage(imageFolder + "/voxels_drawn_outside", voxelsDrawnOutside, ImageFormat3D.Obj);
                 ifsDrawer.SaveVoxelOverlayImage(imageFolder + "/voxels_overlay", sourceVoxels, generatedVoxels, ImageFormat3D.Obj);
             }
         }
@@ -93,7 +91,7 @@ namespace IFS_Thesis_Tests.Manual_Tests
                 var individual = allIndividuals[index];
                 var generatedVoxels = ifsGenerator.GenerateVoxelsForIfs(individual.Singels, dimensionX, dimensionY,
                     dimensionZ, multiplier);
-                ifsDrawer.SaveVoxelImage(
+                ifsDrawer.SaveVoxelsTo3DImage(
                     imagesFolderPath +
                     $"/individual{index + 1}_degree_{individual.Degree}_fitness_{individual.ObjectiveFitness:##.#######}",
                     generatedVoxels, ImageFormat3D.Stl);

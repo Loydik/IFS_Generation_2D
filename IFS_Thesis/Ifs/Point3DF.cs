@@ -1,4 +1,4 @@
-﻿namespace IFS_Thesis.Ifs
+﻿namespace IFS_Thesis.IFS
 {
     /// <summary>
     /// Represents 3d floating point 

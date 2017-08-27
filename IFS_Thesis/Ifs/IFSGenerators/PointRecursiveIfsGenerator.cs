@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using IFS_Thesis.Properties;
 
-namespace IFS_Thesis.Ifs.IFSGenerators
+namespace IFS_Thesis.IFS.IFSGenerators
 {
     /// <summary>
     /// IFS Generator using Point-Recursive algorithm
@@ -15,7 +14,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         {
             foreach (var t in ifsMappings)
             {
-                var q1Point = Apply3DIfsTransformation(t, q0);
+                var q1Point = ApplyIfsTransformationTo3DPoint(t, q0);
 
                 if (l == 0)
                 {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoreLinq;
 using static System.Single;
 
-namespace IFS_Thesis.Ifs.IFSGenerators
+namespace IFS_Thesis.IFS.IFSGenerators
 {
     /// <summary>
     /// Class used for generating 3D IFS-es
@@ -14,12 +13,11 @@ namespace IFS_Thesis.Ifs.IFSGenerators
         #region Protected Members
 
         /// <summary>
-        /// Applies 3D IFS transformation to a given point
+        /// Applies IFS transformation to a given 3D point
         /// </summary>
         /// <param name="ifsFunction">IFS Function to make transformation with</param>
         /// <param name="currentPoint">Current point</param>
-        /// <returns></returns>
-        protected Point3Df Apply3DIfsTransformation(IfsFunction ifsFunction, Point3Df currentPoint)
+        protected Point3Df ApplyIfsTransformationTo3DPoint(IfsFunction ifsFunction, Point3Df currentPoint)
         {
             var x0 = currentPoint.X;
             var y0 = currentPoint.Y;
@@ -66,6 +64,7 @@ namespace IFS_Thesis.Ifs.IFSGenerators
 
             try
             {
+                //Scaling to X Y Z dimensions
                 foreach (var point in points)
                 {
                     var jx = Convert.ToInt32((point.X - xMin) * scaleX);
