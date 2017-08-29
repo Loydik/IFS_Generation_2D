@@ -178,48 +178,30 @@ namespace IFS_Thesis.EvolutionaryData
         /// <param name="ifsGenerator">IFS generator for 3D</param>
         /// <param name="geneticUniversum">Genetic universum (singels)</param>
         /// <param name="randomGen">Random number generator</param>
-        private Population GenerateInitialPopulation(EaConfiguration configuration, HashSet<Voxel> sourceImageVoxels, List<float> probabilityVector, IfsGenerator ifsGenerator, List<Singel> geneticUniversum, Random randomGen)
+        private Population GenerateInitialPopulation(EaConfiguration configuration, HashSet<Voxel> sourceImageVoxels,
+            List<float> probabilityVector, IfsGenerator ifsGenerator, List<Singel> geneticUniversum, Random randomGen)
         {
             var population = new Population();
 
-            List<Individual> initialIndividuals;
+            Log.Info($"Started generation of {Settings.Default.InitialPopulationMultiplier}x initial individuals");
 
-            #region Generating 5x random individuals and taking the best
+            //Creating more initial individuals than needed
+            var initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
+                geneticUniversum, configuration.PopulationSize * Settings.Default.InitialPopulationMultiplier,
+                probabilityVector, randomGen);
 
-            if (configuration.Generate5XIndividualsInBeginning)
-            {
-                Log.Info("Started generation of 10x initial individuals");
+            Log.Info(
+                $"Ended generation of {Settings.Default.InitialPopulationMultiplier}x initial individuals. Starting fitness calculation");
 
-                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    geneticUniversum, configuration.PopulationSize * 5, probabilityVector, randomGen);
-
-                Log.Info("Ended generation of 10x initial individuals. Starting fitness calculation");
-
-                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
-                    sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
-                    Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-
-                initialIndividuals = initialIndividuals.OrderByDescending(x => x.ObjectiveFitness).ToList();
-
-                initialIndividuals = initialIndividuals.Take(configuration.PopulationSize).ToList();
-            }
-
-            else
-            {
-                initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                    geneticUniversum, configuration.PopulationSize, probabilityVector, randomGen);
-                initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals, sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-            }
+            //Calculating fitness for created individuals and taking N best
+            initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
+                sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
+                Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier).OrderByDescending(x => x.ObjectiveFitness).Take(configuration.PopulationSize).ToList();
 
             Log.Info("Calcualted fitness for generated individuals.");
 
-            #endregion
-
-            Log.Info($"Generated {initialIndividuals.Count} initial individuals from the Universum.");
-
+            //Adding generated individuals to the population
             population.AddIndividuals(initialIndividuals);
-
-            Log.Info("Added generated individuals to the population.");
 
             Log.Info($"Highest fitness individual of generated ones is {GetHighestFitIndividual(population)}.\n");
 
@@ -253,7 +235,7 @@ namespace IFS_Thesis.EvolutionaryData
             var oldPopulation = population;
 
             //Generating New Population (Steps 7 - 11)
-            var newPopulation = _geneticOperators.GenerateNewPopulation(configuration, population, geneticUniversum, probabilityVector,
+            var newPopulation = _geneticOperators.GenerateNewPopulation(configuration, population, probabilityVector,
                 randomGen);
 
             Log.Info("Generated new population");
@@ -500,7 +482,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 if (currentGenerationNumber % Settings.Default.MigrationFrequency == 0)
                 {
-                    populations = _geneticOperators.MigrateIndividualsBetweenPopulations(populations, Settings.Default.MigrationRatePerDegree,
+                    populations = _geneticOperators.MigrateIndividualsBetweenSubpopulations(populations, Settings.Default.MigrationRatePerDegree,
                         randomGen);
                 }
                 

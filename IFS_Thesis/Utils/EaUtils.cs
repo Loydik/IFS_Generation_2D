@@ -118,7 +118,7 @@ namespace IFS_Thesis.Utils
         /// </summary>
         public static List<float> UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(List<Individual> bestIndividuals, List<float> vector)
         {
-            Dictionary<int, float> bestFitnessesPerDegree = new Dictionary<int, float>();
+            var bestFitnessesPerDegree = new Dictionary<int, float>();
 
             var degrees = GetDegreesOfIndividuals(bestIndividuals);
             degrees.Sort();
@@ -133,17 +133,6 @@ namespace IFS_Thesis.Utils
             }
 
             vector = NormalizeVectorWithMinimumValue(vector, Settings.Default.ProbabilityVectorMinimum);
-
-            for (var index = 0; index < vector.Count; index++)
-            {
-                var probability = vector[index];
-
-                //Setting to zero
-                if (Math.Abs(probability) > 0.00000001 && probability < 0.00000001)
-                {
-                    vector[index] = 0;
-                }
-            }
 
             Log.Info($"Best fitnesses for degrees: [{string.Join(";", bestFitnessesPerDegree)}]");
             Log.Info($"Updated the probability vector, current values are: [{string.Join(",", vector)}]");

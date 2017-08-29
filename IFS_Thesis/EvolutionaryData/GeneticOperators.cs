@@ -232,7 +232,7 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Generates new population
         /// </summary>
-        public Population GenerateNewPopulation(EaConfiguration configuration, Population population, List<Singel> geneticUniversum, List<float> probabilityVectors, Random randomGen)
+        public Population GenerateNewPopulation(EaConfiguration configuration, Population population, List<float> probabilityVectors, Random randomGen)
         {
             IndividualSelectionStrategy individualSelectionStrategy = new StochasticUniversalSamplingIndividualSelectionStrategy();
             SpeciesSelectionStrategy speciesSelectionStrategy = new ProbabilityVectorSpeciesSelectionStrategy();
@@ -269,7 +269,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             var n1Individuals = new List<Individual>();
 
-            List<int> selectedDegrees = new List<int>();
+            var selectedDegrees = new List<int>();
 
             //Creating a list of selected species
             for (int i = 0; i < n1Count / 2; i++)
@@ -331,21 +331,8 @@ namespace IFS_Thesis.EvolutionaryData
             //Step 8
             var n2Count = (int)(configuration.N2IndividualsPercentage * configuration.PopulationSize);
 
-            List<Individual> n2Individuals;
-
-            if (configuration.N2IndividualsFromExistingPoolOfSingels)
-            {
-                n2Individuals = CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count,
-                    probabilityVectors, randomGen);
-            }
-
-            else if (configuration.GeneticUniversumAtRandom)
-            {
-                n2Individuals = CreateIndividualsFromRandomPoolOfSingels(n2Count*10, n2Count, probabilityVectors, randomGen);
-            }
-            else
-                n2Individuals = CreateIndividualsFromExistingPoolOfSingels(geneticUniversum, n2Count, probabilityVectors,
-                    randomGen);
+            var n2Individuals = CreateIndividualsFromExistingPoolOfSingels(population.GetAllSingels(), n2Count,
+                probabilityVectors, randomGen);
 
             newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
@@ -426,13 +413,13 @@ namespace IFS_Thesis.EvolutionaryData
             var n4Individuals = new List<Individual>();
 
             recombinationStrategy = new ReasortmentStrategy();
-            var individualsForRecombination = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, configuration.SelectionPressure, randomGen);
-            individualsForRecombination.Shuffle(randomGen);
+            var individualsForReasortment = individualSelectionStrategy.SelectIndividuals(population.Individuals, rankingFitnessFunction, n4Count, configuration.SelectionPressure, randomGen);
+            individualsForReasortment.Shuffle(randomGen);
 
-            for (int i = 0; i < individualsForRecombination.Count; i++)
+            for (int i = 0; i < individualsForReasortment.Count; i++)
             {
-                var firstParent = individualsForRecombination[i];
-                var secondParent = individualsForRecombination[i + 1];
+                var firstParent = individualsForReasortment[i];
+                var secondParent = individualsForReasortment[i + 1];
 
                 if (Settings.Default.ExtremeDebugging)
                 {
@@ -490,41 +477,41 @@ namespace IFS_Thesis.EvolutionaryData
         }
 
         /// <summary>
-        /// Migrates individuals between populations
+        /// Migrates individuals between subpopulations
         /// </summary>
-        public List<Population> MigrateIndividualsBetweenPopulations(List<Population> populations, int migrationRatePerDegree, Random randomGen)
+        public List<Population> MigrateIndividualsBetweenSubpopulations(List<Population> subpopulations, int migrationRatePerDegree, Random randomGen)
         {
-            for (var i = 0; i < populations.Count; i++)
+            for (var i = 0; i < subpopulations.Count; i++)
             {
-                var population = populations[i];
+                var currentSubpopulation = subpopulations[i];
 
-                var otherPopulations = populations.Where((c, index) => index != i).ToList();
+                var otherSubpopulations = subpopulations.Where((c, index) => index != i).ToList();
 
                 var migrationPool = new List<Individual>();
-
-                foreach (var pop in otherPopulations)
+                
+                //constructing a migration pool of best individuals from other subpopulations
+                foreach (var pop in otherSubpopulations)
                 {
-                    var bestIndividualsPerDegree = EaUtils.GetBestIndividualsOfEachDegree(pop, migrationRatePerDegree).Clone();
-
-                    migrationPool.AddRange(bestIndividualsPerDegree);
+                    migrationPool.AddRange(EaUtils.GetBestIndividualsOfEachDegree(pop, migrationRatePerDegree).Clone());
                 }
 
                 migrationPool.Shuffle(randomGen);
 
-                var degreesOfIndividualsInPopulation = EaUtils.GetDegreesOfIndividuals(population.Individuals);
-
-                foreach (var degree in degreesOfIndividualsInPopulation)
+                var degreesOfIndividualsInCurrentSubpopulation = EaUtils.GetDegreesOfIndividuals(currentSubpopulation.Individuals);
+                
+                //For each degree in current subpopulation, we replace worst individuals with migrated ones
+                foreach (var degree in degreesOfIndividualsInCurrentSubpopulation)
                 {
-                    if (population.Individuals.Count(x => x.Degree == degree) >= migrationRatePerDegree && migrationPool.Count(x => x.Degree == degree) >= migrationRatePerDegree)
+                    if (currentSubpopulation.Individuals.Count(x => x.Degree == degree) >= migrationRatePerDegree && migrationPool.Count(x => x.Degree == degree) >= migrationRatePerDegree)
                     {
-                        population.ReplaceWorstIndividualsOfDegree(degree, migrationPool.Where(x => x.Degree == degree).Take(migrationRatePerDegree).ToList());
+                        currentSubpopulation.ReplaceWorstIndividualsOfDegree(degree, migrationPool.Where(x => x.Degree == degree).Take(migrationRatePerDegree).ToList());
                     }
                 }
             }
 
             Log.Info("Finished Migration process");
 
-            return populations;
+            return subpopulations;
         }
 
         #endregion

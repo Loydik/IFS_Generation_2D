@@ -373,25 +373,13 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool Generate5xIndividualsAtInitialization {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int InitialPopulationMultiplier {
             get {
-                return ((bool)(this["Generate5xIndividualsAtInitialization"]));
+                return ((int)(this["InitialPopulationMultiplier"]));
             }
             set {
-                this["Generate5xIndividualsAtInitialization"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool N2IndividualsFromExistingPoolOfSingels {
-            get {
-                return ((bool)(this["N2IndividualsFromExistingPoolOfSingels"]));
-            }
-            set {
-                this["N2IndividualsFromExistingPoolOfSingels"] = value;
+                this["InitialPopulationMultiplier"] = value;
             }
         }
         
@@ -440,18 +428,6 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["OffspringReinserted"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool GeneticUniversumAtRandom {
-            get {
-                return ((bool)(this["GeneticUniversumAtRandom"]));
-            }
-            set {
-                this["GeneticUniversumAtRandom"] = value;
             }
         }
         

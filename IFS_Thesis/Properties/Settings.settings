@@ -89,11 +89,8 @@
     <Setting Name="ExtremeDebugging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Generate5xIndividualsAtInitialization" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="N2IndividualsFromExistingPoolOfSingels" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="InitialPopulationMultiplier" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="UseReinsertion" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -106,9 +103,6 @@
     </Setting>
     <Setting Name="OffspringReinserted" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.7</Value>
-    </Setting>
-    <Setting Name="GeneticUniversumAtRandom" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MigrationFrequency" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>

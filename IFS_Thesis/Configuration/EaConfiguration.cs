@@ -50,10 +50,6 @@ namespace IFS_Thesis.Configuration
 
         public float SelectionPressure { get; set; }
 
-        public bool N2IndividualsFromExistingPoolOfSingels { get; set; }
-
-        public bool GeneticUniversumAtRandom { get; set; }
-
         public bool RecalculateFitnessAfterReinsertion { get; set; }
 
         #endregion
