@@ -31,23 +31,24 @@ namespace IFS_Thesis
         [STAThread]
         static void Main(string[] args)
         {
-            #region Image Parameters
+            #region Source IFS
 
-            var initialImagePath = Settings.Default.WorkingDirectory + "/tested_ifs";
-
-            var finalEvolvedImagePath = Settings.Default.WorkingDirectory + "/final_evolved_ifs";
-
-            #endregion
-
-            #region IFS Definitions 3D
-
-            var sierpinskiPyramid = new List<IfsFunction>
+            //sierpinski pyramid
+            var sourceIfs = new List<IfsFunction>
             {
                 new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f),
                 new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0.5f, 0f, 0f),
                 new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0.5f, 0f),
                 new IfsFunction(0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f)
             };
+
+            #endregion
+
+            #region Image Parameters
+
+            var initialImagePath = Settings.Default.WorkingDirectory + "/tested_ifs";
+
+            var finalEvolvedImagePath = Settings.Default.WorkingDirectory + "/final_evolved_ifs";
 
             #endregion
 
@@ -60,36 +61,16 @@ namespace IFS_Thesis
             var ifsGenerator = new RandomIterationIfsGenerator();
             var ifsDrawer = new IfsDrawer3D();
 
-            var voxels = ifsGenerator.GenerateVoxelsForIfs(sierpinskiPyramid, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+            var voxels = ifsGenerator.GenerateVoxelsForIfs(sourceIfs, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveVoxelsTo3DImage(initialImagePath, voxels, ImageFormat3D.Stl);
 
             Log.Info($"Ifs generator is {ifsGenerator.GetType()}");
 
             #endregion
 
-            var ea = new EvolutionaryAlgorithm();
+            #region Population from text file
 
             Population initialPopulation = null;
-
-            #region Initializing Different Configurations
-
-            var configuration1 = EaConfigurator.GetDefaultConfiguration();
-            configuration1.PopulationSize = Settings.Default.PopulationSize / 3;
-            configuration1.MutationRange = 0.6f;
-
-            var configuration2 = EaConfigurator.GetDefaultConfiguration();
-            configuration2.PopulationSize = Settings.Default.PopulationSize / 3;
-            configuration2.MutationRange = 0.3f;
-
-            var configuration3 = EaConfigurator.GetDefaultConfiguration();
-            configuration3.PopulationSize = Settings.Default.PopulationSize / 3;
-            configuration3.MutationRange = 0.15f;
-
-            var configurations = new List<EaConfiguration> { configuration1, configuration2, configuration3};
-
-            #endregion
-
-            #region Population from text file
 
             if (Settings.Default.InitialPopulationFromTextFile)
             {
@@ -106,12 +87,42 @@ namespace IFS_Thesis
 
             #endregion
 
-            //Multiple Populations
-            var highest = ea.StartEvolutionWithMultiplePopulations(configurations, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+            Individual bestIndividual;
 
-            //var highest = Settings.Default.InitialPopulationFromTextFile ? ea.StartEvolution(initialPopulation, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen) : ea.StartEvolution(Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
-                    
-            voxels = ifsGenerator.GenerateVoxelsForIfs(highest.Singels, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
+            var ea = new EvolutionaryAlgorithm();
+
+            if (Settings.Default.MultiplePopulations)
+            {
+                #region Initializing Configurations For Parallel Populations
+
+                var configuration1 = EaConfigurator.GetDefaultConfiguration();
+                configuration1.PopulationSize = Settings.Default.PopulationSize / 3;
+                configuration1.MutationRange = 0.6f;
+
+                var configuration2 = EaConfigurator.GetDefaultConfiguration();
+                configuration2.PopulationSize = Settings.Default.PopulationSize / 3;
+                configuration2.MutationRange = 0.3f;
+
+                var configuration3 = EaConfigurator.GetDefaultConfiguration();
+                configuration3.PopulationSize = Settings.Default.PopulationSize / 3;
+                configuration3.MutationRange = 0.15f;
+
+                var configurations = new List<EaConfiguration> { configuration1, configuration2, configuration3 };
+
+                #endregion
+
+                //Running algorithm with multiple parallel populations
+                bestIndividual = ea.StartEvolutionWithMultiplePopulations(configurations,
+                    Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+            }
+            else
+            {
+                var configuration = EaConfigurator.GetDefaultConfiguration();
+                //Running algorithm with single population
+                bestIndividual = Settings.Default.InitialPopulationFromTextFile ? ea.StartEvolution(configuration, initialPopulation, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen) : ea.StartEvolution(configuration, Settings.Default.NumberOfGenerations, voxels, ifsDrawer, ifsGenerator, randomGen);
+            }
+
+            voxels = ifsGenerator.GenerateVoxelsForIfs(bestIndividual.Singels, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
             ifsDrawer.SaveVoxelsTo3DImage(finalEvolvedImagePath, voxels, ImageFormat3D.Obj);
         }
     }

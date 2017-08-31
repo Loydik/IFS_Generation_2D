@@ -251,7 +251,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                 foreach (var individual in bestIndividuals)
                 {
-                    if (individual.ObjectiveFitness >= configuration.AverageFitnessThreshold)
+                    if (individual.ObjectiveFitness >= configuration.EliteFitnessThreshold)
                     {
                         //we set best individual as elite
                         individual.Elite = true;
@@ -301,7 +301,7 @@ namespace IFS_Thesis.EvolutionaryData
                     var firstParent = selectedIndividuals[i];
                     var secondParent = selectedIndividuals[i+1];
 
-                    if (Settings.Default.ExtremeDebugging)
+                    if (Settings.Default.ExtremeLogging)
                     {
                         Log.Debug(
                             $"Selected N1 individuals for recombination: \n {firstParent} \n {secondParent}  \n Recombination strategy: {recombinationStrategy.GetType()}");
@@ -313,7 +313,7 @@ namespace IFS_Thesis.EvolutionaryData
                     n1Individuals.AddRange(offspring);
                     i++;
 
-                    if (Settings.Default.ExtremeDebugging)
+                    if (Settings.Default.ExtremeLogging)
                     {
                         Log.Debug(
                             $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", offspring)}");
@@ -337,7 +337,7 @@ namespace IFS_Thesis.EvolutionaryData
             newPopulation.AddIndividuals(n2Individuals);
             Log.Debug($"Added {n2Individuals.Count} N2 individuals to new population");
 
-            if (Settings.Default.ExtremeDebugging)
+            if (Settings.Default.ExtremeLogging)
             {
                 Log.Debug($"Added N2 individuals into population: : \n {string.Join("\n", n2Individuals)}");
             }
@@ -371,7 +371,7 @@ namespace IFS_Thesis.EvolutionaryData
                                 individualSelectionStrategy.SelectIndividuals(secondSpecies.Individuals,
                                     rankingFitnessFunction, 1, configuration.SelectionPressure, randomGen).First();
 
-                            if (Settings.Default.ExtremeDebugging)
+                            if (Settings.Default.ExtremeLogging)
                             {
                                 Log.Debug(
                                     $"Selected N3 individuals for inter-species crossover: \n {firstIndividual} \n {secondIndividual} \n");
@@ -383,7 +383,7 @@ namespace IFS_Thesis.EvolutionaryData
                                 randomGen);
                             n3Individuals.AddRange(children);
 
-                            if (Settings.Default.ExtremeDebugging)
+                            if (Settings.Default.ExtremeLogging)
                             {
                                 Log.Debug(
                                     $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", children)}");
@@ -421,7 +421,7 @@ namespace IFS_Thesis.EvolutionaryData
                 var firstParent = individualsForReasortment[i];
                 var secondParent = individualsForReasortment[i + 1];
 
-                if (Settings.Default.ExtremeDebugging)
+                if (Settings.Default.ExtremeLogging)
                 {
                     Log.Debug($"Selected N4 individuals for reasortment: \n {firstParent} \n {secondParent}  \n");
                 }     
@@ -432,7 +432,7 @@ namespace IFS_Thesis.EvolutionaryData
                 n4Individuals.AddRange(offspring);
                 i++;
 
-                if (Settings.Default.ExtremeDebugging)
+                if (Settings.Default.ExtremeLogging)
                 {
                     Log.Debug(
                         $"Produced 2 offspring using {recombinationStrategy.GetType()}: \n {string.Join("\n", offspring)}");
@@ -455,7 +455,7 @@ namespace IFS_Thesis.EvolutionaryData
                 {
                     var mutationStrategy = GetMutationStrategy(configuration.RandomMutationProbability, randomGen);
 
-                    if (Settings.Default.ExtremeDebugging)
+                    if (Settings.Default.ExtremeLogging)
                     {
                         Log.Debug($"Selected individual for mutation: {individual} using {mutationStrategy.GetType()}");
                     }
@@ -464,7 +464,7 @@ namespace IFS_Thesis.EvolutionaryData
 
                     individualMutationStrategy.Mutate(configuration, ref currentIndividual, mutationStrategy, randomGen);
 
-                    if (Settings.Default.ExtremeDebugging)
+                    if (Settings.Default.ExtremeLogging)
                     {
                         Log.Debug($"Individual after mutation: {currentIndividual}");
                     }

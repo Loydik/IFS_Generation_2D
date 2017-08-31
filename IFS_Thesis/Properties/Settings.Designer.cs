@@ -37,6 +37,18 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MultiplePopulations {
+            get {
+                return ((bool)(this["MultiplePopulations"]));
+            }
+            set {
+                this["MultiplePopulations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("600")]
         public int PopulationSize {
             get {
@@ -44,6 +56,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["PopulationSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int InitialPopulationGenerationMultiplier {
+            get {
+                return ((int)(this["InitialPopulationGenerationMultiplier"]));
+            }
+            set {
+                this["InitialPopulationGenerationMultiplier"] = value;
             }
         }
         
@@ -169,13 +193,37 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
-        public float AverageFitnessThreshold {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseLowerLimitFitnessAdjustment {
             get {
-                return ((float)(this["AverageFitnessThreshold"]));
+                return ((bool)(this["UseLowerLimitFitnessAdjustment"]));
             }
             set {
-                this["AverageFitnessThreshold"] = value;
+                this["UseLowerLimitFitnessAdjustment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseUpperLimitFitnessAdjustment {
+            get {
+                return ((bool)(this["UseUpperLimitFitnessAdjustment"]));
+            }
+            set {
+                this["UseUpperLimitFitnessAdjustment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public float EliteFitnessThreshold {
+            get {
+                return ((float)(this["EliteFitnessThreshold"]));
+            }
+            set {
+                this["EliteFitnessThreshold"] = value;
             }
         }
         
@@ -217,18 +265,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.6")]
-        public float MutationRange {
-            get {
-                return ((float)(this["MutationRange"]));
-            }
-            set {
-                this["MutationRange"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public float RandomMutationProbability {
             get {
@@ -248,6 +284,18 @@ namespace IFS_Thesis.Properties {
             }
             set {
                 this["ControlledMutationProbability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.6")]
+        public float MutationRange {
+            get {
+                return ((float)(this["MutationRange"]));
+            }
+            set {
+                this["MutationRange"] = value;
             }
         }
         
@@ -301,42 +349,6 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseLowerLimitFitnessAdjustment {
-            get {
-                return ((bool)(this["UseLowerLimitFitnessAdjustment"]));
-            }
-            set {
-                this["UseLowerLimitFitnessAdjustment"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseUpperLimitFitnessAdjustment {
-            get {
-                return ((bool)(this["UseUpperLimitFitnessAdjustment"]));
-            }
-            set {
-                this["UseUpperLimitFitnessAdjustment"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int UpdateProbabilityVectorAfterNGenerations {
-            get {
-                return ((int)(this["UpdateProbabilityVectorAfterNGenerations"]));
-            }
-            set {
-                this["UpdateProbabilityVectorAfterNGenerations"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
         public float ProbabilityVectorMinimum {
             get {
@@ -349,37 +361,25 @@ namespace IFS_Thesis.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
-        public int DrawImageEveryNthGeneration {
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int ReportImageEveryNthGeneration {
             get {
-                return ((int)(this["DrawImageEveryNthGeneration"]));
+                return ((int)(this["ReportImageEveryNthGeneration"]));
             }
             set {
-                this["DrawImageEveryNthGeneration"] = value;
+                this["ReportImageEveryNthGeneration"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExtremeDebugging {
+        public bool ExtremeLogging {
             get {
-                return ((bool)(this["ExtremeDebugging"]));
+                return ((bool)(this["ExtremeLogging"]));
             }
             set {
-                this["ExtremeDebugging"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int InitialPopulationMultiplier {
-            get {
-                return ((int)(this["InitialPopulationMultiplier"]));
-            }
-            set {
-                this["InitialPopulationMultiplier"] = value;
+                this["ExtremeLogging"] = value;
             }
         }
         

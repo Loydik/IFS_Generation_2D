@@ -24,7 +24,7 @@ namespace IFS_Thesis.Configuration
 
         public float MutationRange { get; set; }
 
-        public float AverageFitnessThreshold { get; set; }
+        public float EliteFitnessThreshold { get; set; }
 
         public float ArithmeticCrossoverProbability { get; set; }
 
@@ -43,8 +43,6 @@ namespace IFS_Thesis.Configuration
         public float ParentsReinserted { get; set; }
 
         public float OffspringReinserted { get; set; }
-
-        public int UpdateProbabilityVectorAfterNGenerations { get; set; }
 
         public bool Generate5XIndividualsInBeginning { get; set; }
 

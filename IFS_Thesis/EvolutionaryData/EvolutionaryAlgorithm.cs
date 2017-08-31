@@ -67,7 +67,7 @@ namespace IFS_Thesis.EvolutionaryData
         private void ChangeConfiguration(int currentGeneration, EaConfiguration configuration)
         {
             //Every 200th generation we turn on extreme debugging
-            Settings.Default.ExtremeDebugging = currentGeneration % 200 == 0;
+            Settings.Default.ExtremeLogging = currentGeneration % 200 == 0;
 
             if (currentGeneration == 500)
             {
@@ -152,7 +152,7 @@ namespace IFS_Thesis.EvolutionaryData
             string path)
         {
             //every Nth generation, save the highest fit individual as image
-            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            if (currentGenerationNumber % Settings.Default.ReportImageEveryNthGeneration == 0)
             {
                 if (individual != null)
                 {
@@ -183,15 +183,15 @@ namespace IFS_Thesis.EvolutionaryData
         {
             var population = new Population();
 
-            Log.Info($"Started generation of {Settings.Default.InitialPopulationMultiplier}x initial individuals");
+            Log.Info($"Started generation of {Settings.Default.InitialPopulationGenerationMultiplier}x initial individuals");
 
             //Creating more initial individuals than needed
             var initialIndividuals = new GeneticOperators().CreateIndividualsFromExistingPoolOfSingels(
-                geneticUniversum, configuration.PopulationSize * Settings.Default.InitialPopulationMultiplier,
+                geneticUniversum, configuration.PopulationSize * Settings.Default.InitialPopulationGenerationMultiplier,
                 probabilityVector, randomGen);
 
             Log.Info(
-                $"Ended generation of {Settings.Default.InitialPopulationMultiplier}x initial individuals. Starting fitness calculation");
+                $"Ended generation of {Settings.Default.InitialPopulationGenerationMultiplier}x initial individuals. Starting fitness calculation");
 
             //Calculating fitness for created individuals and taking N best
             initialIndividuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(initialIndividuals,
@@ -225,12 +225,11 @@ namespace IFS_Thesis.EvolutionaryData
         {
             Log.Info($"Starting evolving generation {currentGenerationNumber}...");
 
-            if (currentGenerationNumber > configuration.UpdateProbabilityVectorAfterNGenerations)
-            {
-                probabilityVector =
-                    EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(GetBestIndividualsPerDegree(population),
-                        probabilityVector);
-            }
+            //Updating Probability Vector
+            probabilityVector =
+                EaUtils.UpdateVectorOfProbabilitiesBasedOnBestIndividualsFromDegree(
+                    GetBestIndividualsPerDegree(population),
+                    probabilityVector);
 
             var oldPopulation = population;
 
@@ -263,7 +262,7 @@ namespace IFS_Thesis.EvolutionaryData
 
             Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
-            if (Settings.Default.ExtremeDebugging)
+            if (Settings.Default.ExtremeLogging)
             {
                 Log.Debug($"Best individuals per degree are:\n {string.Join("\n", GetBestIndividualsPerDegree(population))} \n\n");
                 Log.Debug($"Current whole population is:\n {string.Join("\n", population.Individuals)}");
@@ -286,12 +285,12 @@ namespace IFS_Thesis.EvolutionaryData
         private void GenerateReportImages(int currentGenerationNumber, Population population, IfsDrawer3D drawer, IfsGenerator ifsGenerator)
         {
             //every Nth generation, save the highest fit individual as image
-            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            if (currentGenerationNumber % Settings.Default.ReportImageEveryNthGeneration == 0)
             {
                 var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                 Directory.CreateDirectory(folderPath);
 
-                if (Settings.Default.ExtremeDebugging)
+                if (Settings.Default.ExtremeLogging)
                 {
                     foreach (var individual in GetBestIndividualsPerDegree(population))
                     {
@@ -316,7 +315,7 @@ namespace IFS_Thesis.EvolutionaryData
         private void GenerateReportImages(int currentGenerationNumber, List<Population> populations, IfsDrawer3D drawer, IfsGenerator ifsGenerator)
         {
             //every Nth generation, save the highest fit individual as image
-            if (currentGenerationNumber % Settings.Default.DrawImageEveryNthGeneration == 0)
+            if (currentGenerationNumber % Settings.Default.ReportImageEveryNthGeneration == 0)
             {
                 var folderPath = Settings.Default.WorkingDirectory + $"/best_gen_{currentGenerationNumber}";
                 Directory.CreateDirectory(folderPath);
@@ -328,7 +327,7 @@ namespace IFS_Thesis.EvolutionaryData
                     var populationFolderPath = folderPath + $"/population_{i+1}";
                     Directory.CreateDirectory(populationFolderPath);
 
-                    if (Settings.Default.ExtremeDebugging)
+                    if (Settings.Default.ExtremeLogging)
                     {
                         foreach (var individual in GetBestIndividualsPerDegree(population))
                         {
@@ -368,11 +367,9 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Start the Evolution Process
         /// </summary>
-        public Individual StartEvolution(int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
+        public Individual StartEvolution(EaConfiguration configuration, int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
-
-            var configuration = EaConfigurator.GetDefaultConfiguration();
 
             //Initial Probability vector, 8 max
             var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };
@@ -403,11 +400,9 @@ namespace IFS_Thesis.EvolutionaryData
         /// <summary>
         /// Start the Evolution Process with given initial population (for testing purposes)
         /// </summary>
-        public Individual StartEvolution(Population population, int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
+        public Individual StartEvolution(EaConfiguration configuration, Population population, int maxGenerations, HashSet<Voxel> sourceImageVoxels, IfsDrawer3D drawer, IfsGenerator ifsGenerator, Random randomGen)
         {
             OutputEvolutinaryAlgorithmParameters();
-            
-            var configuration = EaConfigurator.GetDefaultConfiguration();
 
             //Initial Probability vector, 8 max
             var probabilityVector = new List<float> { 0, 0, 0.35f, 0.25f, 0.2f, 0.1f, 0.05f, 0.05f };

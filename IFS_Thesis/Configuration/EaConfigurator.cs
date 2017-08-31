@@ -22,7 +22,7 @@ namespace IFS_Thesis.Configuration
                 ArithmeticCrossoverProbability = Settings.Default.ArithmeticCrossoverProbability,
                 OnePointCrossoverProbability = Settings.Default.OnePointCrossoverProbability,
                 DiscreteSingelRecombinationProbability = Settings.Default.DiscreteSingelRecombinationProbability,
-                AverageFitnessThreshold = Settings.Default.AverageFitnessThreshold,
+                EliteFitnessThreshold = Settings.Default.EliteFitnessThreshold,
                 ControlledMutationProbability = Settings.Default.ControlledMutationProbability,
                 RandomMutationProbability = Settings.Default.RandomMutationProbability,
                 EliteIndividualsPerDegree = Settings.Default.EliteIndividualsPerDegree,
@@ -32,7 +32,6 @@ namespace IFS_Thesis.Configuration
                 ParentsReinserted = Settings.Default.ParentsReinserted,
                 MutationProbability = Settings.Default.MutationProbability,
                 MutationRange = Settings.Default.MutationRange,
-                UpdateProbabilityVectorAfterNGenerations = Settings.Default.UpdateProbabilityVectorAfterNGenerations,
                 RecalculateFitnessAfterReinsertion = Settings.Default.RecalculateFitnessAfterReinsertion
             };
 

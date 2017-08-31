@@ -112,7 +112,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
 
             individual.Singels[singelToMutate][variableToMutate] = newCoefficient;
 
-            if (Settings.Default.ExtremeDebugging)
+            if (Settings.Default.ExtremeLogging)
             {
                 Log.Debug(
                     $"Mutated coefficient {GetCoefficientNameByIndex(variableToMutate)} from {oldCoefficient} to {newCoefficient} using {strategy.GetType().Name}");

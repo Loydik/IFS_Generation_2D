@@ -52,7 +52,7 @@ namespace IFS_Thesis.EvolutionaryData.Reinsertion
                 finalPopulation.AddIndividuals(bestParents);
                 finalPopulation.AddIndividuals(bestOffspring);
 
-                if (Settings.Default.ExtremeDebugging)
+                if (Settings.Default.ExtremeLogging)
                 {
                     Log.Debug($"Best parents for degree {degree} are: \n {string.Join("\n", bestParents)} ");
                     Log.Debug($"Best offspring for degree {degree} are: \n {string.Join("\n", bestOffspring)} ");
