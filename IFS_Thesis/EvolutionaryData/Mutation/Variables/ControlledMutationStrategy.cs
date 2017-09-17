@@ -8,7 +8,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Variables
         /// Mutation operator of the Breeder Genetic Algorithm
         /// </summary>
         /// <remarks>produces small step-sizes with a high probability and large step-sizes with a low probability.</remarks>>
-        public override float Mutate(float variable, Random randomGen, Tuple<int, int> range, float mutationRange)
+        public override float MutateVariable(float variable, Random randomGen, Tuple<int, int> range, float mutationRange)
         {
             //General formula (taken from GEATbx) -> Var = Var + s * r * a
 

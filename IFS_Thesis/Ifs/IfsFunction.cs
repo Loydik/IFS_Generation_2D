@@ -9,6 +9,7 @@ namespace IFS_Thesis.IFS
     {
         #region Properties
 
+        //Coefficients of affine functions
         public float A11 { get; set; }
         public float A12 { get; set; }
         public float A13 { get; set; }

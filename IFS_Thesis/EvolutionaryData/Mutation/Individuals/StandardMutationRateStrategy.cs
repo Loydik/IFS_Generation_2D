@@ -108,7 +108,7 @@ namespace IFS_Thesis.EvolutionaryData.Mutation.Individuals
 
             //performing mutation using specified mutation strategy
             var oldCoefficient = individual.Singels[singelToMutate].Coefficients[variableToMutate];
-            var newCoefficient = strategy.Mutate(oldCoefficient, randomGen, range, configuration.MutationRange);
+            var newCoefficient = strategy.MutateVariable(oldCoefficient, randomGen, range, configuration.MutationRange);
 
             individual.Singels[singelToMutate][variableToMutate] = newCoefficient;
 

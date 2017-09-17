@@ -26,7 +26,7 @@ namespace IFS_Thesis_Tests.MutationStrategiesTests
 
             for (int i = 0; i < 100; i++)
             {
-                results.Add(mutationStrategy.Mutate(variable, random, range, 0.25f));
+                results.Add(mutationStrategy.MutateVariable(variable, random, range, 0.25f));
             }
 
             Assert.Fail("The test is manual :D");
