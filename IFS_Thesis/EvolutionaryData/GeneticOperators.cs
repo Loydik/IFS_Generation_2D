@@ -242,25 +242,27 @@ namespace IFS_Thesis.EvolutionaryData
 
             var newPopulation = new Population();
 
-            if (configuration.UseReinsertion == false)
+            #region Adding Elite Individuals
+
+            // (Step 6.) Adding best individuals of each new degree 
+            var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population,
+                configuration.EliteIndividualsPerDegree);
+
+            //bestIndividuals.ForEach(i => i.Elite = true);
+
+            foreach (var individual in bestIndividuals)
             {
-                // (Step 6.) Adding best individuals of each new degree 
-                var bestIndividuals = EaUtils.GetBestIndividualsOfEachDegree(population, configuration.EliteIndividualsPerDegree);
-              
-                //bestIndividuals.ForEach(i => i.Elite = true);
-
-                foreach (var individual in bestIndividuals)
+                if (individual.ObjectiveFitness >= configuration.EliteFitnessThreshold)
                 {
-                    if (individual.ObjectiveFitness >= configuration.EliteFitnessThreshold)
-                    {
-                        //we set best individual as elite
-                        individual.Elite = true;
-                        newPopulation.AddIndividual(individual);
-                    }
-                }      
-
-                Log.Info("Added elite individuals to new population");
+                    //we set best individual as elite
+                    individual.Elite = true;
+                    newPopulation.AddIndividual(individual);
+                }
             }
+
+            Log.Info("Added elite individuals to new population");
+
+            #endregion
 
             #region N1 Individuals
 

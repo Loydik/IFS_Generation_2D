@@ -18,13 +18,13 @@
       <Value Profile="(Default)">1000000</Value>
     </Setting>
     <Setting Name="ImageX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="ImageY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="ImageZ" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="N1IndividualsPercentage" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.8</Value>
@@ -54,7 +54,7 @@
       <Value Profile="(Default)">0.01</Value>
     </Setting>
     <Setting Name="IfsGenerationMultiplier" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="SelectionPressure" Type="System.Single" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -91,18 +91,6 @@
     </Setting>
     <Setting Name="ExtremeLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="UseReinsertion" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="RecalculateFitnessAfterReinsertion" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ParentsReinserted" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
-    </Setting>
-    <Setting Name="OffspringReinserted" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.7</Value>
     </Setting>
     <Setting Name="MigrationFrequency" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>

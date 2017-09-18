@@ -27,12 +27,8 @@ namespace IFS_Thesis.Configuration
                 RandomMutationProbability = Settings.Default.RandomMutationProbability,
                 EliteIndividualsPerDegree = Settings.Default.EliteIndividualsPerDegree,
                 SelectionPressure = Settings.Default.SelectionPressure,
-                UseReinsertion = Settings.Default.UseReinsertion,
-                OffspringReinserted = Settings.Default.OffspringReinserted,
-                ParentsReinserted = Settings.Default.ParentsReinserted,
                 MutationProbability = Settings.Default.MutationProbability,
-                MutationRange = Settings.Default.MutationRange,
-                RecalculateFitnessAfterReinsertion = Settings.Default.RecalculateFitnessAfterReinsertion
+                MutationRange = Settings.Default.MutationRange
             };
 
             return config;

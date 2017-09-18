@@ -38,17 +38,10 @@ namespace IFS_Thesis.Configuration
 
         public int EliteIndividualsPerDegree { get; set; }
 
-        public bool UseReinsertion { get; set; }
-
-        public float ParentsReinserted { get; set; }
-
-        public float OffspringReinserted { get; set; }
-
         public bool Generate5XIndividualsInBeginning { get; set; }
 
         public float SelectionPressure { get; set; }
 
-        public bool RecalculateFitnessAfterReinsertion { get; set; }
 
         #endregion
 

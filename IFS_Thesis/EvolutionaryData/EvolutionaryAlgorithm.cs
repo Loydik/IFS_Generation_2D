@@ -7,7 +7,6 @@ using System.Reflection;
 using IFS_Thesis.Configuration;
 using IFS_Thesis.EvolutionaryData.EvolutionarySubjects;
 using IFS_Thesis.EvolutionaryData.FitnessFunctions;
-using IFS_Thesis.EvolutionaryData.Reinsertion;
 using IFS_Thesis.IFS;
 using IFS_Thesis.IFS.IFSDrawers;
 using IFS_Thesis.IFS.IFSGenerators;
@@ -231,8 +230,6 @@ namespace IFS_Thesis.EvolutionaryData
                     GetBestIndividualsPerDegree(population),
                     probabilityVector);
 
-            var oldPopulation = population;
-
             //Generating New Population (Steps 7 - 11)
             var newPopulation = _geneticOperators.GenerateNewPopulation(configuration, population, probabilityVector,
                 randomGen);
@@ -244,21 +241,7 @@ namespace IFS_Thesis.EvolutionaryData
                     ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY, Settings.Default.ImageZ,
                     Settings.Default.IfsGenerationMultiplier);
 
-            var reinsertionStrategy = new DegreeBasedReinsertionStrategy();
-
-            //Reinsertion
-            population = configuration.UseReinsertion
-                ? reinsertionStrategy.ReinsertIndividuals(oldPopulation, newPopulation, configuration.ParentsReinserted, configuration.ParentsReinserted, randomGen)
-                : newPopulation;
-
-            if (configuration.RecalculateFitnessAfterReinsertion && configuration.UseReinsertion)
-            {
-                //recalculating fitness for whole population
-                population.Individuals = _objectiveFitnessFunction.CalculateFitnessForIndividuals(
-                    population.Individuals,
-                    sourceImageVoxels, ifsGenerator, Settings.Default.ImageX, Settings.Default.ImageY,
-                    Settings.Default.ImageZ, Settings.Default.IfsGenerationMultiplier);
-            }
+            population = newPopulation;
 
             Log.Info($"Finished evolving generation {currentGenerationNumber}...");
 
